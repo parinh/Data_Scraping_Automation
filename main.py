@@ -26,11 +26,12 @@ chrome_options.add_experimental_option("prefs", {
     })
 
 #chrome driv ja
-browser = webdriver.Chrome(executable_path = r"/Users/mcmxcix/chromedriver",
+browser = webdriver.Chrome(executable_path = r"C:/Users/Bell/Downloads/chromedriver_win32/chromedriver.exe",
                           options = chrome_options)
 browser.get(base_url)
 delay = 5 
 
+item_all = []
 
 item_cost, item_rt, img_src = [],[],[]
 item_name, items_sold, discount_percent = [], [], []
@@ -48,31 +49,39 @@ if(ss == 1):
 
             # find_all() returns an array of elements. 
             # We have to go through all of them and select that one you are need. And than call get_text()
+            # for item_n in soup.find_all('div', class_='_1YAByT'):
+            #     item_name.append(item_all.text)
+            #     print(item_n.get_text())
+
             for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
+                # if(soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'))
                 item_name.append(item_n.text)
                 print(item_n.get_text())
 
-            # find the price of items
+            # # find the price of items
             for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
                 item_cost.append(item_c.text)
                 print(item_c.get_text())
 
-            # find total number of items sold/month *********
+            # # find total number of items sold/month *********
             for items_s in soup.find_all('div',class_ = 'go5yPW'):
                 items_sold.append(items_s.text)
                 print(items_s.get_text())
 
-            # find item discount percent
+            # # find item discount percent
             for dp in soup.find_all('span', class_ = 'percent'):
                 discount_percent.append(dp.text)
                 print(dp.get_text())
 
-            # find img path
-            for img in soup.find_all('div', class_ = 'customized-overlay-image'):
-                print(img)
-                img_src.append(img.src)
-                print(img.get_text())
-
+            # # find img path
+            # for img in soup.find_all('div', class_ = 'customized-overlay-image'):
+               
+            #     print(img)
+            #     img_src.append(img.src)
+            #     # print(img.get_text())
+            
+            # for pic in soup.find_all('div', class_ = 'customized-overlay-image'):
+                
                 
             break # it will break from the loop once the specific element will be present. 
         except TimeoutException:
