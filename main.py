@@ -17,7 +17,7 @@ print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-
 ss = 2
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss"
+base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss_2"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -49,7 +49,7 @@ c=[]
 def getDataFromPostForShopee(html):
     print("get data form shopee")
     soup = BeautifulSoup(html, "html.parser")
-    for item_n in soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'):
+    for item_n in soup.find_all('div',  class_= "col-xs-2-4 shopee-search-item-result__item"):
         getItemDataForShopee(item_n)
 
 #get all item in amazon search
@@ -58,6 +58,16 @@ def getDataFromPostForAmazonSearch(html):
     soup = BeautifulSoup(html, "html.parser")
     for item_n in soup.find_all('div',  class_='sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'):
         getItemDataForAmazonSearch(item_n)
+
+    for i in range(len(item_name)):
+        print(item_name[i])
+        print(items_sold[i])
+        print(items_rating[i])
+        print(items_review[i])
+        print(img_src[i])
+        print("###################")
+        
+        
 
 #sort data form all item na
 def getItemDataForShopee(soup):
@@ -92,37 +102,46 @@ def getItemDataForShopee(soup):
 def getItemDataForAmazonSearch(soup):
 
     # Get Name
-    item_n = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
-    if (item_n):
-        print(item_n.get_text())
+    name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
+    if (name):
+        item_name.append(name.text)
+        # print(name.get_text())
     else:
-        print("no name")
+        item_name.append("no name")
+        # print("no name")
 
     # Price
     price = soup.select_one("span.a-price > span.a-offscreen")
     if (price):
-        print(price.get_text())
+        items_sold.append(price.text)
+        # print(price.get_text())
     else:
-        print("no price found")
+        items_sold.append("out of stock")
+        # print("out of stock")
 
     # rating
     rating = soup.select_one("i > span.a-icon-alt")
     if (rating):
-        print(rating.get_text())
+        items_rating.append(rating.text)
+        # print(rating.get_text())
     else:
-        print("no rating found")
+        items_rating.append("no rating found")
+        # print("no rating found")
 
     #review
     review = soup.select_one("a.a-link-normal > span.a-size-base")
     if (review):
-        print(review.get_text())
+        items_review.append(review.text)
+        # print(review.get_text())
     else:
-        print("no review")
+        items_review.append("no review")
+        # print("no review")
         
     imgs = soup.select_one("img.s-image")
-    print(imgs['src'])
+    img_src.append(imgs['src'])
+    # print(imgs['src'])
 
-    print ("###########################")
+    # print ("###########################")
 
 # #################################################################################################
 
