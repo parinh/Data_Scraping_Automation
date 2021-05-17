@@ -99,7 +99,7 @@ elif (ss == 3):
         try:
             WebDriverWait(browser, delay)
             print ("Page is ready")
-            sleep(5)
+            # sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
            
             soup = BeautifulSoup(html, "html.parser")
