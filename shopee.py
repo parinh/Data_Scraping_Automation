@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 class Shopee:
     #get item
     def getItemDataForShopee(self,soup):
-        # soup2 = BeautifulSoup(soup, "soup.parser")
         a=[] 
         # Name
         for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
