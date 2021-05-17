@@ -5,6 +5,14 @@ class Amazon:
         a=[]
     # Get Name
         item_n = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
+        item_id = soup['data-asin']
+        if (item_id):
+            a.append(item_id)
+            # print(item_id)
+        else:
+            a.append('no data')
+            # print('no data')
+
         if (item_n):
             a.append(item_n.get_text())
             # print(item_n.get_text())
