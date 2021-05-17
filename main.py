@@ -6,18 +6,15 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from time import sleep
-from shopee import *
-from amazon import *
+# from shopee import *
+
 
 #set
 chrome_options = Options()
-s1 = Shopee() 
-a1 = Amazon()
-
 
 # input url site
 print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
-ss = int(input())
+ss = 2
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
 base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss_2"
@@ -34,108 +31,153 @@ chrome_options.add_experimental_option("prefs", {
     })
 
 #chrome driv ja
-browser = webdriver.Chrome(executable_path = r"C:/Users/Bell/Downloads/chromedriver_win32/chromedriver.exe",
+browser = webdriver.Chrome(executable_path = r"/Users/mcmxcix/chromedriver",
                           options = chrome_options)
 browser.get(base_url)
 delay = 5 
 
-item_all = []
 
-item_cost, item_rt, img_src = [],[],[]
+item_cost, items_rating, img_src = [],[],[]
 item_name, items_sold, discount_percent = [], [], []
+items_review = []
 
+c=[]
 
-# for shopee
-if(ss == 1):
-    
-    while True:
-        try:
-            WebDriverWait(browser, delay)
-            print ("Page is ready")
-            # sleep(5)
-            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            c = s1.getDataFromPostForShopee(html)
-            # s1.getDataFromPostForShopee(html)
-            print(len(c))
+#####################################################################################################################
 
-            for i in c:
-                for j in i:
-                    print(j)
-                print("##########")
-            # soup = BeautifulSoup(html, "html.parser")
+#get all item in shopee na
+def getDataFromPostForShopee(html):
+    print("get data form shopee")
+    soup = BeautifulSoup(html, "html.parser")
+    for item_n in soup.find_all('div',  class_= "col-xs-2-4 shopee-search-item-result__item"):
+        getItemDataForShopee(item_n)
+
+#get all item in amazon search
+def getDataFromPostForAmazonSearch(html):
+    print ("get data..")
+    soup = BeautifulSoup(html, "html.parser")
+    for item_n in soup.find_all('div',  class_='sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'):
+        getItemDataForAmazonSearch(item_n)
+
+    for i in range(len(item_name)):
+        print(item_name[i])
+        print(items_sold[i])
+        print(items_rating[i])
+        print(items_review[i])
+        print(img_src[i])
+        print("###################")
         
-            break # it will break from the loop once the specific element will be present. 
-        except TimeoutException:
-            print ("Loading took too much time!-Try again")
+        
 
+#sort data form all item na
+def getItemDataForShopee(soup):
 
+    # Get Name
+    for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
+        item_name.append(item_n.text)
+        print(item_n.get_text())
 
+    # Price
+    for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
+        item_cost.append(item_c.text)
+        print(item_c.get_text())
 
-# for amazon search
-elif (ss == 2):
-    while True:
-        try:
-            WebDriverWait(browser, delay)
-            print ("Page is ready")
-            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            # soup = BeautifulSoup(html, "html.parser")
-            c = a1.getDataFromPostForAmazonSearch(html)
-            print(len(c))
+    # find total number of items sold/month *********
+    for items_s in soup.find_all('div',class_ = 'go5yPW'):
+        items_sold.append(items_s.text)
+        print(items_s.get_text())
 
-            for i in c:
-                for j in i:
-                    print(j)
-                print("##########")
-                
-            break # it will break from the loop once the specific element will be present. 
-        except TimeoutException:
-            print ("Loading took too much time!-Try again")
+    #from
+    for items_f in soup.find_all('div',class_ = '_2CWevj'):
+        items_f.append(items_f.text)
+        print(items_f.get_text())        
 
+    # find img path
+    for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
+        print(imgs.select("img")[0]['src'])
 
+# #################################################################################################
 
-# for amazon officail store
-elif (ss == 3):
+#sort data form all item na
+def getItemDataForAmazonSearch(soup):
+
+    # Get Name
+    name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
+    if (name):
+        item_name.append(name.text)
+        # print(name.get_text())
+    else:
+        item_name.append("no name")
+        # print("no name")
+
+    # Price
+    price = soup.select_one("span.a-price > span.a-offscreen")
+    if (price):
+        items_sold.append(price.text)
+        # print(price.get_text())
+    else:
+        items_sold.append("out of stock")
+        # print("out of stock")
+
+    # rating
+    rating = soup.select_one("i > span.a-icon-alt")
+    if (rating):
+        items_rating.append(rating.text)
+        # print(rating.get_text())
+    else:
+        items_rating.append("no rating found")
+        # print("no rating found")
+
+    #review
+    review = soup.select_one("a.a-link-normal > span.a-size-base")
+    if (review):
+        items_review.append(review.text)
+        # print(review.get_text())
+    else:
+        items_review.append("no review")
+        # print("no review")
+        
+    imgs = soup.select_one("img.s-image")
+    img_src.append(imgs['src'])
+    # print(imgs['src'])
+
+    # print ("###########################")
+
+# #################################################################################################
+
+# shopee set
+if(ss == 1):
     while True:
         try:
             WebDriverWait(browser, delay)
             print ("Page is ready")
             sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-           
-            soup = BeautifulSoup(html, "html.parser")
 
-            # find_all() returns an array of elements. 
-            # We have to go through all of them and select that one you are need. And than call get_text()
-            for item_n in soup.find_all('a', class_='ProductGridItem__title__2C1kS'):
-                item_name.append(item_n.text)
-                print(item_n.get_text())
-
-            # find the price of items
-            for item_c in soup.find_all('span', class_='price style__xlarge__1mW1P ProductGridItem__buyPrice__6DIeT style__fixedSize__2cXU-'):
-                item_cost.append(item_c.text)
-                print(item_c.get_text())
-
-            # rating
-            for items_rt in soup.find_all('span',class_ = 'a-icon-alt'):
-                items_rt.append(items_rt.text)
-                print(items_rt.get_text())
-
-            # # find total number of items sold/month != amazon
-            # for items_s in soup.find_all('div',class_ = 'go5yPW"'):
-            #     items_sold.append(items_s.text)
-            #     print(items_s.get_text())
-
-            # find item discount percent
-            for dp in soup.find_all('span', class_ = 'price style__small__35Bk_ ProductGridItem__strikePrice__1TwIT style__strikethrough__1tKkI style__fixedSize__2cXU-'):
-                discount_percent.append(dp.text)
-                print("form -->"+(dp.get_text()))
-
-
-                
+            getDataFromPostForShopee(html)
+                        
             break # it will break from the loop once the specific element will be present. 
         except TimeoutException:
             print ("Loading took too much time!-Try again")
 
+
+
+# amazon search set
+elif (ss == 2):
+    while True:
+        try:
+            WebDriverWait(browser, delay)
+            print ("Page is ready")
+            sleep(5)
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            #print(html)
+            soup = BeautifulSoup(html, "html.parser")
+
+            getDataFromPostForAmazonSearch(html)
+                
+            break # it will break from the loop once the specific element will be present. 
+        except TimeoutException:
+            print ("Loading took too much time!-Try again")
 
 browser.close()
 
