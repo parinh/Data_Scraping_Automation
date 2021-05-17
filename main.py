@@ -10,49 +10,55 @@ from shopee import *
 
 
 #get all item in shopee na
-def getDataFromPostForShopee(html):
-    soup = BeautifulSoup(html, "html.parser")
-    for item_n in soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'):
-        getItemDataForShopee(item_n)
+# def getDataFromPostForShopee(html):
+#     soup = BeautifulSoup(html, "html.parser")
+#     b=[]
+#     for item in soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'):
+#         print(item.get_text())
+#         b.append(getItemDataForShopee(item))
+
+#     return b
 
 #sort data form all item na
-def getItemDataForShopee(soup):
-
-    # Get Name
-    for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
-        item_name.append(item_n.text)
-        print(item_n.get_text())
-
-    # Price
-    for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
-        item_cost.append(item_c.text)
-        print(item_c.get_text())
-
-    # find total number of items sold/month *********
-    for items_s in soup.find_all('div',class_ = 'go5yPW'):
-        items_sold.append(items_s.text)
-        print(items_s.get_text())
-
-    #from
-    for items_f in soup.find_all('div',class_ = '_2CWevj'):
-        items_f.append(items_f.text)
-        print(items_f.get_text())        
-
-    # find img path
-    for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
-        print(imgs.select("img")[0]['src'])
+# def getItemDataForShopee(soup):
+#     # Get Name
+#     a=[] 
+#         # Name
+#     for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
+#         a.append(item_n.get_text())
+        
+#     # Price
+#     for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
+#         a.append(item_c.get_text()) 
+        
+#     # find total number of items sold/month *********
+#     for items_s in soup.find_all('div',class_ = 'go5yPW'):
+#         a.append(items_s.get_text())
+        
+#     #from
+#     for items_f in soup.find_all('div',class_ = '_2CWevj'):
+#         a.append(items_f.get_text())
+        
+#     # img path
+#     for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
+#         a.append(imgs.select("img")[0]['src'])
+        
+    
+#     return a
 
 # #################################################################################################
 
 #set
 chrome_options = Options()
+s1 = Shopee() 
+
 
 # input url site
 print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
 ss = int(input())
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss"
+base_url = "https://shopee.co.th/mall/search?keyword=%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1&trackingId=searchhint-1621233488-717981be-b6da-11eb-9e3d-f41d6b4ae3e9"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -76,30 +82,31 @@ item_all = []
 item_cost, item_rt, img_src = [],[],[]
 item_name, items_sold, discount_percent = [], [], []
 
-c=[]
 
 # for shopee
 if(ss == 1):
+    
     while True:
         try:
             WebDriverWait(browser, delay)
             print ("Page is ready")
             sleep(5)
+            
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-
-            getDataFromPostForShopee(html)
-
-            # c = getDataFromPostForShopee(html)
-
-            # for i in c:
-            #     for j in i:
-            #         print(j)
-            #     print ("\n")
+            
+            c = s1.getDataFromPostForShopee(html)
+            # s1.getDataFromPostForShopee(html)
             
 
+            print(len(c))
 
+            for i in c:
+                for j in i:
+                    print(j)
+                print("##########")
+            
 
-            #print(html)11
+            #print(html)
             # soup = BeautifulSoup(html, "html.parser")
 
             # # # find_all() returns an array of elements. 
