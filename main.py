@@ -6,14 +6,17 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from time import sleep
+from shopee import *
 
-def getDataFromPost(html):
+
+#get all item in shopee na
+def getDataFromPostForShopee(html):
     soup = BeautifulSoup(html, "html.parser")
     for item_n in soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'):
-        getItemData(item_n)
+        getItemDataForShopee(item_n)
 
-
-def getItemData(soup):
+#sort data form all item na
+def getItemDataForShopee(soup):
 
     # Get Name
     for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
@@ -37,23 +40,19 @@ def getItemData(soup):
 
     # find img path
     for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
-        # soupInner = bs4.BeautifulSoup(imgs.get_text(), "html.parser")
         print(imgs.select("img")[0]['src'])
-        # for imageSrc in soupInner.find_all('img'):
-  
-    print("###################")
-    
-##############
 
+# #################################################################################################
+
+#set
 chrome_options = Options()
 
 # input url site
 print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
-# ss = int(input())
-ss = 1
+ss = int(input())
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://shopee.co.th/mall/search?keyword=%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1"
+base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -76,6 +75,8 @@ delay = 5
 item_cost, item_rt, img_src = [],[],[]
 item_name, items_sold, discount_percent = [], [], []
 
+c=[]
+
 # for shopee
 if(ss == 1):
     while True:
@@ -85,7 +86,17 @@ if(ss == 1):
             sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
 
-            getDataFromPost(html)
+            getDataFromPostForShopee(html)
+
+            # c = getDataFromPostForShopee(html)
+
+            # for i in c:
+            #     for j in i:
+            #         print(j)
+            #     print ("\n")
+            
+
+
 
             #print(html)11
             # soup = BeautifulSoup(html, "html.parser")
