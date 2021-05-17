@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import bs4
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -6,13 +7,53 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from time import sleep
 
+def getDataFromPost(html):
+    soup = BeautifulSoup(html, "html.parser")
+    for item_n in soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'):
+        getItemData(item_n)
+
+
+def getItemData(soup):
+
+    # Get Name
+    for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
+        item_name.append(item_n.text)
+        print(item_n.get_text())
+
+    # Price
+    for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
+        item_cost.append(item_c.text)
+        print(item_c.get_text())
+
+    # find total number of items sold/month *********
+    for items_s in soup.find_all('div',class_ = 'go5yPW'):
+        items_sold.append(items_s.text)
+        print(items_s.get_text())
+
+    #from
+    for items_f in soup.find_all('div',class_ = '_2CWevj'):
+        items_f.append(items_f.text)
+        print(items_f.get_text())        
+
+    # find img path
+    for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
+        # soupInner = bs4.BeautifulSoup(imgs.get_text(), "html.parser")
+        print(imgs.select("img")[0]['src'])
+        # for imageSrc in soupInner.find_all('img'):
+  
+    print("###################")
+    
+##############
+
 chrome_options = Options()
 
 # input url site
 print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
-ss = int(input())
+# ss = int(input())
+ss = 1
 print ("Enter the url for the selected site.. ->>")
-base_url = input()
+# base_url = input()
+base_url = "https://shopee.co.th/mall/search?keyword=%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -44,48 +85,45 @@ if(ss == 1):
             print ("Page is ready")
             sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            #print(html)
-            soup = BeautifulSoup(html, "html.parser")
 
-            # find_all() returns an array of elements. 
-            # We have to go through all of them and select that one you are need. And than call get_text()
-            # for item_n in soup.find_all('div', class_='_1YAByT'):
-            #     item_name.append(item_all.text)
-            #     print(item_n.get_text())
+            getDataFromPost(html)
 
-            for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
-                # if(soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'))
-                item_name.append(item_n.text)
-                print(item_n.get_text())
+            #print(html)11
+            # soup = BeautifulSoup(html, "html.parser")
 
-            # # find the price of items
-            for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
-                item_cost.append(item_c.text)
-                print(item_c.get_text())
+            # # # find_all() returns an array of elements. 
+            #  # We have to go through all of them and select that one you are need. And than call get_text()
+            # for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
+            #      item_name.append(item_n.text)
+            #      print(item_n.get_text())
 
-            # # find total number of items sold/month *********
-            for items_s in soup.find_all('div',class_ = 'go5yPW'):
-                items_sold.append(items_s.text)
-                print(items_s.get_text())
+            #  # find the price of items
+            # for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
+            #      item_cost.append(item_c.text)
+            #      print(item_c.get_text())
 
-            # # find item discount percent
-            for dp in soup.find_all('span', class_ = 'percent'):
-                discount_percent.append(dp.text)
-                print(dp.get_text())
+            #  # find total number of items sold/month *********
+            # for items_s in soup.find_all('div',class_ = 'go5yPW'):
+            #      items_sold.append(items_s.text)
+            #      print(items_s.get_text())
+                 
 
             # # find img path
-            # for img in soup.find_all('div', class_ = 'customized-overlay-image'):
-               
-            #     print(img)
-            #     img_src.append(img.src)
-            #     # print(img.get_text())
-            
-            # for pic in soup.find_all('div', class_ = 'customized-overlay-image'):
-                
-                
+            # for imgs in soup.find_all('div', class_ = 'customized-overlay-image'):
+            #     # soupInner = bs4.BeautifulSoup(imgs.get_text(), "html.parser")
+            #     print(imgs.select("img")[0]['src'])
+            #     # for imageSrc in soupInner.find_all('img'):
+                #      print(imageSrc['src'])
+
+                #  print(img.get_text())
+
+                        
             break # it will break from the loop once the specific element will be present. 
         except TimeoutException:
             print ("Loading took too much time!-Try again")
+
+
+
 
 # for amazon search
 elif (ss == 2):
@@ -141,6 +179,8 @@ elif (ss == 3):
             print ("Page is ready")
             sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            
+            
             #print(html)
             soup = BeautifulSoup(html, "html.parser")
 
@@ -178,4 +218,7 @@ elif (ss == 3):
 
 
 browser.close()
+
+
+
 
