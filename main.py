@@ -110,6 +110,13 @@ def getItemDataForAmazonSearch(soup):
         item_name.append("no name")
         # print("no name")
 
+    #item id
+    item_id = soup['data-asin']
+    if (item_id):
+        print(item_id)
+    else:
+        print('no data')
+    
     # Price
     price = soup.select_one("span.a-price > span.a-offscreen")
     if (price):
