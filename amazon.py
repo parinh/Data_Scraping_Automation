@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import csv
 
 class Amazon:
     def getItemDataForAmazonSearch(self,soup):
@@ -54,3 +55,16 @@ class Amazon:
             b.append(self.getItemDataForAmazonSearch(item_n))
         
         return b
+
+    def toCsv(self,arr):
+        csv_count = 0
+        with open('myfile.csv', 'w', newline='') as csvfile:
+            head_csv = ["num","id","name","price","rating","review","img_src"]
+            thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
+            thewriter.writeheader()
+
+            for i in range(len(arr)):
+                thewriter.writerow({"num": csv_count,"id": arr[i][0],"name": arr[i][1],"price": arr[i][2],"rating": arr[i][3],"review":arr[i][4],"img_src":arr[i][5]})
+                csv_count += 1
+
+                

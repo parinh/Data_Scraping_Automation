@@ -79,12 +79,13 @@ elif (ss == 2):
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             # soup = BeautifulSoup(html, "html.parser")
             c = a1.getDataFromPostForAmazonSearch(html)
-            print(len(c))
 
             for i in c:
                 for j in i:
                     print(j)
                 print("##########")
+
+            a1.toCsv(c)
                 
             break # it will break from the loop once the specific element will be present. 
         except TimeoutException:
