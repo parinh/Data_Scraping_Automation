@@ -6,7 +6,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from time import sleep
-# from shopee import *
+import csv
+
 
 
 #set
@@ -35,11 +36,9 @@ browser = webdriver.Chrome(executable_path = r"/Users/mcmxcix/chromedriver",
                           options = chrome_options)
 browser.get(base_url)
 delay = 5 
-
-
-item_cost, items_rating, img_src = [],[],[]
+items_rating, img_src ,items_cost = [],[],[]
 item_name, items_sold, discount_percent = [], [], []
-items_review = []
+items_review , item_id= [],[]
 
 c=[]
 
@@ -59,13 +58,28 @@ def getDataFromPostForAmazonSearch(html):
     for item_n in soup.find_all('div',  class_='sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'):
         getItemDataForAmazonSearch(item_n)
 
-    for i in range(len(item_name)):
-        print(item_name[i])
-        print(items_sold[i])
-        print(items_rating[i])
-        print(items_review[i])
-        print(img_src[i])
-        print("###################")
+
+    csv_count = 0
+    with open('myfile.csv', 'w', newline='') as csvfile:
+        head_csv = ["num","id","name","price","rating","review","img_src"]
+        thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
+        thewriter.writeheader()
+
+        for i in range(len(item_name)):
+            csv_count += 1
+            thewriter.writerow({"num": csv_count,"id": item_id[i],"name": item_name[i],"price": items_cost[i],"rating": items_rating[i],"review":items_review[i],"img_src":img_src})
+
+        
+    #     mywriter = csv.writer(file)
+    #     mywriter.writerow(head_csv)
+    #     mywriter.writecolumn(head_csv)
+    #     mywriter.writerow(item_id)
+    #     mywriter.writerow(item_name)
+    #     mywriter.writerow(items_cost)
+    #     mywriter.writerow(items_rating)
+    #     mywriter.writerow(items_review)
+    #     mywriter.writerow(img_src)
+
         
         
 
@@ -79,7 +93,7 @@ def getItemDataForShopee(soup):
 
     # Price
     for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
-        item_cost.append(item_c.text)
+        items_cost.append(item_c.text)
         print(item_c.get_text())
 
     # find total number of items sold/month *********
@@ -111,19 +125,19 @@ def getItemDataForAmazonSearch(soup):
         # print("no name")
 
     #item id
-    item_id = soup['data-asin']
-    if (item_id):
-        print(item_id)
+    item_code = soup['data-asin']
+    if (item_code):
+        item_id.append(item_code)
     else:
-        print('no data')
+        item_id.append("no data")
     
     # Price
     price = soup.select_one("span.a-price > span.a-offscreen")
     if (price):
-        items_sold.append(price.text)
+        items_cost.append(price.text)
         # print(price.get_text())
     else:
-        items_sold.append("out of stock")
+        items_cost.append("out of stock")
         # print("out of stock")
 
     # rating
