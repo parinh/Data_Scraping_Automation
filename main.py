@@ -23,7 +23,7 @@ print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-
 ss = int(input())
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://shopee.co.th/mall/search?keyword=%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1&trackingId=searchhint-1621303967-89d7aee9-b77e-11eb-9b29-f898ef6c82ca"
+base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss_2"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -76,15 +76,17 @@ elif (ss == 2):
     while True:
         try:
             WebDriverWait(browser, delay)
+            sleep(5)
             print ("Page is ready")
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             # soup = BeautifulSoup(html, "html.parser")
             c = a1.getDataFromPostForAmazonSearch(html)
+            print(len(c))
 
-            for i in c:
-                for j in i:
-                    print(j)
-                print("##########")
+            # for i in c:
+            #     for j in i:
+            #         print(j)
+            #     print("##########")
 
             a1.toCsv(c)
                 
