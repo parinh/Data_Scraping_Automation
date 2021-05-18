@@ -3,7 +3,9 @@ import bs4
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from time import sleep
 from shopee import *
@@ -21,7 +23,7 @@ print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-
 ss = int(input())
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss_2"
+base_url = "https://shopee.co.th/mall/search?keyword=%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1&trackingId=searchhint-1621303967-89d7aee9-b77e-11eb-9b29-f898ef6c82ca"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -52,17 +54,16 @@ if(ss == 1):
     while True:
         try:
             WebDriverWait(browser, delay)
-            print ("Page is ready")
-            # sleep(5)
+            sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             c = s1.getDataFromPostForShopee(html)
             # s1.getDataFromPostForShopee(html)
             print(len(c))
 
-            for i in c:
-                for j in i:
-                    print(j)
-                print("##########")
+            # for i in c:
+            #     for j in i:
+            #         print(j)
+            #     print("##########")
             # soup = BeautifulSoup(html, "html.parser")
         
             break # it will break from the loop once the specific element will be present. 
