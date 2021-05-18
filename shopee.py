@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup
 
-
-
 class Shopee:
     #get item
     def getItemDataForShopee(self,soup):
@@ -25,7 +23,6 @@ class Shopee:
         # img path
         for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
             a.append(imgs.select("img")[0]['src'])
-            # a.append(5)
         
         return a
     

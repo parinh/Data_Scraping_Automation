@@ -8,6 +8,7 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 from shopee import *
 from amazon import *
+import numpy
 
 #set
 chrome_options = Options()
@@ -67,8 +68,6 @@ if(ss == 1):
             break # it will break from the loop once the specific element will be present. 
         except TimeoutException:
             print ("Loading took too much time!-Try again")
-
-
 
 
 # for amazon search
