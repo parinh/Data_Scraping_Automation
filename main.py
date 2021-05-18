@@ -18,7 +18,7 @@ print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-
 ss = 2
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss_2"
+base_url = "https://www.amazon.com/s?k=chicken&rh=n%3A16310101&dc&qid=1621322563&rnid=2941120011&ref=sr_nr_n_1"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -38,7 +38,9 @@ browser.get(base_url)
 delay = 5 
 items_rating, img_src ,items_cost = [],[],[]
 item_name, items_sold, discount_percent = [], [], []
-items_review , item_id= [],[]
+items_review , item_id , items_form= [],[], []
+item_url = []
+products = []
 
 c=[]
 
@@ -49,36 +51,46 @@ def getDataFromPostForShopee(html):
     print("get data form shopee")
     soup = BeautifulSoup(html, "html.parser")
     for item_n in soup.find_all('div',  class_= "col-xs-2-4 shopee-search-item-result__item"):
-        getItemDataForShopee(item_n)
-
-#get all item in amazon search
-def getDataFromPostForAmazonSearch(html):
-    print ("get data..")
-    soup = BeautifulSoup(html, "html.parser")
-    for item_n in soup.find_all('div',  class_='sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'):
-        getItemDataForAmazonSearch(item_n)
-
+        if item_n.select_one('div.shopee-image-placeholder'):
+            continue
+        else:
+            getItemDataForShopee(item_n)
 
     csv_count = 0
     with open('myfile.csv', 'w', newline='') as csvfile:
-        head_csv = ["num","id","name","price","rating","review","img_src"]
+        head_csv = ["num","name","price","sold","form","img_src","url"]
+        # "img_src"
         thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
         thewriter.writeheader()
 
         for i in range(len(item_name)):
             csv_count += 1
-            thewriter.writerow({"num": csv_count,"id": item_id[i],"name": item_name[i],"price": items_cost[i],"rating": items_rating[i],"review":items_review[i],"img_src":img_src})
+            thewriter.writerow({"num": csv_count,"name": item_name[i],"price": items_cost[i],"sold": items_sold[i],"form": items_form[i],"img_src": img_src[i],"url" : item_url[i]})
+            # ,"img_src":img_src[i]
 
-        
-    #     mywriter = csv.writer(file)
-    #     mywriter.writerow(head_csv)
-    #     mywriter.writecolumn(head_csv)
-    #     mywriter.writerow(item_id)
-    #     mywriter.writerow(item_name)
-    #     mywriter.writerow(items_cost)
-    #     mywriter.writerow(items_rating)
-    #     mywriter.writerow(items_review)
-    #     mywriter.writerow(img_src)
+#get all item in amazon search
+def getDataFromPostForAmazonSearch(html):
+    print ("get data..")
+    soup = BeautifulSoup(html, "html.parser")
+
+    for item_n in soup.select('div[data-component-type=s-search-result]'):
+        data = getItemDataForAmazonSearch(item_n)
+        products.append(data)
+
+
+    csv_count = 0
+    with open('myfile.csv', 'w', newline='') as csvfile:
+        head_csv = ["num","id","name","price","rating","review","img_src","url"]
+        thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
+        thewriter.writeheader()
+
+        print(len(products))
+
+        for i in range(len(products)):
+            print(products[i])
+            csv_count += 1
+            # thewriter.writerow({"num": csv_count,"id": item_id[i],"name": item_name[i],"price": items_cost[i],"rating": items_rating[i],"review":items_review[i],"img_src":img_src[i],"url":item_url[i]})
+            thewriter.writerow({"num": csv_count,"id": products[i]['id'],"name": products[i]['name'],"price": products[i]['price'],"rating": products[i]['rating'],"review":products[i]['review'],"img_src":products[i]['image'],"url":products[i]['url']})
 
         
         
@@ -87,38 +99,77 @@ def getDataFromPostForAmazonSearch(html):
 def getItemDataForShopee(soup):
 
     # Get Name
-    for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
-        item_name.append(item_n.text)
-        print(item_n.get_text())
+    name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
+    if (name):
+        item_name.append(name.text)
+        print(name.get_text())
+    else:
+        item_name.append("no name")
+        print("no name")
+    # for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
+    #     item_name.append(item_n.text)
+    #     print(item_n.get_text())
 
     # Price
-    for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
-        items_cost.append(item_c.text)
-        print(item_c.get_text())
+    price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
+    if (price):
+        items_cost.append(price.text)
+        print(price.get_text())
+    else:
+        items_cost.append("out of stock")
+        print("out of stock")
+    # for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
+    #     items_cost.append(item_c.text)
+    #     print(item_c.get_text())
 
-    # find total number of items sold/month *********
-    for items_s in soup.find_all('div',class_ = 'go5yPW'):
-        items_sold.append(items_s.text)
-        print(items_s.get_text())
+    # find total number of items sold/month
+    sold = soup.select_one("div.go5yPW")
+    if (sold):
+        items_sold.append(sold.text)
+        print(sold.get_text())
+    else:
+        items_sold.append("no item sold")
+        print("no item sold")
 
     #from
-    for items_f in soup.find_all('div',class_ = '_2CWevj'):
-        items_f.append(items_f.text)
-        print(items_f.get_text())        
+    form = soup.select_one("div._2CWevj")
+    if (form):
+        items_form.append(form.text)
+        print(form.get_text())
+    else:
+        items_form.append("no data")
+        print("no data")    
 
     # find img path
-    for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
-        print(imgs.select("img")[0]['src'])
+    imgs = soup.select_one("div._25_r8I._2SHkSu > img")
+    img_src.append(imgs['src'])
+    print (imgs['src'])
+
+    url = soup.select_one("a")
+    item_url.append("https://shopee.co.th/"+url['href'])   
+    print(url['href'])
+    
+    # for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
+    #     print(imgs.select("img")[0]['src'])
 
 # #################################################################################################
 
 #sort data form all item na
 def getItemDataForAmazonSearch(soup):
 
+    _name = 'no name'
+    _id = 'no id'
+    _price = 'out of stock'
+    _rating = 'no rating'
+    _review = 'no review'
+    _image = 'no image'
+    _url = 'no url'
+
     # Get Name
     name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
     if (name):
         item_name.append(name.text)
+        _name = name.text
         # print(name.get_text())
     else:
         item_name.append("no name")
@@ -128,6 +179,7 @@ def getItemDataForAmazonSearch(soup):
     item_code = soup['data-asin']
     if (item_code):
         item_id.append(item_code)
+        _id = item_code
     else:
         item_id.append("no data")
     
@@ -135,6 +187,7 @@ def getItemDataForAmazonSearch(soup):
     price = soup.select_one("span.a-price > span.a-offscreen")
     if (price):
         items_cost.append(price.text)
+        _price = price.text
         # print(price.get_text())
     else:
         items_cost.append("out of stock")
@@ -144,6 +197,7 @@ def getItemDataForAmazonSearch(soup):
     rating = soup.select_one("i > span.a-icon-alt")
     if (rating):
         items_rating.append(rating.text)
+        _rating = rating.text
         # print(rating.get_text())
     else:
         items_rating.append("no rating found")
@@ -153,14 +207,36 @@ def getItemDataForAmazonSearch(soup):
     review = soup.select_one("a.a-link-normal > span.a-size-base")
     if (review):
         items_review.append(review.text)
+        _review = review.text
         # print(review.get_text())
     else:
         items_review.append("no review")
         # print("no review")
         
     imgs = soup.select_one("img.s-image")
-    img_src.append(imgs['src'])
+    if (imgs):
+        img_src.append(imgs['src'])
+        _image = imgs['src']
     # print(imgs['src'])
+
+    #post url
+    post_url = soup.select_one("span.rush-component > a.a-link-normal.s-no-outline")
+
+    if(post_url):
+        item_url.append("https://www.amazon.com/"+post_url['href'])
+        _url = "https://www.amazon.com/"+post_url['href']
+    print(post_url['href'])
+
+    return {
+         "name": _name,
+        "id": _id,
+        "price": _price, 
+        "rating": _rating, 
+        "review": _review,
+        "image": _image,
+        "url": _url 
+    }
+    
 
     # print ("###########################")
 
