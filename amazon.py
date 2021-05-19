@@ -12,6 +12,7 @@ class Amazon:
         _review = 'no review'
         _image = 'no image'
         _url = 'no url'
+        _bestseller = 'not be a best'
    
         #item id
         item_code = soup['data-asin']
@@ -42,6 +43,12 @@ class Amazon:
         if (review):
             _review = review.text
         product.append(_review)
+
+        #best?
+        bestseller = soup.select_one("div.a-row.a-badge-region > span.a-badge > span.a-badge-label > span.a-badge-label-inner.a-text-ellipsis > span.a-badge-text ")
+        if(bestseller):
+            _bestseller = bestseller.text
+        product.append(_bestseller)
             
         imgs = soup.select_one("img.s-image")
         if (imgs):  
@@ -69,13 +76,13 @@ class Amazon:
     def toCsv(self,products):
         csv_count = 0
         with open('amazon-search.csv', 'w', newline='') as csvfile:
-            head_csv = ["num","id","name","price","rating","review","img_src","url"]
+            head_csv = ["num","id","name","price","rating","review","rank","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
             for i in range(len(products)):
                 csv_count += 1
-                thewriter.writerow({"num": csv_count,"id": products[i][0],"name": products[i][1],"price": products[i][2],"rating": products[i][3],"review":products[i][4],"img_src":products[i][5],"url":products[i][6]})
+                thewriter.writerow({"num": csv_count,"id": products[i][0],"name": products[i][1],"price": products[i][2],"rating": products[i][3],"review":products[i][4],"rank":products[i][5],"img_src":products[i][6],"url":products[i][7]})
                 
 
                 
