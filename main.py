@@ -61,8 +61,8 @@ c=[]
 #get all item in shopee na
 def getDataFromPostForShopee(html):
     print("get data form shopee")
-    
     soup = BeautifulSoup(html, "html.parser")
+    #bigloop
     for item_n in soup.select('div[data-sqe=item]'):
         if item_n.select_one('div.shopee-image-placeholder'):
             continue
@@ -74,24 +74,10 @@ def getDataFromPostForShopee(html):
 def getDataFromPostForAmazonSearch(html):
     print ("get data..")
     soup = BeautifulSoup(html, "html.parser")
+    #big loop
     for item_n in soup.select('div[data-component-type=s-search-result]'):
-    # print( soup.select('li.zg-item-immersion'))
-    # for item_n in soup.select('div.zg-item-immersion'):
         data = getItemDataForAmazonSearch(item_n)
         products.append(data)
-
-
-    csv_count = 0
-    with open('myfile.csv', 'w', newline='') as csvfile:
-        head_csv = ["num","id","name","price","rating","review","img_src","url","rank"]
-        thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
-        thewriter.writeheader()
-
-        for i in range(len(products)):
-            csv_count += 1
-            # thewriter.writerow({"num": csv_count,"id": item_id[i],"name": item_name[i],"price": items_cost[i],"rating": items_rating[i],"review":items_review[i],"img_src":img_src[i],"url":item_url[i]})
-            thewriter.writerow({"num": csv_count,"id": products[i]['id'],"name": products[i]['name'],"price": products[i]['price'],"rating": products[i]['rating'],"review":products[i]['review'],"img_src":products[i]['image'],"url":products[i]['url'],"rank":products[i]['bestseller']})
-
         
         
 
@@ -150,7 +136,7 @@ def getItemDataForShopee(soup):
     sold = soup.select_one("div.go5yPW")
     if (sold.text):
         items_sold.append(sold.text)
-        _sold = sold.text
+        _sold = int((sold.text).split(" ")[1])
         print(sold.get_text())
     else:
         _sold = "no sold"
@@ -241,7 +227,7 @@ def getItemDataForAmazonSearch(soup):
     rating = soup.select_one("i > span.a-icon-alt")
     if (rating):
         items_rating.append(rating.text)
-        _rating = rating.text
+        _rating = float((rating.text).split(" ")[0])
         # print(rating.get_text())
     else:
         items_rating.append("no rating found")
@@ -284,7 +270,7 @@ def getItemDataForAmazonSearch(soup):
         "price": _price, 
         "rating": _rating, 
         "review": _review,
-        "image": _image,
+        "img_src": _image,
         "url": _url,
         "bestseller" : _bestseller
     }
@@ -300,7 +286,7 @@ if(ss == 1):
     page=0
     csv.setHeader(header_field)
 
-    while page<=page_count:
+    while page<page_count:
         try:
             browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
@@ -327,13 +313,16 @@ if(ss == 1):
         except TimeoutException:
             print ("Loading took too much time!-Try again")
 
-    csv.addData(products)
+    csv.addDataForShopee(products)
 
 
 
 # amazon search set
 elif (ss == 2):
+    header_field = ["num","id","name","price","rating","review","img_src","url","rank"]
     page=1
+    csv.setHeader(header_field)
+
     while page<=page_count:
         try:
             browser.get(base_url + "&page=" +str(page))
@@ -354,14 +343,13 @@ elif (ss == 2):
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
             sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            soup = BeautifulSoup(html, "html.parser")
 
             getDataFromPostForAmazonSearch(html)
             page+=1
-                
-            break # it will break from the loop once the specific element will be present. 
+                # it will break from the loop once the specific element will be present. 
         except TimeoutException:
             print ("Loading took too much time!-Try again")
+    csv.addDataForAmazon(products)
 
 browser.close()
 

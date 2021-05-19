@@ -19,7 +19,7 @@ class Tocsv:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
             thewriter.writeheader()
 
-    def addData (self,products):
+    def addDataForShopee (self,products):
         with open(self.file_name, mode='a', newline='') as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
 
@@ -39,5 +39,26 @@ class Tocsv:
                 self.num +=1
         # self.thewriter.writerows({"num": self.count,"name": products[i]['name'],"price": products[i]['price'],"type": products[i]['type'],"sold": products[i]['sold'],"from": products[i]['from'],"img_src": products[i]['image'],"url" : products[i]['url']})
     
+
+    def addDataForAmazon (self,products):
+        with open(self.file_name, mode='a', newline='') as csvfile:
+            thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
+
+            for i in range(len(products)):
+                
+                thewriter.writerow(
+                    {
+                        "num": self.num,
+                        "name" : products[i]['name'],
+                        "id" : products[i]['id'],
+                        "price": products[i]['price'],
+                        "rating" :products[i]['rating'],
+                        "review":products[i]['review'],
+                        "img_src" :products[i]['img_src'],
+                        "url" : products[i]['url'],
+                        "rank" : products[i]['bestseller']
+                    })
+                self.num +=1
+
     def addNum (self):
         self.num += 1
