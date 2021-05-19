@@ -7,9 +7,9 @@ class Shopee:
         a=[]
         
         #id
-        # s = soup.select_one("a")
-        # item_id = s['href'].split(".")[len(s['href'].split("."))-2]
-        # print(item_id)
+        s = soup.select_one("a")
+        item_id = s['href'].split(".")[len(s['href'].split("."))-2]
+        print(item_id)
         # item_id = s['href'].split(".")[len(s['href'].split("."))-1]
         # print(item_id)
         # print("\n")

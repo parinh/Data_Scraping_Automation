@@ -64,7 +64,8 @@ class Amazon:
             thewriter.writeheader()
 
             for i in range(len(arr)):
-                thewriter.writerow({"num": csv_count,"id": arr[i][0],"name": arr[i][1],"price": arr[i][2],"rating": arr[i][3],"review":arr[i][4],"img_src":arr[i][5]})
                 csv_count += 1
+                thewriter.writerow({"num": csv_count,"id": arr[i][0],"name": arr[i][1],"price": arr[i][2],"rating": arr[i][3],"review":arr[i][4],"img_src":arr[i][5]})
+                
 
                 

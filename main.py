@@ -23,7 +23,7 @@ print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-
 ss = int(input())
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://www.amazon.com/s?k=garlic&ref=nb_sb_noss_2"
+base_url = "https://www.amazon.com/s?k=chicken&ref=nb_sb_noss_2"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
