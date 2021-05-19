@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from time import sleep
-import csv
+from tocsv import Tocsv
 
 
 
@@ -19,9 +19,19 @@ chrome_options = Options()
 print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
 ss = int(input())
 
+#page count
+print ("enter number of pages")
+page_count = int(input())
+
 print ("Enter the url for the selected site.. ->>")
-# base_url = input()
-base_url = input()
+# page = 1
+# base_url = input() + "&page=" +str(page)
+base_url = input() 
+# print (base_url)
+
+count=0
+
+
 #close all popup 
 chrome_options.add_argument('disable-notifications')
 chrome_options.add_argument('--disable-infobars')
@@ -36,13 +46,13 @@ chrome_options.add_experimental_option("prefs", {
 #chrome driv ja
 browser = webdriver.Chrome(executable_path = r"/Users/mcmxcix/chromedriver",
                           options = chrome_options)
-browser.get(base_url)
 delay = 5 
 items_rating, img_src ,items_cost = [],[],[]
 item_name, items_sold, discount_percent = [], [], []
 items_review , item_id , items_form= [],[], []
 item_url = []
 products = []
+csv = Tocsv("myfile.csv")
 
 c=[]
 
@@ -51,6 +61,7 @@ c=[]
 #get all item in shopee na
 def getDataFromPostForShopee(html):
     print("get data form shopee")
+    
     soup = BeautifulSoup(html, "html.parser")
     for item_n in soup.select('div[data-sqe=item]'):
         if item_n.select_one('div.shopee-image-placeholder'):
@@ -58,20 +69,6 @@ def getDataFromPostForShopee(html):
         else:
             data = getItemDataForShopee(item_n)
             products.append(data)
-
-
-    csv_count = 0
-    with open('myfile.csv', 'w', newline='') as csvfile:
-        head_csv = ["num","name","price","type","sold","from","img_src","url"]
-        # "img_src"
-        thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
-        thewriter.writeheader()
-
-        print(len(products))
-        for i in range(len(products)):
-            csv_count += 1
-            thewriter.writerow({"num": csv_count,"name": products[i]['name'],"price": products[i]['price'],"type": products[i]['type'],"sold": products[i]['sold'],"from": products[i]['from'],"img_src": products[i]['image'],"url" : products[i]['url']})
-            # ,"img_src":img_src[i]
 
 #get all item in amazon search
 def getDataFromPostForAmazonSearch(html):
@@ -187,12 +184,12 @@ def getItemDataForShopee(soup):
 
     return {
         "name" : _name,
-    "price" : _price,
-    "sold": _sold,
-    "from" :_from,
-    "image":_image,
-    "url" :_url,
-    "type" : _type
+        "price" : _price,
+        "sold": _sold,
+        "from" :_from,
+        "img_src":_image,
+        "url" :_url,
+        "type" : _type
     }
     
     # for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
@@ -299,8 +296,13 @@ def getItemDataForAmazonSearch(soup):
 
 # shopee set
 if(ss == 1):
-    while True:
+    header_field = ["num","name","price","type","sold","from","img_src","url"]
+    page=0
+    csv.setHeader(header_field)
+
+    while page<=page_count:
         try:
+            browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
             print ("Page is ready")
             sleep(5)
@@ -319,24 +321,43 @@ if(ss == 1):
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
 
             getDataFromPostForShopee(html)
+            page+=1
                         
-            break # it will break from the loop once the specific element will be present. 
+             # it will break from the loop once the specific element will be present. 
         except TimeoutException:
             print ("Loading took too much time!-Try again")
+
+    csv.addData(products)
 
 
 
 # amazon search set
 elif (ss == 2):
-    while True:
+    page=1
+    while page<=page_count:
         try:
+            browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
             print ("Page is ready")
+            
+            sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
             sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             soup = BeautifulSoup(html, "html.parser")
 
             getDataFromPostForAmazonSearch(html)
+            page+=1
                 
             break # it will break from the loop once the specific element will be present. 
         except TimeoutException:
