@@ -10,7 +10,7 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 from shopee import *
 from amazon import *
-import numpy
+from tocsv import Tocsv
 
 #set
 chrome_options = Options()
@@ -21,9 +21,17 @@ amazon = Amazon()
 # input url site
 print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
 ss = int(input())
+
+print ("enter number of pages")
+page_count = int(input())
+
 print ("Enter the url for the selected site.. ->>")
+# page = 1
+# base_url = input() + "&page=" +str(page)
+base_url = input() 
+
 # base_url = input()
-base_url = "https://www.amazon.com/s?k=chicken&ref=nb_sb_noss_2"
+# base_url = "https://www.amazon.com/s?k=chicken&ref=nb_sb_noss_2"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -50,9 +58,10 @@ item_name, items_sold, discount_percent = [], [], []
 
 # for shopee
 if(ss == 1):
-    
-    while True:
+    page = 0
+    while page<=page_count:
         try:
+            browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
             sleep(5)
             browser.execute_script("window.scrollTo(0, 0);")
@@ -77,8 +86,8 @@ if(ss == 1):
             #         print(data)
             #     print("##########")
             shopee.toCsv(products)
-        
-            break # it will break from the loop once the specific element will be present. 
+            page+=1
+         
         except TimeoutException:
             print ("Loading took too much time!-Try again")
 
