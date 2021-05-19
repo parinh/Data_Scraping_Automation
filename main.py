@@ -14,8 +14,8 @@ import numpy
 
 #set
 chrome_options = Options()
-s1 = Shopee() 
-a1 = Amazon()
+shopee = Shopee() 
+amazon = Amazon()
 
 
 # input url site
@@ -23,7 +23,7 @@ print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-
 ss = int(input())
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://www.amazon.com/s?k=chicken&ref=nb_sb_noss_2"
+base_url = "https://shopee.co.th/search?facet=9205&keyword=%E0%B9%84%E0%B8%81%E0%B9%88&noCorrection=true&page=0"
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -55,16 +55,28 @@ if(ss == 1):
         try:
             WebDriverWait(browser, delay)
             sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
+            sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            c = s1.getDataFromPostForShopee(html)
-            # s1.getDataFromPostForShopee(html)
-            print(len(c))
+            products = shopee.getData(html)
+    
+            print(len(products))
 
-            # for i in c:
-            #     for j in i:
-            #         print(j)
+            # for product in products:
+            #     for data in product:
+            #         print(data)
             #     print("##########")
-            # soup = BeautifulSoup(html, "html.parser")
+            shopee.toCsv(products)
         
             break # it will break from the loop once the specific element will be present. 
         except TimeoutException:
@@ -77,18 +89,30 @@ elif (ss == 2):
         try:
             WebDriverWait(browser, delay)
             sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
+            sleep(5)
             print ("Page is ready")
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             # soup = BeautifulSoup(html, "html.parser")
-            c = a1.getDataFromPostForAmazonSearch(html)
-            print(len(c))
+            products = amazon.getData(html)
+            print(len(products))
 
-            # for i in c:
-            #     for j in i:
-            #         print(j)
+            # for product in products:
+            #     for data in product:
+            #         print(data)
             #     print("##########")
 
-            a1.toCsv(c)
+            amazon.toCsv(products)
                 
             break # it will break from the loop once the specific element will be present. 
         except TimeoutException:

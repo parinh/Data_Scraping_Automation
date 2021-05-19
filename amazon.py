@@ -2,70 +2,80 @@ from bs4 import BeautifulSoup
 import csv
 
 class Amazon:
-    def getItemDataForAmazonSearch(self,soup):
-        a=[]
-        item_n = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
-        item_id = soup['data-asin']
-        
-        # ID
-        if (item_id):
-            a.append(item_id)    
-        else:
-            a.append('no data')
-           
-        # Name
-        if (item_n):
-            a.append(item_n.get_text())
-        else:
-            a.append("no name")
+    
+    def getItem(self,soup):
+        product = []
+        _name = 'no name'
+        _id = 'no id'
+        _price = 'out of stock'
+        _rating = 'no rating'
+        _review = 'no review'
+        _image = 'no image'
+        _url = 'no url'
+   
+        #item id
+        item_code = soup['data-asin']
+        if (item_code):  
+            _id = item_code
+        product.append(_id)
 
+        # Get Name
+        name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
+        if (name):
+            _name = name.text
+        product.append(_name)
+        
         # Price
         price = soup.select_one("span.a-price > span.a-offscreen")
         if (price):
-            a.append(price.get_text())
-        else:
-            a.append("no price found")
-        
+            _price = price.text
+        product.append(_price)
+
         # rating
         rating = soup.select_one("i > span.a-icon-alt")
         if (rating):
-            a.append(rating.get_text())
-        else:
-            a.append("no rating found")
-
+            _rating = rating.text
+        product.append(_rating)
+        
         #review
         review = soup.select_one("a.a-link-normal > span.a-size-base")
         if (review):
-            a.append(review.get_text())
-        else:
-            a.append("no review")
-        
-        #img    
+            _review = review.text
+        product.append(_review)
+            
         imgs = soup.select_one("img.s-image")
-        a.append(imgs['src'])
+        if (imgs):  
+            _image = imgs['src']
+        product.append(_image)
 
-        return a
-    
-    def getDataFromPostForAmazonSearch(self,html):
-        b=[]
+        #post url
+        post_url = soup.select_one("span.rush-component > a.a-link-normal.s-no-outline")
+        if(post_url):
+            _url = "https://www.amazon.com/"+post_url['href']
+        product.append(_url)
+
+        return product
+        
+    def getData(self,html):
+        products=[]
         print ("get data..")
         soup = BeautifulSoup(html, "html.parser")
         
-        for item_n in soup.find_all('div',  class_='sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'):
-            b.append(self.getItemDataForAmazonSearch(item_n))
+        for item in soup.find_all('div',  class_='sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'):
+            products.append(self.getItem(item))
         
-        return b
+        return products
 
-    def toCsv(self,arr):
+    def toCsv(self,products):
         csv_count = 0
-        with open('myfile.csv', 'w', newline='') as csvfile:
-            head_csv = ["num","id","name","price","rating","review","img_src"]
+        with open('amazon-search.csv', 'w', newline='') as csvfile:
+            head_csv = ["num","id","name","price","rating","review","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
-            for i in range(len(arr)):
+            for i in range(len(products)):
                 csv_count += 1
-                thewriter.writerow({"num": csv_count,"id": arr[i][0],"name": arr[i][1],"price": arr[i][2],"rating": arr[i][3],"review":arr[i][4],"img_src":arr[i][5]})
+                thewriter.writerow({"num": csv_count,"id": products[i][0],"name": products[i][1],"price": products[i][2],"rating": products[i][3],"review":products[i][4],"img_src":products[i][5],"url":products[i][6]})
                 
 
                 

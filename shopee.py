@@ -1,67 +1,100 @@
+from os import name
 from bs4 import BeautifulSoup
 import csv
 
+from numpy import product
+
 class Shopee:
     #get item
-    def getItemDataForShopee(self,soup):
-        a=[]
-        
-        #id
-        s = soup.select_one("a")
-        item_id = s['href'].split(".")[len(s['href'].split("."))-2]
-        print(item_id)
-        # item_id = s['href'].split(".")[len(s['href'].split("."))-1]
-        # print(item_id)
-        # print("\n")
+    def getItem(self,soup):
+        product=[]
+        _name = 'no name'
+        _price = 'no price'
+        _sold = 'no sold'
+        _from = 'no from'
+        _image = 'no image'
+        _url = 'no url'
+        _type = 'general'
+
+        # Name 1
+        name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
+        if (name):
+            _name = name.text
+        product.append(_name)
        
-        # a.append(item_id)
-        
-        # Name
-        for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
-            a.append(item_n.get_text())
-           
-        # Price
-        for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
-            a.append(item_c.get_text()) 
+        # Price 2
+        price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
+        if (price):
+            _price = price.text
+        product.append(_price)
+
+        #type 3
+        __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
+        if(__type):
+            _type = __type.text
             
-        # find total number of items sold/month *********
-        for items_s in soup.find_all('div',class_ = 'go5yPW'):
-            a.append(items_s.get_text())
+
+        __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
+        # print(__type)
+        if(__type):
+            # product
+            _type = "shopee mall"
+        # else:
+        #     print("general")
+        product.append(_type)
+
+        # sold/month 4
+        sold = soup.select_one("div.go5yPW")
+        if (sold.text):
+            _sold = sold.text
+        product.append(_sold) 
            
-        #from
-        for items_f in soup.find_all('div',class_ = '_2CWevj'):
-            a.append(items_f.get_text())
-           
-        # img path
-        for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
-            a.append(imgs.select("img")[0]['src'])
+        #from 5
+        __from = soup.select_one("div._2CWevj")
+        if (__from):
+            _from = __from.text
+        product.append(_from)
+
+        # find img path 6
+        imgs = soup.select_one("div._25_r8I._2SHkSu > img")
+        try:
+            _image = imgs['src']
+            product.append(_image)
+         
+        except:
+            product.append(_image)
         
-        return a
-    
+       #url 7
+        url = soup.select_one("a")
+        _url = "https://shopee.co.th/"+url['href']
+        product.append(_url)
+            
+        return product
+
+
     #add data in array
-    def getDataFromPostForShopee(self,html):
+    def getData(self,html):
         soup = BeautifulSoup(html, "html.parser")
-        b=[]
-        # print(soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'))
+        products=[]
         for item in soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'):
-            # print(item.get_text())
             if(item.select_one('div.shopee-image-placeholder')):
                 continue  
             else:  
-                b.append(self.getItemDataForShopee(item))
+                products.append(self.getItem(item))
 
-        return b
+        return products
     
-    def toCsv(arr):
+    def toCsv(self,products):
         csv_count = 0
-        with open('myfile.csv', 'w', newline='') as csvfile:
-            head_csv = ["num","id","name","price","rating","review","img_src"]
+        with open('shopee-search.csv', 'w', encoding="utf-8",newline='') as csvfile:
+            head_csv = ["num","name","price","type","sold","from","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
-            for i in range(len(arr)):
-                thewriter.writerow({"num": csv_count,"id": arr[i][0],"name": arr[i][1],"price": arr[i][2],"rating": arr[i][3],"review":arr[i][4],"img_src":arr[i][5]})
+            for i in range(len(products)):
                 csv_count += 1
+                thewriter.writerow({"num": csv_count,"name": products[i][0],"price": products[i][1],"type": products[i][2],"sold":products[i][3],"from":products[i][4],"img_src":products[i][5],"url":products[i][6]})
+                
 # 
 
 
