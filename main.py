@@ -22,7 +22,7 @@ ss = int(input())
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
 base_url = input()
-#close all popup
+#close all popup 
 chrome_options.add_argument('disable-notifications')
 chrome_options.add_argument('--disable-infobars')
 chrome_options.add_argument('start-maximized')
@@ -86,17 +86,14 @@ def getDataFromPostForAmazonSearch(html):
 
     csv_count = 0
     with open('myfile.csv', 'w', newline='') as csvfile:
-        head_csv = ["num","id","name","price","rating","review","img_src","url"]
+        head_csv = ["num","id","name","price","rating","review","img_src","url","rank"]
         thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
         thewriter.writeheader()
 
-        print(len(products))
-
         for i in range(len(products)):
-            print(products[i])
             csv_count += 1
             # thewriter.writerow({"num": csv_count,"id": item_id[i],"name": item_name[i],"price": items_cost[i],"rating": items_rating[i],"review":items_review[i],"img_src":img_src[i],"url":item_url[i]})
-            thewriter.writerow({"num": csv_count,"id": products[i]['id'],"name": products[i]['name'],"price": products[i]['price'],"rating": products[i]['rating'],"review":products[i]['review'],"img_src":products[i]['image'],"url":products[i]['url']})
+            thewriter.writerow({"num": csv_count,"id": products[i]['id'],"name": products[i]['name'],"price": products[i]['price'],"rating": products[i]['rating'],"review":products[i]['review'],"img_src":products[i]['image'],"url":products[i]['url'],"rank":products[i]['bestseller']})
 
         
         
@@ -213,6 +210,7 @@ def getItemDataForAmazonSearch(soup):
     _review = 'no review'
     _image = 'no image'
     _url = 'no url'
+    _bestseller = 'not be a best'
 
     # Get Name
     name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
@@ -268,13 +266,20 @@ def getItemDataForAmazonSearch(soup):
         _image = imgs['src']
     # print(imgs['src'])
 
+    #best?
+    bestseller = soup.select_one("div.a-row.a-badge-region > span.a-badge > span.a-badge-label > span.a-badge-label-inner.a-text-ellipsis > span.a-badge-text ")
+    print(bestseller)
+    if(bestseller):
+        _bestseller = bestseller.text
+    else:
+        print("no bestseller")
+
     #post url
     post_url = soup.select_one("span.rush-component > a.a-link-normal.s-no-outline")
 
     if(post_url):
         item_url.append("https://www.amazon.com/"+post_url['href'])
         _url = "https://www.amazon.com/"+post_url['href']
-    print(post_url['href'])
 
     return {
          "name": _name,
@@ -283,7 +288,8 @@ def getItemDataForAmazonSearch(soup):
         "rating": _rating, 
         "review": _review,
         "image": _image,
-        "url": _url 
+        "url": _url,
+        "bestseller" : _bestseller
     }
     
 
