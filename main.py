@@ -1,3 +1,5 @@
+from os import name
+import re
 from bs4 import BeautifulSoup
 import bs4
 import requests
@@ -15,11 +17,11 @@ chrome_options = Options()
 
 # input url site
 print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
-ss = 2
+ss = int(input())
+
 print ("Enter the url for the selected site.. ->>")
 # base_url = input()
-base_url = "https://www.amazon.com/s?k=chicken&rh=n%3A16310101&dc&qid=1621322563&rnid=2941120011&ref=sr_nr_n_1"
-
+base_url = input()
 #close all popup
 chrome_options.add_argument('disable-notifications')
 chrome_options.add_argument('--disable-infobars')
@@ -50,30 +52,34 @@ c=[]
 def getDataFromPostForShopee(html):
     print("get data form shopee")
     soup = BeautifulSoup(html, "html.parser")
-    for item_n in soup.find_all('div',  class_= "col-xs-2-4 shopee-search-item-result__item"):
+    for item_n in soup.select('div[data-sqe=item]'):
         if item_n.select_one('div.shopee-image-placeholder'):
             continue
         else:
-            getItemDataForShopee(item_n)
+            data = getItemDataForShopee(item_n)
+            products.append(data)
+
 
     csv_count = 0
     with open('myfile.csv', 'w', newline='') as csvfile:
-        head_csv = ["num","name","price","sold","form","img_src","url"]
+        head_csv = ["num","name","price","type","sold","from","img_src","url"]
         # "img_src"
         thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
         thewriter.writeheader()
 
-        for i in range(len(item_name)):
+        print(len(products))
+        for i in range(len(products)):
             csv_count += 1
-            thewriter.writerow({"num": csv_count,"name": item_name[i],"price": items_cost[i],"sold": items_sold[i],"form": items_form[i],"img_src": img_src[i],"url" : item_url[i]})
+            thewriter.writerow({"num": csv_count,"name": products[i]['name'],"price": products[i]['price'],"type": products[i]['type'],"sold": products[i]['sold'],"from": products[i]['from'],"img_src": products[i]['image'],"url" : products[i]['url']})
             # ,"img_src":img_src[i]
 
 #get all item in amazon search
 def getDataFromPostForAmazonSearch(html):
     print ("get data..")
     soup = BeautifulSoup(html, "html.parser")
-
     for item_n in soup.select('div[data-component-type=s-search-result]'):
+    # print( soup.select('li.zg-item-immersion'))
+    # for item_n in soup.select('div.zg-item-immersion'):
         data = getItemDataForAmazonSearch(item_n)
         products.append(data)
 
@@ -98,10 +104,19 @@ def getDataFromPostForAmazonSearch(html):
 #sort data form all item na
 def getItemDataForShopee(soup):
 
+    _name = 'no name'
+    _price = 'no price'
+    _sold = 'no sold'
+    _from = 'no from'
+    _image = 'no image'
+    _url = 'no url'
+    _type = 'general'
+
     # Get Name
     name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
     if (name):
         item_name.append(name.text)
+        _name = name.text
         print(name.get_text())
     else:
         item_name.append("no name")
@@ -114,40 +129,74 @@ def getItemDataForShopee(soup):
     price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
     if (price):
         items_cost.append(price.text)
+        _price = price.text
         print(price.get_text())
     else:
-        items_cost.append("out of stock")
-        print("out of stock")
+        items_cost.append("no cost")
+        print("no cost")
     # for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
     #     items_cost.append(item_c.text)
     #     print(item_c.get_text())
 
-    # find total number of items sold/month
+    #type
+    __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
+    if(__type):
+        _type = __type.text
+    else:
+        print("general")
+
+    __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
+    print(__type)
+    if(__type):
+        _type = "shopee mall"
+    else:
+        print("general")
+
+    # sold/month
     sold = soup.select_one("div.go5yPW")
-    if (sold):
+    if (sold.text):
         items_sold.append(sold.text)
+        _sold = sold.text
         print(sold.get_text())
     else:
-        items_sold.append("no item sold")
+        _sold = "no sold"
         print("no item sold")
 
     #from
-    form = soup.select_one("div._2CWevj")
-    if (form):
-        items_form.append(form.text)
-        print(form.get_text())
+    __from = soup.select_one("div._2CWevj")
+    if (__from):
+        items_form.append(__from.text)
+        _from = __from.text
+        print(__from.get_text())
     else:
         items_form.append("no data")
         print("no data")    
 
     # find img path
     imgs = soup.select_one("div._25_r8I._2SHkSu > img")
-    img_src.append(imgs['src'])
-    print (imgs['src'])
+   
+    try:
+        img_src.append(imgs['src'])
+        _image = imgs['src']
+        print (imgs['src'])
+    except:
+        print('no image source')
 
+    #url
     url = soup.select_one("a")
-    item_url.append("https://shopee.co.th/"+url['href'])   
+    item_url.append("https://shopee.co.th/"+url['href'])
+    _url = "https://shopee.co.th/"+url['href']
     print(url['href'])
+
+    return {
+        "name" : _name,
+    "price" : _price,
+    "sold": _sold,
+    "from" :_from,
+    "image":_image,
+    "url" :_url,
+    "type" : _type
+    }
     
     # for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
     #     print(imgs.select("img")[0]['src'])
@@ -249,6 +298,18 @@ if(ss == 1):
             WebDriverWait(browser, delay)
             print ("Page is ready")
             sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
+            sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
 
             getDataFromPostForShopee(html)
@@ -267,7 +328,6 @@ elif (ss == 2):
             print ("Page is ready")
             sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            #print(html)
             soup = BeautifulSoup(html, "html.parser")
 
             getDataFromPostForAmazonSearch(html)
