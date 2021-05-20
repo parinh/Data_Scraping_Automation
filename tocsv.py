@@ -38,6 +38,3 @@ class Tocsv:
                     })
                 self.num +=1
         # self.thewriter.writerows({"num": self.count,"name": products[i]['name'],"price": products[i]['price'],"type": products[i]['type'],"sold": products[i]['sold'],"from": products[i]['from'],"img_src": products[i]['image'],"url" : products[i]['url']})
-    
-    def addNum (self):
-        self.num += 1

@@ -1,10 +1,16 @@
 from os import name
 from bs4 import BeautifulSoup
 import csv
+import tocsv
 
 from numpy import product
 
 class Shopee:
+    
+    def __init__(self) :
+        self.csv_count = 0
+        self.products = []
+        
     #get item
     def getItem(self,soup):
         product=[]
@@ -35,12 +41,9 @@ class Shopee:
             
 
         __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
-        # print(__type)
         if(__type):
             # product
             _type = "shopee mall"
-        # else:
-        #     print("general")
         product.append(_type)
 
         # sold/month 4
@@ -72,28 +75,27 @@ class Shopee:
         return product
 
 
-    #add data in array
+    #get data to array
     def getData(self,html):
         soup = BeautifulSoup(html, "html.parser")
-        products=[]
         for item in soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'):
             if(item.select_one('div.shopee-image-placeholder')):
                 continue  
             else:  
-                products.append(self.getItem(item))
+                self.products.append(self.getItem(item))
 
-        return products
+        # return self.products
+
     
     def toCsv(self,products):
-        csv_count = 0
-        with open('shopee-search.csv', 'a', encoding="utf-8",newline='') as csvfile:
+        with open('shopee-search.csv', 'a',encoding='utf-8',newline='') as csvfile:
             head_csv = ["num","name","price","type","sold","from","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
             for i in range(len(products)):
-                csv_count += 1
-                thewriter.writerow({"num": csv_count,"name": products[i][0],"price": products[i][1],"type": products[i][2],"sold":products[i][3],"from":products[i][4],"img_src":products[i][5],"url":products[i][6]})
+                self.csv_count += 1
+                thewriter.writerow({"num": self.csv_count,"name": products[i][0],"price": products[i][1],"type": products[i][2],"sold":products[i][3],"from":products[i][4],"img_src":products[i][5],"url":products[i][6]})
                 
 # 
 

@@ -59,6 +59,7 @@ item_name, items_sold, discount_percent = [], [], []
 # for shopee
 if(ss == 1):
     page = 0
+    
     while page<=page_count:
         try:
             browser.get(base_url + "&page=" +str(page))
@@ -77,19 +78,20 @@ if(ss == 1):
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
             sleep(5)
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            products = shopee.getData(html)
-    
-            print(len(products))
+            shopee.getData(html)
 
             # for product in products:
             #     for data in product:
             #         print(data)
             #     print("##########")
-            shopee.toCsv(products)
+            
             page+=1
+        
          
         except TimeoutException:
             print ("Loading took too much time!-Try again")
+    
+    shopee.toCsv(shopee.products)
 
 
 # for amazon search
