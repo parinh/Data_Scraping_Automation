@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from lxml import html
 import json
 import requests
+from requests.api import post
 from requests.exceptions import ConnectionError, ReadTimeout
 import time
 import random
@@ -10,18 +11,48 @@ import re
 import codecs
 
 
+
 class Pantip:
 
     def __init__(self) :
         self.csv_count = 0
         self.posts = []
 
-    def getPost(self,html):
+    def getPosts(self,html):
         soup = BeautifulSoup(html, "html.parser")
         for post in soup.find_all('div',id='searchresult'):
             post_url = post.select_one("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in")
-            print(post_url['href'])
-            # print(post_url['href'])
+            self.posts.append(self.getItem(post_url['href']))
+
+    def getItem(self,link):
+        post = []
+        start_page = requests.get(link)
+        start_page.encoding = 'utf-8'
+        tree = html.fromstring(start_page.text)
+
+        name = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
+        post.append(name)
+        author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
+        post.append(author)
+        author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
+        post.append(author_id)
+        story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
+        post.append(story)
+        likeCount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
+        post.append(likeCount)
+        emoCount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
+        post.append(emoCount)
+        allEmos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
+        post.append(allEmos)
+        tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item"]/text()')
+        post.append(tags)
+        dateTime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
+        post.append(dateTime)
+
+        return post
+
+        
+        
         
 #     def get_topic_from_link(tid):
 # 		global udg_header

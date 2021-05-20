@@ -142,14 +142,15 @@ elif (ss == 3):
             sleep(5)
             print ("Page is ready")
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            pantip.getPosts(html)
+            posts=pantip.posts
+            
 
-            pantip.getPost(html)
 
-
-            # for product in products:
-            #     for data in product:
-            #         print(data)
-            #     print("##########")
+            for post in posts:
+                for data in post:
+                    print(data)
+                print("##########")
                 
             break
         except TimeoutException:
