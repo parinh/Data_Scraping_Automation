@@ -21,6 +21,7 @@ class Shopee:
         _image = 'no image'
         _url = 'no url'
         _type = 'general'
+        _star = 0
 
         # Name 1
         name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
@@ -38,19 +39,29 @@ class Shopee:
         __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
         if(__type):
             _type = __type.text
-            
-
         __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
         if(__type):
-            # product
             _type = "shopee mall"
         product.append(_type)
 
-        # sold/month 4
+        #sold
         sold = soup.select_one("div.go5yPW")
         if (sold.text):
-            _sold = sold.text
-        product.append(_sold) 
+            if "พัน" not in sold.text:
+                _sold = float((sold.text).split(" ")[1])
+            else:
+                _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
+        else:
+            _sold = "no sold"
+        product.append(_sold)
+
+        #star
+        for star in soup.select('div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit'):
+            _star = _star + float(star['style'].split(" ")[1].split("%")[0]) 
+
+        _star = round(_star / 100,4)
+        product.append(_star)
+
            
         #from 5
         __from = soup.select_one("div._2CWevj")
@@ -89,13 +100,25 @@ class Shopee:
     
     def toCsv(self,products):
         with open('shopee-search.csv', 'a',encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","name","price","type","sold","from","img_src","url"]
+            head_csv = ["num","name","price","type","sold","star","from","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
             for i in range(len(products)):
                 self.csv_count += 1
-                thewriter.writerow({"num": self.csv_count,"name": products[i][0],"price": products[i][1],"type": products[i][2],"sold":products[i][3],"from":products[i][4],"img_src":products[i][5],"url":products[i][6]})
+                thewriter.writerow(
+                    {
+                        "num": self.csv_count,
+                        "name": products[i][0],
+                        "price": products[i][1],
+                        "type": products[i][2],
+                        "sold":products[i][3],
+                        "star":products[i][4],
+                        "from":products[i][5],
+                        "img_src":products[i][6],
+                        "url":products[i][7]
+                    }
+                )
                 
 # 
 
