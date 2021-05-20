@@ -59,7 +59,6 @@ item_name, items_sold, discount_percent = [], [], []
 # for shopee
 if(ss == 1):
     page = 0
-    
     while page<=page_count:
         try:
             browser.get(base_url + "&page=" +str(page))
@@ -96,7 +95,8 @@ if(ss == 1):
 
 # for amazon search
 elif (ss == 2):
-    while True:
+    page=0
+    while page<=page_count:
         try:
             WebDriverWait(browser, delay)
             sleep(5)
@@ -114,65 +114,18 @@ elif (ss == 2):
             sleep(5)
             print ("Page is ready")
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            # soup = BeautifulSoup(html, "html.parser")
-            products = amazon.getData(html)
-            print(len(products))
+            amazon.getData(html)    
 
             # for product in products:
             #     for data in product:
             #         print(data)
             #     print("##########")
-
-            amazon.toCsv(products)
                 
-            break # it will break from the loop once the specific element will be present. 
+            page+=1
         except TimeoutException:
             print ("Loading took too much time!-Try again")
-
-
-
-# for amazon officail store
-elif (ss == 3):
-    while True:
-        try:
-            WebDriverWait(browser, delay)
-            print ("Page is ready")
-            # sleep(5)
-            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-           
-            soup = BeautifulSoup(html, "html.parser")
-
-            # find_all() returns an array of elements. 
-            # We have to go through all of them and select that one you are need. And than call get_text()
-            for item_n in soup.find_all('a', class_='ProductGridItem__title__2C1kS'):
-                item_name.append(item_n.text)
-                print(item_n.get_text())
-
-            # find the price of items
-            for item_c in soup.find_all('span', class_='price style__xlarge__1mW1P ProductGridItem__buyPrice__6DIeT style__fixedSize__2cXU-'):
-                item_cost.append(item_c.text)
-                print(item_c.get_text())
-
-            # rating
-            for items_rt in soup.find_all('span',class_ = 'a-icon-alt'):
-                items_rt.append(items_rt.text)
-                print(items_rt.get_text())
-
-            # # find total number of items sold/month != amazon
-            # for items_s in soup.find_all('div',class_ = 'go5yPW"'):
-            #     items_sold.append(items_s.text)
-            #     print(items_s.get_text())
-
-            # find item discount percent
-            for dp in soup.find_all('span', class_ = 'price style__small__35Bk_ ProductGridItem__strikePrice__1TwIT style__strikethrough__1tKkI style__fixedSize__2cXU-'):
-                discount_percent.append(dp.text)
-                print("form -->"+(dp.get_text()))
-
-
-                
-            break # it will break from the loop once the specific element will be present. 
-        except TimeoutException:
-            print ("Loading took too much time!-Try again")
+    
+    amazon.toCsv(amazon.products)
 
 
 browser.close()

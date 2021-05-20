@@ -2,6 +2,10 @@ from bs4 import BeautifulSoup
 import csv
 
 class Amazon:
+   
+    def __init__(self) :
+        self.csv_count = 0
+        self.products = []
     
     def getItem(self,soup):
         product = []
@@ -64,25 +68,34 @@ class Amazon:
         return product
         
     def getData(self,html):
-        products=[]
-        print ("get data..")
         soup = BeautifulSoup(html, "html.parser")
         
         for item in soup.find_all('div',  class_='sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'):
-            products.append(self.getItem(item))
+            self.products.append(self.getItem(item))
         
-        return products
+
 
     def toCsv(self,products):
-        csv_count = 0
         with open('amazon-search.csv', 'w', newline='') as csvfile:
             head_csv = ["num","id","name","price","rating","review","rank","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
             for i in range(len(products)):
-                csv_count += 1
-                thewriter.writerow({"num": csv_count,"id": products[i][0],"name": products[i][1],"price": products[i][2],"rating": products[i][3],"review":products[i][4],"rank":products[i][5],"img_src":products[i][6],"url":products[i][7]})
+                self.csv_count += 1
+                thewriter.writerow(
+                    {
+                        "num": self.csv_count,
+                        "id": products[i][0],
+                        "name": products[i][1],
+                        "price": products[i][2],
+                        "rating": products[i][3],
+                        "review":products[i][4],
+                        "rank":products[i][5],
+                        "img_src":products[i][6],
+                        "url":products[i][7]
+                    }
+                )
                 
 
                 
