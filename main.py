@@ -1,3 +1,4 @@
+from pantip import Pantip
 from bs4 import BeautifulSoup
 import bs4
 import requests
@@ -10,16 +11,18 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 from shopee import *
 from amazon import *
+from pantip import *
 from tocsv import Tocsv
 
 #set
 chrome_options = Options()
 shopee = Shopee() 
 amazon = Amazon()
+pantip = Pantip()
 
 
 # input url site
-print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
+print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip]->>")
 ss = int(input())
 
 print ("enter number of pages")
@@ -29,8 +32,6 @@ print ("Enter the url for the selected site.. ->>")
 # page = 1
 # base_url = input() + "&page=" +str(page)
 base_url = input() 
-
-# base_url = input()
 # base_url = "https://www.amazon.com/s?k=chicken&ref=nb_sb_noss_2"
 
 #close all popup
@@ -49,12 +50,6 @@ browser = webdriver.Chrome(executable_path = r"C:/Users/Bell/Downloads/chromedri
                           options = chrome_options)
 browser.get(base_url)
 delay = 5 
-
-item_all = []
-
-item_cost, item_rt, img_src = [],[],[]
-item_name, items_sold, discount_percent = [], [], []
-
 
 # for shopee
 if(ss == 1):
@@ -126,6 +121,41 @@ elif (ss == 2):
             print ("Loading took too much time!-Try again")
     
     amazon.toCsv(amazon.products)
+
+#pantip
+elif (ss == 3):
+    while True:
+        try:
+            WebDriverWait(browser, delay)
+            sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
+            sleep(5)
+            print ("Page is ready")
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+
+            pantip.getPost(html)
+
+
+            # for product in products:
+            #     for data in product:
+            #         print(data)
+            #     print("##########")
+                
+            break
+        except TimeoutException:
+            print ("Loading took too much time!-Try again")
+    
+  
 
 
 browser.close()
