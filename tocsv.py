@@ -31,6 +31,7 @@ class Tocsv:
                         "name" : products[i]['name'],
                         "price" : products[i]['price'],
                         "sold": products[i]['sold'],
+                        "star" : products[i]['star'],
                         "from" :products[i]['from'],
                         "img_src":products[i]['img_src'],
                         "url" :products[i]['url'],

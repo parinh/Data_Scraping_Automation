@@ -91,6 +91,7 @@ def getItemDataForShopee(soup):
     _image = 'no image'
     _url = 'no url'
     _type = 'general'
+    _star = 0
 
     # Get Name
     name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
@@ -101,9 +102,6 @@ def getItemDataForShopee(soup):
     else:
         item_name.append("no name")
         print("no name")
-    # for item_n in soup.find_all('div', class_='yQmmFK _1POlWt _36CEnF'):
-    #     item_name.append(item_n.text)
-    #     print(item_n.get_text())
 
     # Price
     price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
@@ -114,9 +112,6 @@ def getItemDataForShopee(soup):
     else:
         items_cost.append("no cost")
         print("no cost")
-    # for item_c in soup.find_all('div', class_='WTFwws _1lK1eK _5W0f35'):
-    #     items_cost.append(item_c.text)
-    #     print(item_c.get_text())
 
     #type
     __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
@@ -136,11 +131,26 @@ def getItemDataForShopee(soup):
     sold = soup.select_one("div.go5yPW")
     if (sold.text):
         items_sold.append(sold.text)
-        _sold = int((sold.text).split(" ")[1])
-        print(sold.get_text())
+        
+        if "พัน" not in sold.text:
+            _sold = float((sold.text).split(" ")[1])
+            print(_sold)
+        
+        else:
+            _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
+            print(_sold)
     else:
         _sold = "no sold"
         print("no item sold")
+
+    #star
+    for star in soup.select('div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit'):
+        # print(star)
+        print(star['style'])
+        _star = _star + float(star['style'].split(" ")[1].split("%")[0]) 
+
+    _star = round(_star / 100,4)
+    print(_star)  
 
     #from
     __from = soup.select_one("div._2CWevj")
@@ -175,11 +185,11 @@ def getItemDataForShopee(soup):
         "from" :_from,
         "img_src":_image,
         "url" :_url,
-        "type" : _type
+        "type" : _type,
+        "star" : _star
     }
     
-    # for imgs in soup.find_all('div', class_ = '_25_r8I _2SHkSu'):
-    #     print(imgs.select("img")[0]['src'])
+
 
 # #################################################################################################
 
@@ -282,7 +292,7 @@ def getItemDataForAmazonSearch(soup):
 
 # shopee set
 if(ss == 1):
-    header_field = ["num","name","price","type","sold","from","img_src","url"]
+    header_field = ["num","name","price","type","star","sold","from","img_src","url"]
     page=0
     csv.setHeader(header_field)
 
