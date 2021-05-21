@@ -15,12 +15,12 @@ class Tocsv:
 
 
     def createFile(self) :
-        with open(self.file_name, 'w', newline='') as csvfile:
+        with open(self.file_name, 'w', newline='',encoding="utf-8") as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
             thewriter.writeheader()
 
     def addDataForShopee (self,products):
-        with open(self.file_name, mode='a', newline='') as csvfile:
+        with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
 
             for i in range(len(products)):
@@ -58,6 +58,33 @@ class Tocsv:
                         "img_src" :products[i]['img_src'],
                         "url" : products[i]['url'],
                         "rank" : products[i]['bestseller']
+                    })
+                self.num +=1
+
+    def addNum (self):
+        self.num += 1
+
+    
+    def addDataForPantip (self,products):
+        with open(self.file_name, mode='a', newline='') as csvfile:
+            thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
+
+            for i in range(len(products)):
+                
+                thewriter.writerow(
+                    {
+                        "num": self.num,
+                        "title" : products[i]['title'],
+                        "author" : products[i]['author'],
+                        "author_id": products[i]['author_id'],
+                        "story" :products[i]['story'],
+                        "likeCount":products[i]['likeCount'],
+                        "emocount" :products[i]['emocount'],
+                        "allemos" : products[i]['allemos'],
+                        "tags" : products[i]['tags'],
+                        "dateTime" : products[i]['dateTime'],
+                        "post_link" : products[i]['post_link'],
+                        "img_src" : products[i]['img_src']
                     })
                 self.num +=1
 

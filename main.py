@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from time import sleep
 from tocsv import Tocsv
+from lxml import html as htmllxml
 
 
 
@@ -23,6 +24,7 @@ ss = int(input())
 print ("enter number of pages")
 page_count = int(input())
 
+print("enter sort num []")
 print ("Enter the url for the selected site.. ->>")
 # page = 1
 # base_url = input() + "&page=" +str(page)
@@ -30,6 +32,7 @@ base_url = input()
 # print (base_url)
 
 count=0
+post =0
 
 
 #close all popup 
@@ -78,7 +81,32 @@ def getDataFromPostForAmazonSearch(html):
     for item_n in soup.select('div[data-component-type=s-search-result]'):
         data = getItemDataForAmazonSearch(item_n)
         products.append(data)
+
         
+def getDataFormPostForPantip(html):
+    print ("get data Pantip")
+    soup = BeautifulSoup(html, "html.parser") 
+    ch = 0 
+    
+
+    while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
+        sh = browser.execute_script("return document.body.scrollHeight")
+        browser.execute_script("window.scrollTo(0, %d);"% ch)
+        ch += sh/3
+        # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+        html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+        soup = BeautifulSoup(html, "html.parser")
+    
+
+    for item_n in soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'): 
+        # print(sh)
+        link = item_n['href']
+        data = getItemDataForPantip(link)
+        products.append(data)
+        # print(type(ch))
+        
+
+
         
 
 #sort data form all item na
@@ -290,6 +318,66 @@ def getItemDataForAmazonSearch(soup):
 
 # #################################################################################################
 
+def getItemDataForPantip(link):
+
+    _title = "no title"
+    _author = "no author"
+    _author_id = "no author id"
+    _story = "no story"
+    _likecount = "no like"
+    _emocount = "no emo"
+    _allemos = "no emos"
+    _tags = "no tags"
+    _datetime = "no time"
+    _post_link = "no link"
+    _img_src = "no img"
+
+    start_page = requests.get(link)
+    start_page.encoding = 'utf-8'
+
+    # print(start_page.text)
+    # print("##################################")
+    # print(htmllxml)
+
+    
+    tree = htmllxml.fromstring(start_page.text)
+
+    _post_link = link
+    _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
+    _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
+    _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
+    _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
+    _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
+    _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
+    _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
+    _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item cs-tag_topic_title"]/text()')
+    print(_tags)
+    _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
+    _img = tree.xpath('//img[@class="img-in-post"]/@src')
+    if (len(_img) > 0):
+        print(_img[0])
+        _img_src = _img[0]
+
+    return{
+        "title" : _title,
+        "author" : _author,
+        "author_id" : _author_id,
+        "story" : _story,
+        "likeCount" :_likecount,
+        "emocount" : _emocount,
+        "allemos" : _allemos,
+        "tags" : _tags,
+        "dateTime" : _datetime,
+        "post_link" : _post_link,
+        "img_src" : _img_src
+
+    }
+
+
+
+
+ 
+
 # shopee set
 if(ss == 1):
     header_field = ["num","name","price","type","star","sold","from","img_src","url"]
@@ -332,7 +420,7 @@ elif (ss == 2):
     header_field = ["num","id","name","price","rating","review","img_src","url","rank"]
     page=1
     csv.setHeader(header_field)
-
+    
     while page<=page_count:
         try:
             browser.get(base_url + "&page=" +str(page))
@@ -361,8 +449,26 @@ elif (ss == 2):
             print ("Loading took too much time!-Try again")
     csv.addDataForAmazon(products)
 
-browser.close()
 
+elif (ss == 3):
+    header_field = ["num","title","author","author_id","story","likeCount","emocount","allemos","tags","dateTime","post_link","img_src"]
+    csv.setHeader(header_field)
+    browser.get(base_url)
+    WebDriverWait(browser, delay)
+    print ("Page is ready")
+    sleep(5)
+
+    browser.execute_script("window.scrollTo(0, 0);")
+    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+    
+    getDataFormPostForPantip(html)
+    csv.addDataForPantip(products)
+
+
+
+
+browser.close()
+print("End process")
 
 
 
