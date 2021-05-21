@@ -4,12 +4,7 @@ import json
 import requests
 from requests.api import post
 from requests.exceptions import ConnectionError, ReadTimeout
-import time
-import random
-import os, sys
-import re
-import codecs
-
+import csv
 
 
 class Pantip:
@@ -30,16 +25,25 @@ class Pantip:
         start_page = requests.get(link)
         start_page.encoding = 'utf-8'
         tree = html.fromstring(start_page.text)
-        name = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
-        post.append(name)
+
+        id = link.split("/")[len(link.split("/"))-1]
+        post.append(id)
+
+        title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
+        post.append(title)
+
+        description = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
+        post.append(description)
+
         author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
         post.append(author)
-        author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
-        post.append(author_id)
-        story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
-        post.append(story)
+
+        # author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
+        # post.append(author_id)
+
         likeCount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
         post.append(likeCount)
+
         emoCount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
         post.append(emoCount)
         # allEmos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
@@ -49,7 +53,33 @@ class Pantip:
         dateTime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
         post.append(dateTime)
 
+        post.append(link)
+
         return post
+
+    def toCsv(self,posts):
+        with open('pantip-search.csv', 'w', encoding='utf-8',newline='') as csvfile:
+            head_csv = ["num","id","title","description","author","like","emo","date-time","url"]
+            thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
+            thewriter.writeheader()
+
+            for i in range(len(posts)):
+                self.csv_count += 1
+                thewriter.writerow(
+                    {
+                        "num": self.csv_count,
+                        "id": posts[i][0],
+                        "title": posts[i][1],
+                        "description": posts[i][2],
+                        "author": posts[i][3],
+                        "like":posts[i][4],
+                        "emo":posts[i][5],
+                        "date-time":posts[i][6],
+                        "url":posts[i][7]
+                        
+                    }
+                )
+
 
         
         

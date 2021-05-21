@@ -143,16 +143,18 @@ elif (ss == 3):
             print ("Page is ready")
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             pantip.getPosts(html)
-            posts=pantip.posts
 
-            for post in posts:
-                for data in post:
-                    print(data)
-                print("##########")
+            # for post in posts:
+            #     for data in post:
+            #         print(data)
+            #     print("##########")
                 
             break
         except TimeoutException:
             print ("Loading took too much time!-Try again")
+        
+    pantip.toCsv(pantip.posts)
+
     
   
 
