@@ -20,7 +20,7 @@ class Pantip:
 
     def getPosts(self,html):
         soup = BeautifulSoup(html, "html.parser")
-        for post in soup.find_all('div',id='searchresult'):
+        for post in soup.find_all('div',class_='rowsearch card px-0'):
             post_url = post.select_one("div.rowsearch.card.px-0 > div.title.col-md-12 > a.datasearch-in")
             # print(post_url['href'])
             self.posts.append(self.getItem(post_url['href']))

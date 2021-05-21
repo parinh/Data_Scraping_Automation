@@ -144,8 +144,6 @@ elif (ss == 3):
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             pantip.getPosts(html)
             posts=pantip.posts
-            
-
 
             for post in posts:
                 for data in post:
