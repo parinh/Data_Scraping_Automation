@@ -95,7 +95,9 @@ elif (ss == 2):
         try:
             WebDriverWait(browser, delay)
             sleep(5)
-            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+            # browser.execute_script("window.scrollTo(0,  window.scrollY + 200);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
@@ -128,7 +130,6 @@ elif (ss == 3):
         try:
             WebDriverWait(browser, delay)
             sleep(5)
-            browser.execute_script("window.scrollTo(0, 0);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
