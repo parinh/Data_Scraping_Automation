@@ -93,6 +93,7 @@ elif (ss == 2):
     page=0
     while page<=page_count:
         try:
+            browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
             sleep(5)
             browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -126,52 +127,37 @@ elif (ss == 2):
 
 #pantip
 # elif (ss == 3):
-#     while True:
-#         try:
-#             WebDriverWait(browser, delay)
-#             sleep(5)
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
-#             sleep(5)
-#             print ("Page is ready")
-#             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-#             pantip.getPosts(html)
+#     browser.get(base_url)
+#     WebDriverWait(browser, delay)
+#     print ("Page is ready")
+#     sleep(5)
 
-#             # for post in posts:
-#             #     for data in post:
-#             #         print(data)
-#             #     print("##########")
-                
-#             break
-#         except TimeoutException:
-#             print ("Loading took too much time!-Try again")
-        
-#     pantip.toCsv(pantip.posts)
+#     browser.execute_script("window.scrollTo(0, 0);")
+#     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+    
+#     pantip.getPosts(html)
+    
+    
 
 # test pantip
 elif(ss == 3):
     ch = 0 
+    WebDriverWait(browser, delay)
+    print ("Page is ready")
+    sleep(5)
+    browser.execute_script("window.scrollTo(0, 0);")
+    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")   
+    soup = BeautifulSoup(html, "html.parser")
     while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
         sh = browser.execute_script("return document.body.scrollHeight")
         browser.execute_script("window.scrollTo(0, %d);"% ch)
         ch += sh/3
-        
         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
         soup = BeautifulSoup(html, "html.parser")
 
-        
+    pantip.getPosts(soup)
     
-  
-
-
+    print(len(pantip.posts))
 browser.close()
 
 

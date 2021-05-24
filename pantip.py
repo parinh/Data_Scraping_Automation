@@ -13,12 +13,32 @@ class Pantip:
         self.csv_count = 0
         self.posts = []
 
-    def getPosts(self,html):
-        soup = BeautifulSoup(html, "html.parser")
+    def getPosts(self,soup):
         for post in soup.find_all('div',class_='rowsearch card px-0'):
             post_url = post.select_one("div.rowsearch.card.px-0 > div.title.col-md-12 > a.datasearch-in")
-            # print(post_url['href'])
+            
             self.posts.append(self.getItem(post_url['href']))
+
+    # def getData(self,html):
+    #     soup = BeautifulSoup(html, "html.parser") 
+    #     ch = 0 
+    
+
+    #     while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
+    #         sh = browser.execute_script("return document.body.scrollHeight")
+    #         browser.execute_script("window.scrollTo(0, %d);"% ch)
+    #         ch += sh/3
+    #         # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+    #         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+    #         soup = BeautifulSoup(html, "html.parser")
+
+
+    #     for item_n in soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'): 
+    #         # print(sh)
+    #         link = item_n['href']
+    #         data = getItemDataForPantip(link)
+    #         products.append(data)
+    #         # print(type(ch))
 
     def getItem(self,link):
         post = []
