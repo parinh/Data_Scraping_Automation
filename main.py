@@ -10,6 +10,8 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 from tocsv import Tocsv
 from lxml import html as htmllxml
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 
@@ -330,18 +332,15 @@ def getItemDataForPantip(link):
     _datetime = "no time"
     _post_link = "no link"
     _img_src = "no img"
+    _post_id = "no post id"
 
     start_page = requests.get(link)
     start_page.encoding = 'utf-8'
-
-    # print(start_page.text)
-    # print("##################################")
-    # print(htmllxml)
-
     
     tree = htmllxml.fromstring(start_page.text)
 
     _post_link = link
+    _post_id = link.split("/")[4]
     _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
     _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
     _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
@@ -368,7 +367,8 @@ def getItemDataForPantip(link):
         "tags" : _tags,
         "dateTime" : _datetime,
         "post_link" : _post_link,
-        "img_src" : _img_src
+        "img_src" : _img_src,
+        "post_id" : _post_id
 
     }
 
@@ -448,18 +448,24 @@ elif (ss == 2):
             print ("Loading took too much time!-Try again")
     csv.addDataForAmazon(products)
 
-
+#pantip
 elif (ss == 3):
-    header_field = ["num","title","author","author_id","story","likeCount","emocount","allemos","tags","dateTime","post_link","img_src"]
+    header_field = ["num","title","author","author_id","story","likeCount","emocount","allemos","tags","dateTime","post_link","img_src","post_id"]
     csv.setHeader(header_field)
     browser.get(base_url)
     WebDriverWait(browser, delay)
-    print ("Page is ready")
+    browser.execute_script("window.scrollTo(0, 0);")
+
+    browser.execute_script("document.getElementById('timebias_2').checked = true")
+    browser.execute_script("document.getElementById('searchbutton').click()")
     sleep(5)
 
-    browser.execute_script("window.scrollTo(0, 0);")
     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-    
+    soup = BeautifulSoup(html, "html.parser")
+    sort = soup.select_one('div.pt-lists-item__form.pure-material-radio.m-t-2 > input')
+
+    print ("Page is ready")
+    sleep(5)
     getDataFormPostForPantip(html)
     csv.addDataForPantip(products)
 

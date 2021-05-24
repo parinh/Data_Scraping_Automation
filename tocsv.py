@@ -1,4 +1,6 @@
 import csv
+from datetime import datetime
+
 
 class Tocsv:
     file_name = "my_csv.csv"
@@ -66,6 +68,7 @@ class Tocsv:
 
     
     def addDataForPantip (self,products):
+        products.sort(key=lambda x: x['dateTime'] ,reverse = True)
         with open(self.file_name, mode='a', newline='') as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
 
@@ -84,7 +87,8 @@ class Tocsv:
                         "tags" : products[i]['tags'],
                         "dateTime" : products[i]['dateTime'],
                         "post_link" : products[i]['post_link'],
-                        "img_src" : products[i]['img_src']
+                        "img_src" : products[i]['img_src'],
+                        "post_id" : products[i]['post_id']
                     })
                 self.num +=1
 
