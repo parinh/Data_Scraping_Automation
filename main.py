@@ -126,38 +126,45 @@ elif (ss == 2):
     amazon.toCsv(amazon.products)
 
 #pantip
-# elif (ss == 3):
-#     browser.get(base_url)
-#     WebDriverWait(browser, delay)
-#     print ("Page is ready")
-#     sleep(5)
+elif (ss == 3):
+    browser.get(base_url)
+    WebDriverWait(browser, delay)
+    print ("Page is ready")
+    sleep(5)
 
-#     browser.execute_script("window.scrollTo(0, 0);")
-#     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+    browser.execute_script("window.scrollTo(0, 0);")
+    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
     
-#     pantip.getPosts(html)
+    pantip.getData(html,page_count,browser)
+    print(len(pantip.posts))
     
     
 
 # test pantip
-elif(ss == 3):
-    ch = 0 
-    WebDriverWait(browser, delay)
-    print ("Page is ready")
-    sleep(5)
-    browser.execute_script("window.scrollTo(0, 0);")
-    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")   
-    soup = BeautifulSoup(html, "html.parser")
-    while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
-        sh = browser.execute_script("return document.body.scrollHeight")
-        browser.execute_script("window.scrollTo(0, %d);"% ch)
-        ch += sh/3
-        html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-        soup = BeautifulSoup(html, "html.parser")
+# elif(ss == 3):
+#     ch = 0 
+#     WebDriverWait(browser, delay)
+#     print ("Page is ready")
+#     sleep(5)
+#     browser.execute_script("window.scrollTo(0, 0);")
+#     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")   
+#     soup = BeautifulSoup(html, "html.parser")
+#     print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+#     while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
+#         print(1)
+#         sh = browser.execute_script("return document.body.scrollHeight")
+#         browser.execute_script("window.scrollTo(0, %d);"% ch)
+#         sleep(2)
+#         ch += sh/3
+#         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+#         soup = BeautifulSoup(html, "html.parser")
 
-    pantip.getPosts(soup)
+#     pantip.getPosts(soup)
     
-    print(len(pantip.posts))
+#     print(len(pantip.posts))
+
+
+
 browser.close()
 
 
