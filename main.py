@@ -17,14 +17,13 @@ from lxml import html as htmllxml
 chrome_options = Options()
 
 # input url site
-print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = amazon-official-store]->>")
+print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip]->>")
 ss = int(input())
 
 #page count
 print ("enter number of pages")
 page_count = int(input())
 
-print("enter sort num []")
 print ("Enter the url for the selected site.. ->>")
 # page = 1
 # base_url = input() + "&page=" +str(page)
