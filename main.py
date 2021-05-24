@@ -137,6 +137,7 @@ elif (ss == 3):
     
     pantip.getData(html,page_count,browser)
     print(len(pantip.posts))
+    pantip.toCsv(pantip.posts)
     
     
 
