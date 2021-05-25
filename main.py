@@ -126,20 +126,6 @@ elif (ss == 2):
             print ("Loading took too much time!-Try again")
     
     amazon.toCsv(amazon.products)
-
-#pantip
-# elif (ss == 3):
-#     browser.get(base_url)
-#     WebDriverWait(browser, delay)
-#     print ("Page is ready")
-#     sleep(5)
-
-#     browser.execute_script("window.scrollTo(0, 0);")
-#     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-    
-#     pantip.getData(html,page_count,browser)
-#     print(len(pantip.posts))
-#     pantip.toCsv(pantip.posts)
     
 
 #pantip
@@ -236,16 +222,6 @@ elif(ss == 5):
     
     print(len(lazada.products))
     
-
-
-
-    
-
-
-
-
-
-
 
 
 browser.close()
