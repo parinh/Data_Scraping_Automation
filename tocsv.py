@@ -44,7 +44,7 @@ class Tocsv:
     
 
     def addDataForAmazon (self,products):
-        with open(self.file_name, mode='a', newline='') as csvfile:
+        with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
 
             for i in range(len(products)):
@@ -68,8 +68,8 @@ class Tocsv:
 
     
     def addDataForPantip (self,products):
-        products.sort(key=lambda x: x['dateTime'] ,reverse = True)
-        with open(self.file_name, mode='a', newline='') as csvfile:
+        products.sort(key=lambda x: datetime.strptime(x['dateTime'], "%m/%d/%Y %H:%M:%S") ,reverse = True)
+        with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
 
             for i in range(len(products)):
@@ -89,6 +89,30 @@ class Tocsv:
                         "post_link" : products[i]['post_link'],
                         "img_src" : products[i]['img_src'],
                         "post_id" : products[i]['post_id']
+                    })
+                self.num +=1
+
+    def addNum (self):
+        self.num += 1
+
+    def addDataForJD (self,products):
+        # products.sort(key=lambda x: datetime.strptime(x['dateTime'], "%m/%d/%Y %H:%M:%S") ,reverse = True)
+        with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
+            thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
+
+            for i in range(len(products)):
+                
+                thewriter.writerow(
+                    {
+                        "num": self.num,
+                        "name" : products[i]['name'],
+                        "id" : products[i]['id'],
+                        "review" : products[i]['review'],
+                        "price" : products[i]['price'],
+                        "img_src":products[i]['img_src'],
+                        "url" :products[i]['url'],
+                        "type" : products[i]['type']
+                        
                     })
                 self.num +=1
 

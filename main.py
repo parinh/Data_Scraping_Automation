@@ -12,6 +12,7 @@ from tocsv import Tocsv
 from lxml import html as htmllxml
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import json
 
 
 
@@ -26,10 +27,11 @@ ss = int(input())
 print ("enter number of pages")
 page_count = int(input())
 
-print ("Enter the url for the selected site.. ->>")
+print ("Enter the keyword for the selected site.. ->>")
+keyword = input()
 # page = 1
 # base_url = input() + "&page=" +str(page)
-base_url = input() 
+# base_url = "https://api.jd.co.th/client.action?body={'page':'2','keyword':'อาหารแมว'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0" 
 # print (base_url)
 
 count=0
@@ -76,7 +78,7 @@ def getDataFromPostForShopee(html):
 
 #get all item in amazon search
 def getDataFromPostForAmazonSearch(html):
-    print ("get data..")
+    print ("get data Amazon")
     soup = BeautifulSoup(html, "html.parser")
     #big loop
     for item_n in soup.select('div[data-component-type=s-search-result]'):
@@ -106,7 +108,17 @@ def getDataFormPostForPantip(html):
         products.append(data)
         # print(type(ch))
         
-
+#get all item in JD
+def getDataFromPostForJD(html):
+    print ("get data JD")
+    soup = BeautifulSoup(html, "html.parser")
+    #big loop
+    item_n = soup.select_one('pre')
+    info = json.loads(item_n.text)
+    for item in info['wareInfo'] :
+        print (item['wname'])
+        data = getItemDataForJD(item)
+        products.append(data)
 
         
 
@@ -371,14 +383,85 @@ def getItemDataForPantip(link):
         "post_id" : _post_id
 
     }
+    ###################################################################################
+def getItemDataForJD(soup):###
+
+    # _name = 'no name'
+    # _price = 'no price'
+    # _image = 'no image'
+    # _url = 'no url'
+    # _id = 'no id'
+    # _review = "no review"
+    # _type = 'general'
+
+    # Get Name
+    name = soup.select_one("div.name-content-global > a" )
+    if (name):
+        _name = name['title']
+        print(_name)
+    else:
+        print("no name")
+
+    id = soup.select_one("div.p-price > strong")
+    if (id):
+        print(id.text)
+        _price = id.text
+        _id = (id['id']).split("_")[3]
+        _url = ("https://www.jd.co.th/product/"+ _id +".html")
+        print(_price)
+        print(_id)
+        print(_url)
+    
+    # # Price
+    # price = soup.select_one("div.c3gUW0 > span.c13VH6")
+    # if (price):
+    #     items_cost.append(price.text)
+    #     _price = price.text
+    #     print(price.get_text())
+    # else:
+    #     items_cost.append("no cost")
+    #     print("no cost")
+
+    #type
+    __type = soup.select_one("div.p-shop > a.p-shop-name")
+    if(__type):
+        _type = __type.text
+    else:
+        print("general")
+
+    #review
+    __review = soup.select_one("a.comment-num")
+    if (__review):
+        _review = int((__review.text).split("(")[1].split(")")[0])
+        print(_review)
+    else:
+        print("no review")    
+
+    # find img path
+    imgs = soup.select_one("img.ui-switchable-imgscroll-img.prepost.pro_resize")
+    # _image = imgs['src']
+    # print(_image) 
+    try:
+        _image = imgs['src']
+        print (imgs['src'])
+    except:
+        print('no image source')
 
 
-
-
- 
+    return {
+        "name" : _name,
+        "id" : _id,
+        "price" : _price,
+        "img_src":_image,
+        "url" :_url,
+        "type" : _type,
+        "review" : _review
+    }
+    
 
 # shopee set
 if(ss == 1):
+    base_url = "https://shopee.co.th/search?keyword=" + keyword
     header_field = ["num","name","price","type","star","sold","from","img_src","url"]
     page=0
     csv.setHeader(header_field)
@@ -416,6 +499,7 @@ if(ss == 1):
 
 # amazon search set
 elif (ss == 2):
+    base_url = "https://www.amazon.com/s?k=" + keyword
     header_field = ["num","id","name","price","rating","review","img_src","url","rank"]
     page=1
     csv.setHeader(header_field)
@@ -450,12 +534,14 @@ elif (ss == 2):
 
 #pantip
 elif (ss == 3):
+    base_url = "https://pantip.com/search?q=" + keyword
     header_field = ["num","title","author","author_id","story","likeCount","emocount","allemos","tags","dateTime","post_link","img_src","post_id"]
     csv.setHeader(header_field)
     browser.get(base_url)
     WebDriverWait(browser, delay)
     browser.execute_script("window.scrollTo(0, 0);")
 
+    #sort search click
     browser.execute_script("document.getElementById('timebias_2').checked = true")
     browser.execute_script("document.getElementById('searchbutton').click()")
     sleep(5)
@@ -469,11 +555,56 @@ elif (ss == 3):
     getDataFormPostForPantip(html)
     csv.addDataForPantip(products)
 
+#JD
+if(ss == 4):
+    page=1
+    # base_url = ("https://api.jd.co.th/client.action?body={'page':'" + str(page) +"','keyword':'" + keyword + "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0")
+    # print (base_url)
+    header_field = ["num","name","id","price","img_src","url","type","review"]
+    
+    csv.setHeader(header_field)
+
+    while page<page_count:
+        try:
+            base_url = ("https://api.jd.co.th/client.action?body={'page':'" + str(page) +"','keyword':'" + keyword + "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0")
+            # base_url = "https://api.jd.co.th/client.action?body={'page':'2','keyword':'อาหารแมว'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0"
+            # browser.get(base_url + "&page=" +str(page))
+            browser.get(base_url)
+            WebDriverWait(browser, delay)
+            print ("Page is ready")
+            sleep(5)
+
+
+            sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
+            sleep(5)
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+          
+           # print(html)
+            getDataFromPostForJD(html)
+            page+=1
+                        
+             # it will break from the loop once the specific element will be present. 
+        except TimeoutException:
+            print ("Loading took too much time!-Try again")
+
+    # csv.addDataForJD(products)
 
 
 
 browser.close()
 print("End process")
+
 
 
 
