@@ -1,3 +1,4 @@
+from logging import exception
 from os import name
 import re
 from bs4 import BeautifulSoup
@@ -115,8 +116,9 @@ def getDataFromPostForJD(html):
     #big loop
     item_n = soup.select_one('pre')
     info = json.loads(item_n.text)
+    print(len(info['wareInfo']))
     for item in info['wareInfo'] :
-        print (item['wname'])
+        # print (item['wname'])
         data = getItemDataForJD(item)
         products.append(data)
 
@@ -384,33 +386,56 @@ def getItemDataForPantip(link):
 
     }
     ###################################################################################
-def getItemDataForJD(soup):###
+def getItemDataForJD(item):###
 
-    # _name = 'no name'
-    # _price = 'no price'
-    # _image = 'no image'
-    # _url = 'no url'
-    # _id = 'no id'
-    # _review = "no review"
-    # _type = 'general'
+    _name = 'no name'
+    _price = 'no price'
+    _image = 'no image'
+    _from = 'no data'
+    _id = 'no id'
+    _review = "no review"
+    _type = 'general'
 
     # Get Name
-    name = soup.select_one("div.name-content-global > a" )
-    if (name):
-        _name = name['title']
-        print(_name)
-    else:
+    try:
+        _name = item['wname']
+    
+    except:
         print("no name")
 
-    id = soup.select_one("div.p-price > strong")
-    if (id):
-        print(id.text)
-        _price = id.text
-        _id = (id['id']).split("_")[3]
-        _url = ("https://www.jd.co.th/product/"+ _id +".html")
-        print(_price)
-        print(_id)
-        print(_url)
+    try:
+        _price = item['jdPrice']
+    except:
+        print("na price")
+
+    try:
+        _image = item['imageurl']
+    except:
+        print("no img")
+
+    try:
+        _id = item['spuId']
+    except:
+        print("no id")
+
+    try:
+        _type = item['shopName']
+    except:
+        print("no type")
+
+    try:
+        _review = int((item['reviews']).split(" ")[0])
+    except:
+        print("no review")
+    
+    try:
+        _from = item['localDelivery']
+    except:
+        print("no from")
+    
+    
+    
+    
     
     # # Price
     # price = soup.select_one("div.c3gUW0 > span.c13VH6")
@@ -423,29 +448,29 @@ def getItemDataForJD(soup):###
     #     print("no cost")
 
     #type
-    __type = soup.select_one("div.p-shop > a.p-shop-name")
-    if(__type):
-        _type = __type.text
-    else:
-        print("general")
+    # __type = soup.select_one("div.p-shop > a.p-shop-name")
+    # if(__type):
+    #     _type = __type.text
+    # else:
+    #     print("general")
 
-    #review
-    __review = soup.select_one("a.comment-num")
-    if (__review):
-        _review = int((__review.text).split("(")[1].split(")")[0])
-        print(_review)
-    else:
-        print("no review")    
+    # #review
+    # __review = soup.select_one("a.comment-num")
+    # if (__review):
+    #     _review = int((__review.text).split("(")[1].split(")")[0])
+    #     print(_review)
+    # else:
+    #     print("no review")    
 
-    # find img path
-    imgs = soup.select_one("img.ui-switchable-imgscroll-img.prepost.pro_resize")
-    # _image = imgs['src']
-    # print(_image) 
-    try:
-        _image = imgs['src']
-        print (imgs['src'])
-    except:
-        print('no image source')
+    # # find img path
+    # imgs = soup.select_one("img.ui-switchable-imgscroll-img.prepost.pro_resize")
+    # # _image = imgs['src']
+    # # print(_image) 
+    # try:
+    #     _image = imgs['src']
+    #     print (imgs['src'])
+    # except:
+    #     print('no image source')
 
 
     return {
@@ -453,9 +478,9 @@ def getItemDataForJD(soup):###
         "id" : _id,
         "price" : _price,
         "img_src":_image,
-        "url" :_url,
         "type" : _type,
-        "review" : _review
+        "review" : _review,
+        "from" : _from
     }
     
 
@@ -560,22 +585,20 @@ if(ss == 4):
     page=1
     # base_url = ("https://api.jd.co.th/client.action?body={'page':'" + str(page) +"','keyword':'" + keyword + "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0")
     # print (base_url)
-    header_field = ["num","name","id","price","img_src","url","type","review"]
+    header_field = ["num","name","id","price","img_src","type","review","from"]
     
     csv.setHeader(header_field)
 
-    while page<page_count:
+    while page<=page_count:
         try:
-            base_url = ("https://api.jd.co.th/client.action?body={'page':'" + str(page) +"','keyword':'" + keyword + "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0")
-            # base_url = "https://api.jd.co.th/client.action?body={'page':'2','keyword':'อาหารแมว'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0"
+            base_url = ("https://api.jd.co.th/client.action?body={'pagesize':'60','page':'" + str(page) +"','keyword':'" + keyword + "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0")
+            # base_url = "https://api.jd.co.th/client.action?body={'page':'1','keyword':'อาหารแมว'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0"
             # browser.get(base_url + "&page=" +str(page))
             browser.get(base_url)
             WebDriverWait(browser, delay)
             print ("Page is ready")
             sleep(5)
 
-
-            sleep(5)
             browser.execute_script("window.scrollTo(0, 0);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
@@ -598,7 +621,7 @@ if(ss == 4):
         except TimeoutException:
             print ("Loading took too much time!-Try again")
 
-    # csv.addDataForJD(products)
+    csv.addDataForJD(products)
 
 
 

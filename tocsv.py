@@ -110,7 +110,7 @@ class Tocsv:
                         "review" : products[i]['review'],
                         "price" : products[i]['price'],
                         "img_src":products[i]['img_src'],
-                        "url" :products[i]['url'],
+                        "from" :products[i]['from'],
                         "type" : products[i]['type']
                         
                     })
