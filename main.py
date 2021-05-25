@@ -21,19 +21,16 @@ import json
 chrome_options = Options()
 
 # input url site
-print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip]->>")
+print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4 = JD]->>")
 ss = int(input())
 
 #page count
-print ("enter number of pages")
+print ("enter number of pages//posts")
 page_count = int(input())
 
 print ("Enter the keyword for the selected site.. ->>")
 keyword = input()
-# page = 1
-# base_url = input() + "&page=" +str(page)
-# base_url = "https://api.jd.co.th/client.action?body={'page':'2','keyword':'อาหารแมว'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0" 
-# print (base_url)
+
 
 count=0
 post =0
