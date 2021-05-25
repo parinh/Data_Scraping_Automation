@@ -1,3 +1,6 @@
+from jd import JD
+from lazada import Lazada
+from selenium.webdriver.chrome.webdriver import WebDriver
 from pantip import Pantip
 from bs4 import BeautifulSoup
 import bs4
@@ -13,12 +16,15 @@ from shopee import *
 from amazon import *
 from pantip import *
 from tocsv import Tocsv
+from jd import *
 
 #set
 chrome_options = Options()
 shopee = Shopee() 
 amazon = Amazon()
 pantip = Pantip()
+lazada = Lazada()
+jd = JD()
 
 
 # input url site
@@ -29,10 +35,8 @@ print ("enter number of pages")
 page_count = int(input())
 
 print ("Enter the url for the selected site.. ->>")
-# page = 1
-# base_url = input() + "&page=" +str(page)
 base_url = input() 
-# base_url = "https://www.amazon.com/s?k=chicken&ref=nb_sb_noss_2"
+
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -96,9 +100,7 @@ elif (ss == 2):
             browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
             sleep(5)
-            browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
-            # browser.execute_script("window.scrollTo(0,  window.scrollY + 200);")
+            browser.execute_script("window.scrollTo(0, 0);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
@@ -126,43 +128,123 @@ elif (ss == 2):
     amazon.toCsv(amazon.products)
 
 #pantip
-elif (ss == 3):
-    browser.get(base_url)
-    WebDriverWait(browser, delay)
-    print ("Page is ready")
-    sleep(5)
-
-    browser.execute_script("window.scrollTo(0, 0);")
-    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-    
-    pantip.getData(html,page_count,browser)
-    print(len(pantip.posts))
-    pantip.toCsv(pantip.posts)
-    
-    
-
-# test pantip
-# elif(ss == 3):
-#     ch = 0 
+# elif (ss == 3):
+#     browser.get(base_url)
 #     WebDriverWait(browser, delay)
 #     print ("Page is ready")
 #     sleep(5)
-#     browser.execute_script("window.scrollTo(0, 0);")
-#     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")   
-#     soup = BeautifulSoup(html, "html.parser")
-#     print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
-#     while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
-#         print(1)
-#         sh = browser.execute_script("return document.body.scrollHeight")
-#         browser.execute_script("window.scrollTo(0, %d);"% ch)
-#         sleep(2)
-#         ch += sh/3
-#         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-#         soup = BeautifulSoup(html, "html.parser")
 
-#     pantip.getPosts(soup)
+#     browser.execute_script("window.scrollTo(0, 0);")
+#     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
     
+#     pantip.getData(html,page_count,browser)
 #     print(len(pantip.posts))
+#     pantip.toCsv(pantip.posts)
+    
+
+#pantip
+elif(ss == 3):
+    ch = 0 
+    WebDriverWait(browser, delay)
+    print ("Page is ready")
+    sleep(5)
+    browser.execute_script("window.scrollTo(0, 0);")
+    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")   
+    soup = BeautifulSoup(html, "html.parser")
+    while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
+        sh = browser.execute_script("return document.body.scrollHeight")
+        browser.execute_script("window.scrollTo(0, %d);"% ch)
+        ch += sh/33
+
+        html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+        soup = BeautifulSoup(html, "html.parser")
+
+    pantip.getPosts(soup)
+    
+    pantip.toCsv(pantip.posts)
+
+
+#JD
+elif(ss == 4):
+    page = 0
+    while page<=page_count:
+        try:
+            # browser.get(base_url + "&page=" +str(page))
+            WebDriverWait(browser, delay)
+            sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
+            sleep(5)
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            jd.getProducts(html)
+
+            for product in jd.products:
+                for data in product:
+                    print(data)
+                print("##########")
+            
+            page+=1
+        
+         
+        except TimeoutException:
+            print ("Loading took too much time!-Try again")
+
+    # print(len(jd.products))
+
+#lazada
+elif(ss == 5):
+    page = 0
+    while page<=page_count:
+        try:
+            browser.get(base_url + "&page=" +str(page))
+            WebDriverWait(browser, delay)
+            sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
+            browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
+            sleep(5)
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            lazada.getProducts(html)
+
+            for product in lazada.products:
+                for data in product:
+                    print(data)
+                print("##########")
+            
+            page+=1
+        
+         
+        except TimeoutException:
+            print ("Loading took too much time!-Try again")
+    
+    print(len(lazada.products))
+    
+
+
+
+    
+
+
+
+
+
 
 
 

@@ -5,7 +5,7 @@ import requests
 from requests.api import post
 from requests.exceptions import ConnectionError, ReadTimeout
 import csv
-
+from datetime import datetime
 
 class Pantip:
 
@@ -19,29 +19,13 @@ class Pantip:
             
             self.posts.append(self.getItem(post_url['href']))
 
-    # def getData(self,html):
-    #     soup = BeautifulSoup(html, "html.parser") 
-    #     ch = 0 
-    
-
-    #     while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
-    #         sh = browser.execute_script("return document.body.scrollHeight")
-    #         browser.execute_script("window.scrollTo(0, %d);"% ch)
-    #         ch += sh/3
-    #         # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
-    #         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-    #         soup = BeautifulSoup(html, "html.parser")
-
-
-    #     for item_n in soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'): 
-    #         # print(sh)
-    #         link = item_n['href']
-    #         data = getItemDataForPantip(link)
-    #         products.append(data)
-    #         # print(type(ch))
 
     def getItem(self,link):
         post = []
+        title = "no title"
+        author = "no author"
+        description = "no story"
+        date_time = "no time"
         start_page = requests.get(link)
         start_page.encoding = 'utf-8'
         tree = html.fromstring(start_page.text)
@@ -61,25 +45,34 @@ class Pantip:
         # author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
         # post.append(author_id)
 
-        likeCount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
-        post.append(likeCount)
+        like_count = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
+        post.append(like_count)
 
-        emoCount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
-        post.append(emoCount)
+        emo_count = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
+        post.append(emo_count)
         # allEmos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
         # post.append(allEmos)
         # tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item"]/text()')
         # post.append(tags)
-        dateTime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
-        post.append(dateTime)
+        date_time = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
+        post.append(date_time)
 
+        img = tree.xpath('//img[@class="img-in-post"]/@src')
+        if (len(img) > 0):
+            img = img[0]
+        else:
+            img = "no image"
+
+        post.append(img)
         post.append(link)
 
         return post
 
     def toCsv(self,posts):
+        
         with open('pantip-search.csv', 'w', encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","id","title","description","author","like","emo","date-time","url"]
+            head_csv = ["num","id","title","description","author","like","emo","date-time","img","url"]
+            posts.sort(key=lambda x: datetime.strptime(x[6], '%m/%d/%Y %H:%M:%S'),reverse = True)
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
@@ -95,85 +88,13 @@ class Pantip:
                         "like":posts[i][4],
                         "emo":posts[i][5],
                         "date-time":posts[i][6],
-                        "url":posts[i][7]
+                        "img":posts[i][7],
+                        "url":posts[i][8]
                         
                     }
                 )
         
         
-    def getData(self,html,page_count,browser):
-        print ("get data Pantip")
-        soup = BeautifulSoup(html, "html.parser") 
-        ch = 0 
-        
-
-        while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
-            sh = browser.execute_script("return document.body.scrollHeight")
-            browser.execute_script("window.scrollTo(0, %d);"% ch)
-            ch += sh/3
-            # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
-            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            soup = BeautifulSoup(html, "html.parser")
-        
-
-        for item_n in soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'): 
-            # print(sh)
-            link = item_n['href']
-            data = self.getItem(link)
-            self.posts.append(data)
-            # print(type(ch))
     
-#     def getItemDataForPantip(link):
-
-#     _title = "no title"
-#     _author = "no author"
-#     _author_id = "no author id"
-#     _story = "no story"
-#     _likecount = "no like"
-#     _emocount = "no emo"
-#     _allemos = "no emos"
-#     _tags = "no tags"
-#     _datetime = "no time"
-#     _post_link = "no link"
-#     _img_src = "no img"
-
-#     start_page = requests.get(link)
-#     start_page.encoding = 'utf-8'
-
-#     # print(start_page.text)
-#     # print("##################################")
-#     # print(htmllxml)
-
+            
     
-#     tree = htmllxml.fromstring(start_page.text)
-
-#     _post_link = link
-#     _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
-#     _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
-#     _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
-#     _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
-#     _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
-#     _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
-#     _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
-#     _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item cs-tag_topic_title"]/text()')
-#     print(_tags)
-#     _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
-#     _img = tree.xpath('//img[@class="img-in-post"]/@src')
-#     if (len(_img) > 0):
-#         print(_img[0])
-#         _img_src = _img[0]
-
-#     return{
-#         "title" : _title,
-#         "author" : _author,
-#         "author_id" : _author_id,
-#         "story" : _story,
-#         "likeCount" :_likecount,
-#         "emocount" : _emocount,
-#         "allemos" : _allemos,
-#         "tags" : _tags,
-#         "dateTime" : _datetime,
-#         "post_link" : _post_link,
-#         "img_src" : _img_src
-
-#     }
