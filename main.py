@@ -51,9 +51,6 @@ chrome_options.add_experimental_option("prefs", {
 browser = webdriver.Chrome(executable_path = r"/Users/mcmxcix/chromedriver",
                           options = chrome_options)
 delay = 5 
-items_rating, img_src ,items_cost = [],[],[]
-item_name, items_sold, discount_percent = [], [], []
-items_review , item_id , items_form= [],[], []
 item_url = []
 products = []
 csv = Tocsv("myfile.csv")
@@ -136,41 +133,27 @@ def getItemDataForShopee(soup):
     # Get Name
     name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
     if (name):
-        item_name.append(name.text)
         _name = name.text
         print(name.get_text())
-    else:
-        item_name.append("no name")
-        print("no name")
 
     # Price
     price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
     if (price):
-        items_cost.append(price.text)
         _price = price.text
-        print(price.get_text())
-    else:
-        items_cost.append("no cost")
-        print("no cost")
 
     #type
     __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
     if(__type):
         _type = __type.text
-    else:
-        print("general")
 
     __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
     print(__type)
     if(__type):
         _type = "shopee mall"
-    else:
-        print("general")
 
     # sold/month
     sold = soup.select_one("div.go5yPW")
     if (sold.text):
-        items_sold.append(sold.text)
         
         if "พัน" not in sold.text:
             _sold = float((sold.text).split(" ")[1])
@@ -181,7 +164,6 @@ def getItemDataForShopee(soup):
             print(_sold)
     else:
         _sold = "no sold"
-        print("no item sold")
 
     #star
     for star in soup.select('div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit'):
@@ -195,18 +177,13 @@ def getItemDataForShopee(soup):
     #from
     __from = soup.select_one("div._2CWevj")
     if (__from):
-        items_form.append(__from.text)
         _from = __from.text
         print(__from.get_text())
-    else:
-        items_form.append("no data")
-        print("no data")    
 
     # find img path
     imgs = soup.select_one("div._25_r8I._2SHkSu > img")
    
     try:
-        img_src.append(imgs['src'])
         _image = imgs['src']
         print (imgs['src'])
     except:
@@ -248,54 +225,36 @@ def getItemDataForAmazonSearch(soup):
     # Get Name
     name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
     if (name):
-        item_name.append(name.text)
         _name = name.text
         # print(name.get_text())
-    else:
-        item_name.append("no name")
         # print("no name")
 
     #item id
     item_code = soup['data-asin']
     if (item_code):
-        item_id.append(item_code)
         _id = item_code
-    else:
-        item_id.append("no data")
     
     # Price
     price = soup.select_one("span.a-price > span.a-offscreen")
     if (price):
-        items_cost.append(price.text)
         _price = price.text
         # print(price.get_text())
-    else:
-        items_cost.append("out of stock")
-        # print("out of stock")
 
     # rating
     rating = soup.select_one("i > span.a-icon-alt")
     if (rating):
-        items_rating.append(rating.text)
         _rating = float((rating.text).split(" ")[0])
         # print(rating.get_text())
-    else:
-        items_rating.append("no rating found")
-        # print("no rating found")
 
     #review
     review = soup.select_one("a.a-link-normal > span.a-size-base")
     if (review):
-        items_review.append(review.text)
         _review = review.text
         # print(review.get_text())
-    else:
-        items_review.append("no review")
-        # print("no review")
+
         
     imgs = soup.select_one("img.s-image")
     if (imgs):
-        img_src.append(imgs['src'])
         _image = imgs['src']
     # print(imgs['src'])
 
@@ -324,9 +283,7 @@ def getItemDataForAmazonSearch(soup):
         "url": _url,
         "bestseller" : _bestseller
     }
-    
 
-    # print ("###########################")
 
 # #################################################################################################
 
@@ -383,7 +340,7 @@ def getItemDataForPantip(link):
 
     }
     ###################################################################################
-def getItemDataForJD(item):###
+def getItemDataForJD(item):
 
     _name = 'no name'
     _price = 'no price'
@@ -430,45 +387,6 @@ def getItemDataForJD(item):###
     except:
         print("no from")
     
-    
-    
-    
-    
-    # # Price
-    # price = soup.select_one("div.c3gUW0 > span.c13VH6")
-    # if (price):
-    #     items_cost.append(price.text)
-    #     _price = price.text
-    #     print(price.get_text())
-    # else:
-    #     items_cost.append("no cost")
-    #     print("no cost")
-
-    #type
-    # __type = soup.select_one("div.p-shop > a.p-shop-name")
-    # if(__type):
-    #     _type = __type.text
-    # else:
-    #     print("general")
-
-    # #review
-    # __review = soup.select_one("a.comment-num")
-    # if (__review):
-    #     _review = int((__review.text).split("(")[1].split(")")[0])
-    #     print(_review)
-    # else:
-    #     print("no review")    
-
-    # # find img path
-    # imgs = soup.select_one("img.ui-switchable-imgscroll-img.prepost.pro_resize")
-    # # _image = imgs['src']
-    # # print(_image) 
-    # try:
-    #     _image = imgs['src']
-    #     print (imgs['src'])
-    # except:
-    #     print('no image source')
-
 
     return {
         "name" : _name,
@@ -493,6 +411,7 @@ if(ss == 1):
             browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
             print ("Page is ready")
+            print("on page %d of %d" % (page+1,page_count))
             sleep(5)
             browser.execute_script("window.scrollTo(0, 0);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
@@ -531,6 +450,7 @@ elif (ss == 2):
             browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
             print ("Page is ready")
+            print("on page %d of %d" % (page,page_count))
             
             sleep(5)
             browser.execute_script("window.scrollTo(0, 0);")
@@ -594,6 +514,7 @@ if(ss == 4):
             browser.get(base_url)
             WebDriverWait(browser, delay)
             print ("Page is ready")
+            print("on page %d of %d" % (page,page_count))
             sleep(5)
 
             browser.execute_script("window.scrollTo(0, 0);")
