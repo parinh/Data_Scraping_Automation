@@ -67,8 +67,6 @@ class Tocsv:
                     })
                 self.num +=1
 
-    def addNum (self):
-        self.num += 1
 
     
     def addDataForPantip (self,products):
@@ -99,8 +97,6 @@ class Tocsv:
                     })
                 self.num +=1
 
-    def addNum (self):
-        self.num += 1
 
     def addDataForJD (self,products):
         # products.sort(key=lambda x: datetime.strptime(x['dateTime'], "%m/%d/%Y %H:%M:%S") ,reverse = True)
@@ -124,5 +120,26 @@ class Tocsv:
                     })
                 self.num +=1
 
-    def addNum (self):
-        self.num += 1
+    
+    def addDataForFacebook (self,products):
+        # products.sort(key=lambda x: datetime.strptime(x['dateTime'], "%m/%d/%Y %H:%M:%S") ,reverse = True)
+        with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
+            thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
+
+            for i in range(len(products)):
+                
+                thewriter.writerow(
+                    {
+                        "num": self.num,
+                        "user_name" : products[i]['user_name'],
+                        "comment" : products[i]['comment'],
+                        "date" : products[i]['date'],
+                        "image_h" : products[i]['image_h'],
+                        "image_l":products[i]['image_l'],
+                        "reaction" :products[i]['reaction'],
+                        "post_url" : products[i]['post_url'],
+                        "post_id" : products[i]['post_id'],
+                        "post_text" : products[i]['post_text']
+                        
+                    })
+                self.num +=1

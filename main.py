@@ -143,6 +143,16 @@ def getDataFromPostForJD(html):
         data = getItemDataForJD(item)
         products.append(data)
 
+def getDataFromPostForFacebook(keyword,page_count):
+    print ("get data from facebook")
+
+    for post in get_posts(keyword,pages = page_count):
+        data = getItemDataForFacebook(post)
+        products.append(data)
+
+
+
+
         
 
 #sort data form all item na
@@ -463,22 +473,54 @@ def getItemDataForJD(item):
         "url" : _url
     }
     ##########################################################
-def getItemDataForFacebook():
-    _available = False
+def getItemDataForFacebook(post):
+    _user_name = "no name"
     _comment = 0
     _date = "no time"
-    _image = []
-    _likes = 0
+    _image_h = []
+    _image_l = []
+    _reactions = 0
     _post_url = "no link"
     _post_id = "no post id"
     _post_text = "no text"
 
-
-
+    print(post)
+    print('++++++++++++++++++++++++++++++++++++++++++++')
+    _post_id = post['post_id']
+    print(_post_id)
+    _post_text = post['post_text']
+    print(_post_text)
+    _date = post['time']
+    print(_date)
+    _image_h = post['images']
+    print(_image_h)
+    _image_l = post['images_lowquality']
+    print(_image_l)
+    _reactions = post.get("reactions")
+    print(_reactions)
+    _comment = post['comments']
+    print(_comment)
+    _post_url = post['post_url']
+    print(_post_url)
+    _user_name = post['username']
+    print(_user_name)
     
-    for post in get_posts(keyword,page= page_count):
-        print(post)
-        
+
+    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
+    return{
+        "user_name":_user_name,
+        "comment":_comment,
+        "date" :_date,
+        "image_h" :_image_h,
+        "image_l" :_image_l,
+        "reaction":_reactions,
+        "post_url":_post_url,
+        "post_id" :_post_id,
+        "post_text":_post_text
+    }
+
+
 
     ###########################################################
 
@@ -580,7 +622,7 @@ elif (ss == 3):
     getDataFormPostForPantip(html)
     csv.addDataForPantip(products)
 
-#JD6
+#JD
 elif(ss == 4):
     page=1
     header_field = ["num","name","id","price","img_src","type","review","from","url"]
@@ -621,12 +663,16 @@ elif(ss == 4):
     csv.addDataForJD(products)
 
 elif (ss ==5):
+    header_field = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text"]
+    
+    csv.setHeader(header_field)
     try:
-        getItemDataForFacebook()
+        getDataFromPostForFacebook(keyword,page_count)
 
     except TimeoutException:
             print ("Loading took too much time!-Try again")
 
+    csv.addDataForFacebook(products)
 
 
 browser.close()
