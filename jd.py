@@ -67,8 +67,6 @@ class JD:
             product.append(_image)
         except:
             product.append(_image)
-
-
         
         try:
             _from = item['localDelivery']
@@ -76,11 +74,17 @@ class JD:
         except:
             product.append(_from)
 
+        url = "https://www.jd.co.th/product/"+str(item['spuId'])+".html"
+        product.append(url)
+
+
+
+
         return product
 
     def toCsv(self,products):
-        with open('jd-search.csv', encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","id","name","price","type","review","rank","img_src","url"]
+        with open('jd-search.csv','w', encoding='utf-8',newline='') as csvfile:
+            head_csv = ["num","id","name","price","type","review","from","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
@@ -92,9 +96,9 @@ class JD:
                         "id": products[i][0],
                         "name": products[i][1],
                         "price": products[i][2],
-                        "rating": products[i][3],
+                        "type": products[i][3],
                         "review":products[i][4],
-                        "rank":products[i][5],
+                        "from":products[i][5],
                         "img_src":products[i][6],
                         "url":products[i][7]
                     }

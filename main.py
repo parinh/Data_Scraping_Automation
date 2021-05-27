@@ -197,11 +197,7 @@ elif(ss == 4):
         except TimeoutException:
             print ("Loading took too much time!-Try again")
 
-    print(len(jd.products))
-    for product in jd.products:
-        for data in product:
-            print(data)
-        print("##########")
+    jd.toCsv(jd.products)
 
 
 # elif(ss == 5):
