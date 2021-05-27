@@ -17,6 +17,8 @@ from amazon import *
 from pantip import *
 from tocsv import Tocsv
 from jd import *
+from facebook_scraper import *
+from facebook import *
 
 #set
 chrome_options = Options()
@@ -25,10 +27,11 @@ amazon = Amazon()
 pantip = Pantip()
 lazada = Lazada()
 jd = JD()
+facebook = Facebook()
 
 
 # input url site
-print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4= jd][5 = lazada]->>")
+print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4= jd][5 = facebook]->>")
 ss = int(input())
 
 #close all popup
@@ -199,42 +202,22 @@ elif(ss == 4):
 
     jd.toCsv(jd.products)
 
+#facebook
+elif(ss == 5):
+    print ("Enter page ->>")
+    page_id = input()
+    print("Enter number of pages")
+    page_count = int(input())
 
-# elif(ss == 5):
-#     page = 0
-#     while page<=page_count:
-#         try:
-#             browser.get(base_url + "&page=" +str(page))
-#             WebDriverWait(browser, delay)
-#             sleep(5)
-#             browser.execute_script("window.scrollTo(0, 0);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 2);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 3);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 4);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 5);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 6);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 7);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 8);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
-#             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
-#             sleep(5)
-#             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-#             lazada.getProducts(html)
+    facebook.getPosts(page_id,page_count)
+    print(len(facebook.posts))
+    # for post in facebook.posts:
+    #     print(post['text'])
 
-#             for product in lazada.products:
-#                 for data in product:
-#                     print(data)
-#                 print("##########")
-            
-#             page+=1
-        
-         
-#         except TimeoutException:
-#             print ("Loading took too much time!-Try again")
-    
-#     print(len(lazada.products))
-    
+    facebook.toCsv(facebook.posts)
+
+   
+     
 
 
 browser.close()
