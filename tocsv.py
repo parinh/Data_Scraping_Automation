@@ -21,6 +21,9 @@ class Tocsv:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
             thewriter.writeheader()
 
+
+
+
     def addDataForShopee (self,products):
         with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
@@ -37,7 +40,8 @@ class Tocsv:
                         "from" :products[i]['from'],
                         "img_src":products[i]['img_src'],
                         "url" :products[i]['url'],
-                        "type" : products[i]['type']
+                        "type" : products[i]['type'],
+                        "id" :products[i]['id']
                     })
                 self.num +=1
         # self.thewriter.writerows({"num": self.count,"name": products[i]['name'],"price": products[i]['price'],"type": products[i]['type'],"sold": products[i]['sold'],"from": products[i]['from'],"img_src": products[i]['image'],"url" : products[i]['url']})
@@ -88,7 +92,10 @@ class Tocsv:
                         "dateTime" : products[i]['dateTime'],
                         "post_link" : products[i]['post_link'],
                         "img_src" : products[i]['img_src'],
-                        "post_id" : products[i]['post_id']
+                        "post_id" : products[i]['post_id'],
+                        "meaning" : products[i]['meaning'],
+                        "goodWords" : products[i]['goodWords'],
+                        "badWords" : products[i]['badWords']
                     })
                 self.num +=1
 
@@ -111,7 +118,8 @@ class Tocsv:
                         "price" : products[i]['price'],
                         "img_src":products[i]['img_src'],
                         "from" :products[i]['from'],
-                        "type" : products[i]['type']
+                        "type" : products[i]['type'],
+                        "url" : products[i]['url']
                         
                     })
                 self.num +=1

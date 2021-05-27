@@ -14,8 +14,35 @@ from lxml import html as htmllxml
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import json
+from os import path
+from pythainlp import sent_tokenize, word_tokenize,Tokenizer
+from pythainlp.util import dict_trie
+from pythainlp.corpus.common import thai_words
+from facebook_scraper import get_posts
 
+#add new word to custom
+newWords = ["ไม่ดี","ตี"]
+custom_words_list = set(thai_words())
+custom_words_list.update(newWords)
+trie = dict_trie(dict_source=custom_words_list)
+custom_tokenizer = Tokenizer(custom_dict=trie, engine='longest',keep_whitespace=False)
 
+#locate words file and append to array
+positive_vocab = []
+negative_vocab = []
+swear_words = []
+
+with open("words/negative-sentiment-words.txt", 'r') as f:
+    for line in f:
+        negative_vocab.append(line.rstrip())
+
+with open("words/positive-sentiment-words.txt", 'r') as f:
+    for line in f:
+        positive_vocab.append(line.rstrip())
+        
+with open("words/swear-words.txt", 'r') as f:
+    for line in f:
+        swear_words.append(line.rstrip())
 
 #set
 chrome_options = Options()
@@ -129,6 +156,7 @@ def getItemDataForShopee(soup):
     _url = 'no url'
     _type = 'general'
     _star = 0
+    _id = "no id"
 
     # Get Name
     name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
@@ -193,6 +221,8 @@ def getItemDataForShopee(soup):
     url = soup.select_one("a")
     item_url.append("https://shopee.co.th/"+url['href'])
     _url = "https://shopee.co.th/"+url['href']
+    _id = (url['href']).split(".")[len((url['href']).split("."))-1]
+    print(_id)
     print(url['href'])
 
     return {
@@ -203,7 +233,8 @@ def getItemDataForShopee(soup):
         "img_src":_image,
         "url" :_url,
         "type" : _type,
-        "star" : _star
+        "star" : _star,
+        "id" : _id
     }
     
 
@@ -301,6 +332,11 @@ def getItemDataForPantip(link):
     _post_link = "no link"
     _img_src = "no img"
     _post_id = "no post id"
+    _meaning = "notthing"
+    _good_words = []
+    _bad_words = []
+    pos = 0
+    neg = 0
 
     start_page = requests.get(link)
     start_page.encoding = 'utf-8'
@@ -313,11 +349,34 @@ def getItemDataForPantip(link):
     _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
     _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
     _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
+    words = custom_tokenizer.word_tokenize(_story)
+    
+    for word in words:
+        if word in positive_vocab:
+            pos = pos + 1
+            _good_words.append(word)
+            print(word)
+        if word in negative_vocab or word in swear_words:
+            neg = neg + 1
+            _bad_words.append(word)
+            print(word)
+
+    if pos > neg:
+        _meaning = 'positive'
+        print('positive')
+    elif neg > pos:
+        _meaning = "negative"
+        print('negative')
+    else:
+        _meaning = 'neutral'
+        print('neutral')
+
+
+
     _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
     _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
     _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
     _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item cs-tag_topic_title"]/text()')
-    print(_tags)
     _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
     _img = tree.xpath('//img[@class="img-in-post"]/@src')
     if (len(_img) > 0):
@@ -336,7 +395,10 @@ def getItemDataForPantip(link):
         "dateTime" : _datetime,
         "post_link" : _post_link,
         "img_src" : _img_src,
-        "post_id" : _post_id
+        "post_id" : _post_id,
+        "meaning" : _meaning,
+        "goodWords" : _good_words,
+        "badWords" : _bad_words
 
     }
     ###################################################################################
@@ -349,6 +411,7 @@ def getItemDataForJD(item):
     _id = 'no id'
     _review = "no review"
     _type = 'general'
+    _url = "no url"
 
     # Get Name
     try:
@@ -369,6 +432,7 @@ def getItemDataForJD(item):
 
     try:
         _id = item['spuId']
+        _url = "https://www.jd.co.th/products/"+item['id']+".html"
     except:
         print("no id")
 
@@ -395,14 +459,33 @@ def getItemDataForJD(item):
         "img_src":_image,
         "type" : _type,
         "review" : _review,
-        "from" : _from
+        "from" : _from,
+        "url" : _url
     }
+    ##########################################################
+def getItemDataForFacebook():
+    _available = False
+    _comment = 0
+    _date = "no time"
+    _image = []
+    _likes = 0
+    _post_url = "no link"
+    _post_id = "no post id"
+    _post_text = "no text"
+
+
+
     
+    for post in get_posts(keyword,page= page_count):
+        print(post)
+        
+
+    ###########################################################
 
 # shopee set
 if(ss == 1):
     base_url = "https://shopee.co.th/search?keyword=" + keyword
-    header_field = ["num","name","price","type","star","sold","from","img_src","url"]
+    header_field = ["num","name","price","type","star","sold","from","img_src","url","id"]
     page=0
     csv.setHeader(header_field)
 
@@ -477,7 +560,7 @@ elif (ss == 2):
 #pantip
 elif (ss == 3):
     base_url = "https://pantip.com/search?q=" + keyword
-    header_field = ["num","title","author","author_id","story","likeCount","emocount","allemos","tags","dateTime","post_link","img_src","post_id"]
+    header_field = ["num","title","author","author_id","story","likeCount","emocount","allemos","tags","dateTime","post_link","img_src","post_id","meaning","goodWords","badWords"]
     csv.setHeader(header_field)
     browser.get(base_url)
     WebDriverWait(browser, delay)
@@ -497,20 +580,16 @@ elif (ss == 3):
     getDataFormPostForPantip(html)
     csv.addDataForPantip(products)
 
-#JD
-if(ss == 4):
+#JD6
+elif(ss == 4):
     page=1
-    # base_url = ("https://api.jd.co.th/client.action?body={'page':'" + str(page) +"','keyword':'" + keyword + "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0")
-    # print (base_url)
-    header_field = ["num","name","id","price","img_src","type","review","from"]
+    header_field = ["num","name","id","price","img_src","type","review","from","url"]
     
     csv.setHeader(header_field)
 
     while page<=page_count:
         try:
             base_url = ("https://api.jd.co.th/client.action?body={'pagesize':'60','page':'" + str(page) +"','keyword':'" + keyword + "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0")
-            # base_url = "https://api.jd.co.th/client.action?body={'page':'1','keyword':'อาหารแมว'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0"
-            # browser.get(base_url + "&page=" +str(page))
             browser.get(base_url)
             WebDriverWait(browser, delay)
             print ("Page is ready")
@@ -540,6 +619,13 @@ if(ss == 4):
             print ("Loading took too much time!-Try again")
 
     csv.addDataForJD(products)
+
+elif (ss ==5):
+    try:
+        getItemDataForFacebook()
+
+    except TimeoutException:
+            print ("Loading took too much time!-Try again")
 
 
 
