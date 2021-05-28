@@ -9,7 +9,7 @@ class Facebook:
     def getPosts(self,page_id,page_count):
         for post in get_posts(account=page_id,pages=page_count):
             self.posts.append(post)
-            # print(post['text'])
+            # print(post)
         
     def toCsv(self,posts):
         with open('csv/facebook-posts.csv','w', encoding='utf-8',newline='') as csvfile:

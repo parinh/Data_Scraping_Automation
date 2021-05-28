@@ -99,7 +99,7 @@ class Shopee:
 
     
     def toCsv(self,products):
-        with open('csv/shopee-search.csv', 'a',encoding='utf-8',newline='') as csvfile:
+        with open('csv/shopee-search.csv', 'w',encoding='utf-8',newline='') as csvfile:
             head_csv = ["num","name","price","type","sold","star","from","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()

@@ -1,10 +1,9 @@
+from nlp import NLP
 from jd import JD
 from lazada import Lazada
 from selenium.webdriver.chrome.webdriver import WebDriver
 from pantip import Pantip
 from bs4 import BeautifulSoup
-import bs4
-import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -15,12 +14,19 @@ from time import sleep
 from shopee import *
 from amazon import *
 from pantip import *
-from tocsv import Tocsv
+from tocsv import *
 from jd import *
 from facebook_scraper import *
 from facebook import *
 
+def printArr(arr):
+    for i in arr:
+        for j in i:
+            print(j)
+        print("##########")
+
 #set
+delay = 5
 chrome_options = Options()
 shopee = Shopee() 
 amazon = Amazon()
@@ -28,9 +34,12 @@ pantip = Pantip()
 lazada = Lazada()
 jd = JD()
 facebook = Facebook()
+nlp = NLP()
 
 
-# input url site
+
+
+# select site
 print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4= jd][5 = facebook]->>")
 ss = int(input())
 
@@ -49,7 +58,7 @@ chrome_options.add_experimental_option("prefs", {
 browser = webdriver.Chrome(executable_path = r"C:/Users/Bell/Downloads/chromedriver_win32/chromedriver.exe",
                           options = chrome_options)
 # browser.get(base_url)
-delay = 5 
+ 
 
 # for shopee
 if(ss == 1):
@@ -80,14 +89,8 @@ if(ss == 1):
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             shopee.getData(html)
 
-            # for product in products:
-            #     for data in product:
-            #         print(data)
-            #     print("##########")
-            
             page+=1
-        
-         
+    
         except TimeoutException:
             print ("Loading took too much time!-Try again")
     
@@ -124,11 +127,6 @@ elif (ss == 2):
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             amazon.getData(html)    
 
-            # for product in products:
-            #     for data in product:
-            #         print(data)
-            #     print("##########")
-                
             page+=1
         except TimeoutException:
             print ("Loading took too much time!-Try again")
@@ -159,8 +157,11 @@ elif(ss == 3):
         soup = BeautifulSoup(html, "html.parser")
 
     pantip.getPosts(soup)
+    for post in pantip.posts:
+        nlp.check_words(post[])
+    # print(pantip.posts)
     
-    pantip.toCsv(pantip.posts)
+    # pantip.toCsv(pantip.posts)
 
 
 #JD
