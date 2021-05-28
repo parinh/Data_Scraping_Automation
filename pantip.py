@@ -70,7 +70,7 @@ class Pantip:
 
     def toCsv(self,posts):
         
-        with open('pantip-search.csv', 'w', encoding='utf-8',newline='') as csvfile:
+        with open('csv/pantip-search.csv', 'w', encoding='utf-8',newline='') as csvfile:
             head_csv = ["num","id","title","description","author","like","emo","date-time","img","url"]
             posts.sort(key=lambda x: datetime.strptime(x[6], '%m/%d/%Y %H:%M:%S'),reverse = True)
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)

@@ -76,7 +76,7 @@ class Amazon:
 
 
     def toCsv(self,products):
-        with open('amazon-search.csv', 'w', newline='') as csvfile:
+        with open('csv/amazon-search.csv', 'w', newline='') as csvfile:
             head_csv = ["num","id","name","price","rating","review","rank","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()

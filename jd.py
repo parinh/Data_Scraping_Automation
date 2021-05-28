@@ -83,7 +83,7 @@ class JD:
         return product
 
     def toCsv(self,products):
-        with open('jd-search.csv','w', encoding='utf-8',newline='') as csvfile:
+        with open('csv/jd-search.csv','w', encoding='utf-8',newline='') as csvfile:
             head_csv = ["num","id","name","price","type","review","from","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()

@@ -12,7 +12,7 @@ class Facebook:
             # print(post['text'])
         
     def toCsv(self,posts):
-        with open('facebook-posts.csv','w', encoding='utf-8',newline='') as csvfile:
+        with open('csv/facebook-posts.csv','w', encoding='utf-8',newline='') as csvfile:
             head_csv = ["num","id","text","like","comment","shared","date_time","img_src","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
