@@ -139,7 +139,11 @@ class Tocsv:
                         "reaction" :products[i]['reaction'],
                         "post_url" : products[i]['post_url'],
                         "post_id" : products[i]['post_id'],
-                        "post_text" : products[i]['post_text']
+                        "post_text" : products[i]['post_text'],
+                        "meaning" : products[i]['meaning'],
+                        "goodWords" : products[i]['goodWords'],
+                        "badWords" : products[i]['badWords']
+
                         
                     })
                 self.num +=1

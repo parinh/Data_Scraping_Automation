@@ -21,11 +21,11 @@ from pythainlp.corpus.common import thai_words
 from facebook_scraper import get_posts
 
 #add new word to custom
-newWords = ["ไม่ดี","ไม่พอใจ"]
+newWords = ["ไม่ดี","ไม่พอใจ","ชั่วคราว"]
 custom_words_list = set(thai_words())
 custom_words_list.update(newWords)
 trie = dict_trie(dict_source=custom_words_list)
-custom_tokenizer = Tokenizer(custom_dict=trie, engine='longest',keep_whitespace=False)
+custom_tokenizer = Tokenizer(custom_dict=trie, engine='newmm',keep_whitespace=False)
 
 #locate words file and append to array
 positive_vocab = []
@@ -490,12 +490,45 @@ def getItemDataForFacebook(post):
     _post_url = "no link"
     _post_id = "no post id"
     _post_text = "no text"
+    _meaning = "nothing"
+    _good_words = []
+    _bad_words = []
+    pos = 0
+    neg = 0
 
     # print(post)
     print('++++++++++++++++++++++++++++++++++++++++++++')
     _post_id = post['post_id']
     # print(_post_id)
     _post_text = post['post_text']
+
+    words = custom_tokenizer.word_tokenize(_post_text)
+    for word in words:
+        if word in positive_vocab:
+            if word not in _good_words:
+                pos = pos + 1
+            else:
+                pos = pos + 0.5
+            _good_words.append(word)
+            print(word)
+        if word in negative_vocab or word in swear_words:
+            if word not in _bad_words:
+                neg = neg + 1
+            else:
+                neg = neg + 0.5
+            _bad_words.append(word)
+            print(word)
+
+    if pos > neg:
+        _meaning = 'positive'
+        print('positive')
+    elif neg > pos:
+        _meaning = "negative"
+        print('negative')
+    else:
+        _meaning = 'neutral'
+        print('neutral')
+    
     # print(_post_text)
     _date = post['time']
     # print(_date)
@@ -524,7 +557,10 @@ def getItemDataForFacebook(post):
         "reaction":_reactions,
         "post_url":_post_url,
         "post_id" :_post_id,
-        "post_text":_post_text
+        "post_text":_post_text,
+        "goodWords" : _good_words,
+        "badWords" : _bad_words,
+        "meaning" : _meaning
     }
 
 
@@ -670,7 +706,7 @@ elif(ss == 4):
     csv.addDataForJD(products)
 
 elif (ss ==5):
-    header_field = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text"]
+    header_field = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text","meaning","goodWords","badWords"]
     
     csv.setHeader(header_field)
     try:
