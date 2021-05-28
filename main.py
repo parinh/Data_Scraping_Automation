@@ -64,9 +64,9 @@ browser = webdriver.Chrome(executable_path = r"C:/Users/Bell/Downloads/chromedri
 if(ss == 1):
     print ("enter number of pages")
     page_count = int(input())
-
-    print ("Enter the url for the selected site.. ->>")
-    base_url = input() 
+    print ("Enter the keyword for the selected site.. ->>")
+    keyword = input()
+    base_url = "https://shopee.co.th/search?keyword=" + keyword
 
     page = 0
     while page<=page_count:
@@ -102,9 +102,9 @@ if(ss == 1):
 elif (ss == 2):
     print ("enter number of pages")
     page_count = int(input())
-    print ("Enter the url for the selected site.. ->>")
-    base_url = input() 
-
+    print ("Enter the keyword for the selected site.. ->>")
+    keyword = input()
+    base_url = "https://www.amazon.com/s?k=" + keyword
     page=0
     while page<=page_count:
         try:
@@ -138,8 +138,9 @@ elif (ss == 2):
 elif(ss == 3):
     print ("enter number of pages")
     page_count = int(input())
-    print ("Enter the url for the selected site.. ->>")
-    base_url = input() 
+    print ("Enter the keyword for the selected site.. ->>")
+    keyword = input() 
+    base_url = "https://pantip.com/search?q=" + keyword
     browser.get(base_url)
     ch = 0 
     WebDriverWait(browser, delay)
@@ -157,11 +158,11 @@ elif(ss == 3):
         soup = BeautifulSoup(html, "html.parser")
 
     pantip.getPosts(soup)
-    for post in pantip.posts:
-        nlp.check_words(post[])
+    # for post in pantip.posts:
+    #     nlp.check_words(post[])
     # print(pantip.posts)
     
-    # pantip.toCsv(pantip.posts)
+    pantip.toCsv(pantip.posts)
 
 
 #JD
