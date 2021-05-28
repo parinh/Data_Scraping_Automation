@@ -137,7 +137,7 @@ def getDataFromPostForJD(html):
     #big loop
     item_n = soup.select_one('pre')
     info = json.loads(item_n.text)
-    print(len(info['wareInfo']))
+    # print(len(info['wareInfo']))
     for item in info['wareInfo'] :
         # print (item['wname'])
         data = getItemDataForJD(item)
@@ -172,7 +172,7 @@ def getItemDataForShopee(soup):
     name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
     if (name):
         _name = name.text
-        print(name.get_text())
+        # print(name.get_text())
 
     # Price
     price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
@@ -185,7 +185,7 @@ def getItemDataForShopee(soup):
         _type = __type.text
 
     __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
-    print(__type)
+    # print(__type)
     if(__type):
         _type = "shopee mall"
 
@@ -195,35 +195,35 @@ def getItemDataForShopee(soup):
         
         if "พัน" not in sold.text:
             _sold = float((sold.text).split(" ")[1])
-            print(_sold)
+            # print(_sold)
         
         else:
             _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
-            print(_sold)
+            # print(_sold)
     else:
         _sold = "no sold"
 
     #star
     for star in soup.select('div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit'):
         # print(star)
-        print(star['style'])
+        # print(star['style'])
         _star = _star + float(star['style'].split(" ")[1].split("%")[0]) 
 
     _star = round(_star / 100,4)
-    print(_star)  
+    # print(_star)  
 
     #from
     __from = soup.select_one("div._2CWevj")
     if (__from):
         _from = __from.text
-        print(__from.get_text())
+        # print(__from.get_text())
 
     # find img path
     imgs = soup.select_one("div._25_r8I._2SHkSu > img")
    
     try:
         _image = imgs['src']
-        print (imgs['src'])
+        # print (imgs['src'])
     except:
         print('no image source')
 
@@ -232,8 +232,8 @@ def getItemDataForShopee(soup):
     item_url.append("https://shopee.co.th/"+url['href'])
     _url = "https://shopee.co.th/"+url['href']
     _id = (url['href']).split(".")[len((url['href']).split("."))-1]
-    print(_id)
-    print(url['href'])
+    # print(_id)
+    # print(url['href'])
 
     return {
         "name" : _name,
@@ -301,7 +301,7 @@ def getItemDataForAmazonSearch(soup):
 
     #best?
     bestseller = soup.select_one("div.a-row.a-badge-region > span.a-badge > span.a-badge-label > span.a-badge-label-inner.a-text-ellipsis > span.a-badge-text ")
-    print(bestseller)
+    # print(bestseller)
     if(bestseller):
         _bestseller = bestseller.text
     else:
@@ -360,7 +360,7 @@ def getItemDataForPantip(link):
     _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
     _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
     words = custom_tokenizer.word_tokenize(_story)
-    print(words)
+    # print(words)
     
     for word in words:
         if word in positive_vocab:
@@ -397,7 +397,7 @@ def getItemDataForPantip(link):
     _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
     _img = tree.xpath('//img[@class="img-in-post"]/@src')
     if (len(_img) > 0):
-        print(_img[0])
+        # print(_img[0])
         _img_src = _img[0]
 
     return{
@@ -491,26 +491,26 @@ def getItemDataForFacebook(post):
     _post_id = "no post id"
     _post_text = "no text"
 
-    print(post)
+    # print(post)
     print('++++++++++++++++++++++++++++++++++++++++++++')
     _post_id = post['post_id']
-    print(_post_id)
+    # print(_post_id)
     _post_text = post['post_text']
-    print(_post_text)
+    # print(_post_text)
     _date = post['time']
-    print(_date)
+    # print(_date)
     _image_h = post['images']
-    print(_image_h)
+    # print(_image_h)
     _image_l = post['images_lowquality']
-    print(_image_l)
+    # print(_image_l)
     _reactions = post.get("reactions")
-    print(_reactions)
+    # print(_reactions)
     _comment = post['comments']
-    print(_comment)
+    # print(_comment)
     _post_url = post['post_url']
-    print(_post_url)
+    # print(_post_url)
     _user_name = post['username']
-    print(_user_name)
+    # print(_user_name)
     
 
     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
