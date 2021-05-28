@@ -21,7 +21,7 @@ from pythainlp.corpus.common import thai_words
 from facebook_scraper import get_posts
 
 #add new word to custom
-newWords = ["ไม่ดี","ตี"]
+newWords = ["ไม่ดี","ไม่พอใจ"]
 custom_words_list = set(thai_words())
 custom_words_list.update(newWords)
 trie = dict_trie(dict_source=custom_words_list)
@@ -364,11 +364,17 @@ def getItemDataForPantip(link):
     
     for word in words:
         if word in positive_vocab:
-            pos = pos + 1
+            if word not in _good_words:
+                pos = pos + 1
+            else:
+                pos = pos + 0.5
             _good_words.append(word)
             print(word)
         if word in negative_vocab or word in swear_words:
-            neg = neg + 1
+            if word not in _bad_words:
+                neg = neg + 1
+            else:
+                neg = neg + 0.5
             _bad_words.append(word)
             print(word)
 
