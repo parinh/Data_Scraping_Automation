@@ -360,6 +360,7 @@ def getItemDataForPantip(link):
     _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
     _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
     words = custom_tokenizer.word_tokenize(_story)
+    print(words)
     
     for word in words:
         if word in positive_vocab:
