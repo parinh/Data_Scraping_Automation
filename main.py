@@ -19,11 +19,15 @@ from jd import *
 from facebook_scraper import *
 from facebook import *
 
-def printArr(arr):
+def printArr2D(arr):
     for i in arr:
         for j in i:
             print(j)
         print("##########")
+
+def printArr(arr):
+    for i in arr:
+        print(i)
 
 #set
 delay = 5
@@ -158,16 +162,18 @@ elif(ss == 3):
         soup = BeautifulSoup(html, "html.parser")
 
     pantip.getPosts(soup)
-    # for post in pantip.posts:
-    #     nlp.check_words(post[])
+    for post in pantip.posts:
+        # print(post[2])
+        nlp.check(post[2])
     # print(pantip.posts)
+    printArr(nlp.check_words)
     
     pantip.toCsv(pantip.posts)
 
 
 #JD
 elif(ss == 4):
-    print ("enter number of pages")
+    print ("Enter number of pages")
     page_count = int(input())
     print ("Enter the keyword for the selected site.. ->>")
     keyword = input()
