@@ -221,10 +221,10 @@ elif(ss == 5):
 
     facebook.getPosts(page_id,page_count)
     print(len(facebook.posts))
-    # print(type(facebook.posts[2]))
     # printArr(facebook.posts)
-    # for post in facebook.posts:
-    #     print(post['text'])
+    for post in facebook.posts:
+        nlp.check(post['text'])
+    printArr(nlp.check_words)
 
     facebook.toCsv(facebook.posts)
 
