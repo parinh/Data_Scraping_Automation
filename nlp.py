@@ -1,6 +1,13 @@
 from pythainlp import *
 from pythainlp.tag.named_entity import ThaiNameTagger
+from pythainlp.corpus.common import thai_words
+from pythainlp.util import dict_trie
 
+newWords = ["ไม่ดี","ไม่พอใจ","ชั่วคราว"]
+custom_words_list = set(thai_words())
+custom_words_list.update(newWords)
+trie = dict_trie(dict_source=custom_words_list)
+custom_tokenizer = Tokenizer(custom_dict=trie, engine='newmm',keep_whitespace=False)
 
 class NLP:
     def __init__(self):
@@ -25,11 +32,12 @@ class NLP:
 
         
     def check(self,string):
+        words = custom_tokenizer.word_tokenize(string)
         score = 0
         good = []
         bad = []
-        ner = ThaiNameTagger()
-        words = ner.get_ner(string)
+        # ner = ThaiNameTagger()
+        # words = ner.get_ner(string)
         self.check_words.append(string)
         for word in words:
             if word in self.positive_words:

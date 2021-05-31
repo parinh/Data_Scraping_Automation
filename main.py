@@ -18,6 +18,8 @@ from tocsv import *
 from jd import *
 from facebook_scraper import *
 from facebook import *
+from pythainlp.corpus.common import thai_words
+from pythainlp import *
 
 def printArr2D(arr):
     for i in arr:
@@ -163,7 +165,7 @@ elif(ss == 3):
 
     pantip.getPosts(soup)
     for post in pantip.posts:
-        # print(post[2])
+        
         nlp.check(post[2])
     # print(pantip.posts)
     printArr(nlp.check_words)
