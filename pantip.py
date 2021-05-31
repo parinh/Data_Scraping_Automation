@@ -76,7 +76,7 @@ class Pantip:
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
-            for i in range(len(posts)):
+            for i in range(len([posts])):
                 self.csv_count += 1
                 thewriter.writerow(
                     {

@@ -1,4 +1,6 @@
 from facebook_scraper import *
+from datetime import datetime
+import csv
 
 
 class Facebook:
@@ -14,6 +16,8 @@ class Facebook:
     def toCsv(self,posts):
         with open('csv/facebook-posts.csv','w', encoding='utf-8',newline='') as csvfile:
             head_csv = ["num","id","text","like","comment","shared","date_time","img_src","url"]
+            # posts.sort(key=lambda x: datetime.strptime(x['time'], '%m/%d/%Y %H:%M:%S'),reverse = True)
+            sorted_posts = sorted(posts,key=lambda x:x['time'],reverse = True)
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
@@ -22,13 +26,13 @@ class Facebook:
                 thewriter.writerow(
                     {
                         "num": self.csv_count,
-                        "id": posts[i]['post_id'],
-                        "text": posts[i]['text'],
-                        "like": posts[i]['reactions']['like'],
-                        "comment": posts[i]['comments'],
-                        "shared": posts[i]['shares'],
-                        "date_time": posts[i]['time'],
-                        "img_src":posts[i]['image'],
-                        "url":posts[i]['w3_fb_url']
+                        "id": sorted_posts[i]['post_id'],
+                        "text": sorted_posts[i]['text'],
+                        "like": sorted_posts[i]['likes'],
+                        "comment": sorted_posts[i]['comments'],
+                        "shared": sorted_posts[i]['shares'],
+                        "date_time": sorted_posts[i]['time'],
+                        "img_src":sorted_posts[i]['image'],
+                        "url":sorted_posts[i]['w3_fb_url']
                     }
                 )

@@ -221,6 +221,8 @@ elif(ss == 5):
 
     facebook.getPosts(page_id,page_count)
     print(len(facebook.posts))
+    # print(type(facebook.posts[2]))
+    # printArr(facebook.posts)
     # for post in facebook.posts:
     #     print(post['text'])
 
