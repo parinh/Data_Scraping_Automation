@@ -13,6 +13,7 @@ class Facebook:
     def getPosts(self,page_id,page_count):
         for post in get_posts(account=page_id,pages=2,page_limit=10,options={"posts_per_page":page_count}):
             self.posts.append(post)
+
             
         
     def toCsv(self,posts):
