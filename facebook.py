@@ -2,6 +2,8 @@ from facebook_scraper import *
 from datetime import datetime
 import csv
 
+from requests.api import options
+
 
 class Facebook:
     def __init__(self):
@@ -9,14 +11,13 @@ class Facebook:
         self.posts =[]
 
     def getPosts(self,page_id,page_count):
-        for post in get_posts(account=page_id,pages=page_count):
+        for post in get_posts(account=page_id,pages=2,page_limit=10,options={"posts_per_page":page_count}):
             self.posts.append(post)
-            # print(post)
+            
         
     def toCsv(self,posts):
         with open('csv/facebook-posts.csv','w', encoding='utf-8',newline='') as csvfile:
             head_csv = ["num","id","text","like","comment","shared","date_time","img_src","url"]
-            # posts.sort(key=lambda x: datetime.strptime(x['time'], '%m/%d/%Y %H:%M:%S'),reverse = True)
             sorted_posts = sorted(posts,key=lambda x:x['time'],reverse = True)
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()

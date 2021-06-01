@@ -13,6 +13,7 @@ class Pantip:
     def __init__(self) :
         self.csv_count = 0
         self.posts = []
+        # self.nlp = NLP()
 
     def getPosts(self,soup):
         for post in soup.find_all('div',class_='rowsearch card px-0'):
@@ -21,6 +22,7 @@ class Pantip:
 
 
     def getItem(self,link):
+        nlp = NLP()
         post = []
         title = "no title"
         author = "no author"
@@ -38,6 +40,11 @@ class Pantip:
 
         description = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
         post.append(description)
+
+        nlp.check(description)
+        post.append(nlp.check_words[0])
+        post.append(nlp.check_words[1])
+        
 
         author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
         post.append(author)
@@ -66,17 +73,22 @@ class Pantip:
         post.append(img)
         post.append(link)
 
+       
+        
+        
+
         return post
 
     def toCsv(self,posts):
         
         with open('csv/pantip-search.csv', 'w', encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","id","title","description","author","like","emo","date-time","img","url"]
-            posts.sort(key=lambda x: datetime.strptime(x[6], '%m/%d/%Y %H:%M:%S'),reverse = True)
+            head_csv = ["num","id","title","description","score","polarity","author","like","emo","date-time","img","url"]
+            # posts.sort(key=lambda x: datetime.strptime(x[8], '%m/%d/%Y %H:%M:%S'),reverse = True)
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
-            for i in range(len([posts])):
+            for i in range(len(posts)):
+                # print(i)
                 self.csv_count += 1
                 thewriter.writerow(
                     {
@@ -84,13 +96,14 @@ class Pantip:
                         "id": posts[i][0],
                         "title": posts[i][1],
                         "description": posts[i][2],
-                        "author": posts[i][3],
-                        "like":posts[i][4],
-                        "emo":posts[i][5],
-                        "date-time":posts[i][6],
-                        "img":posts[i][7],
-                        "url":posts[i][8]
-                        
+                        "score": posts[i][3], 
+                        "polarity": posts[i][4],
+                        "author": posts[i][5],
+                        "like":posts[i][6],
+                        "emo":posts[i][7],
+                        "date-time":posts[i][8],
+                        "img":posts[i][9],
+                        "url":posts[i][10]
                     }
                 )
         

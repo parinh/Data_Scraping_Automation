@@ -13,7 +13,7 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 from shopee import *
 from amazon import *
-from pantip import *
+from pantip import Pantip
 from tocsv import *
 from jd import *
 from facebook_scraper import *
@@ -155,6 +155,7 @@ elif(ss == 3):
     browser.execute_script("window.scrollTo(0, 0);")
     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")   
     soup = BeautifulSoup(html, "html.parser")
+
     while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
         sh = browser.execute_script("return document.body.scrollHeight")
         browser.execute_script("window.scrollTo(0, %d);"% ch)
@@ -163,13 +164,8 @@ elif(ss == 3):
         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
         soup = BeautifulSoup(html, "html.parser")
 
-    pantip.getPosts(soup)
-    for post in pantip.posts:
-        
-        nlp.check(post[2])
-    # print(pantip.posts)
-    printArr(nlp.check_words)
-    
+        pantip.getPosts(soup)
+    # printArr2D(pantip.posts)
     pantip.toCsv(pantip.posts)
 
 
@@ -222,9 +218,10 @@ elif(ss == 5):
     facebook.getPosts(page_id,page_count)
     print(len(facebook.posts))
     # printArr(facebook.posts)
-    for post in facebook.posts:
-        nlp.check(post['text'])
-    printArr(nlp.check_words)
+    # printArr(facebook.posts)
+    # for post in facebook.posts:
+    #     nlp.check(post['text'])
+    # printArr(nlp.check_words)
 
     facebook.toCsv(facebook.posts)
 

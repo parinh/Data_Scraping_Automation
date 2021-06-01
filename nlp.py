@@ -29,16 +29,12 @@ class NLP:
                 self.swear_words.append(line.rstrip())
 
         
-
-        
     def check(self,string):
         words = custom_tokenizer.word_tokenize(string)
         score = 0
         good = []
         bad = []
-        # ner = ThaiNameTagger()
-        # words = ner.get_ner(string)
-        self.check_words.append(string)
+        # self.check_words.append(string)
         for word in words:
             if word in self.positive_words:
                 if word not in good:
@@ -53,11 +49,18 @@ class NLP:
                 else:
                     score = score - 0.5
                 bad.append(word)
-
-        self.check_words.append(good)
-        self.check_words.append(bad)
         self.check_words.append(score)
+        
+        if(score>0):
+            self.check_words.append('positive')
+        elif(score==0):
+            self.check_words.append('neutral')
+        else: 
+            self.check_words.append('negative')
 
+        # self.check_words.append(good)
+        # self.check_words.append(bad)
+       
 
 
 
