@@ -214,14 +214,13 @@ elif(ss == 5):
     page_id = input()
     print("Enter number of pages")
     page_count = int(input())
+    if ( page_count <= 100):
+        facebook.getPosts(page_id,page_count)
+    else:
+        print("cant get posts // pages limit was set on 100 ")
 
-    facebook.getPosts(page_id,page_count)
-    print(len(facebook.posts))
+    
     # printArr(facebook.posts)
-    # printArr(facebook.posts)
-    # for post in facebook.posts:
-    #     nlp.check(post['text'])
-    # printArr(nlp.check_words)
 
     facebook.toCsv(facebook.posts)
 
