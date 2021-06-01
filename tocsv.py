@@ -122,7 +122,8 @@ class Tocsv:
 
     
     def addDataForFacebook (self,products):
-        # products.sort(key=lambda x: datetime.strptime(x['dateTime'], "%m/%d/%Y %H:%M:%S") ,reverse = True)
+        print("add data to csv")
+        # sorted_products = sorted(products,key=lambda x:x["date"],reverse=True)
         with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
 
@@ -146,4 +147,4 @@ class Tocsv:
 
                         
                     })
-                self.num +=1
+                self.num +=1 

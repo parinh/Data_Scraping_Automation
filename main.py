@@ -8,7 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
-from time import sleep
+from time import sleep, time
 from tocsv import Tocsv
 from lxml import html as htmllxml
 from selenium.webdriver.support import expected_conditions as EC
@@ -18,14 +18,16 @@ from os import path
 from pythainlp import sent_tokenize, word_tokenize,Tokenizer
 from pythainlp.util import dict_trie
 from pythainlp.corpus.common import thai_words
-from facebook_scraper import get_posts
+from facebook_scraper import *
+import sys
 
 #add new word to custom
-newWords = ["ไม่ดี","ไม่พอใจ","ชั่วคราว"]
+newWords = ["ไม่ดี","ไม่พอใจ","ชั่วคราว","ต่อต้าน","เล่นวีดีโอ","บาดเจ็บ"]
 custom_words_list = set(thai_words())
 custom_words_list.update(newWords)
 trie = dict_trie(dict_source=custom_words_list)
 custom_tokenizer = Tokenizer(custom_dict=trie, engine='newmm',keep_whitespace=False)
+
 
 #locate words file and append to array
 positive_vocab = []
@@ -146,14 +148,34 @@ def getDataFromPostForJD(html):
 def getDataFromPostForFacebook(keyword,page_count):
     print ("get data from facebook")
 
-    for post in get_posts(keyword,pages = page_count):
-        data = getItemDataForFacebook(post)
-        products.append(data)
+    
+    try:
+        # x = list(get_posts(
+        #     keyword,
+        #     pages = page_count, 
+        #     page_limit = 100,
+        #     timeout = 15,
+        #     options = {"posts_per_page": 10}
+        # ))
+ 
+        # if (len(x) >=  page_count):
+        #     print("x >= page_count")
+        # else :
+        #     print("else")
 
+        # print("get success")
+        if ( page_count <= 100):
+            for post in get_posts(keyword,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10}):
+                print("processing..")
+                data = getItemDataForFacebook(post)
+                products.append(data)
+            print("get post succ")
 
-
-
-        
+        else:
+            print("cant get posts // pages limit was set on 100 ")
+    except:
+        print("get post error")
+        print("Unexpected error:", sys.exc_info()[0])
 
 #sort data form all item na
 def getItemDataForShopee(soup):
@@ -369,24 +391,24 @@ def getItemDataForPantip(link):
             else:
                 pos = pos + 0.5
             _good_words.append(word)
-            print(word)
+            # print(word)
         if word in negative_vocab or word in swear_words:
             if word not in _bad_words:
                 neg = neg + 1
             else:
                 neg = neg + 0.5
             _bad_words.append(word)
-            print(word)
+            # print(word)
 
     if pos > neg:
         _meaning = 'positive'
-        print('positive')
+        # print('positive')
     elif neg > pos:
         _meaning = "negative"
-        print('negative')
+        # print('negative')
     else:
         _meaning = 'neutral'
-        print('neutral')
+        # print('neutral')
 
 
 
@@ -486,7 +508,7 @@ def getItemDataForFacebook(post):
     _date = "no time"
     _image_h = []
     _image_l = []
-    _reactions = 0
+    _reactions = []
     _post_url = "no link"
     _post_id = "no post id"
     _post_text = "no text"
@@ -497,12 +519,15 @@ def getItemDataForFacebook(post):
     neg = 0
 
     # print(post)
-    print('++++++++++++++++++++++++++++++++++++++++++++')
+    # print('++++++++++++++++++++++++++++++++++++++++++++')
     _post_id = post['post_id']
     # print(_post_id)
     _post_text = post['post_text']
 
+
+    #แยกคำ
     words = custom_tokenizer.word_tokenize(_post_text)
+    #find word i array files
     for word in words:
         if word in positive_vocab:
             if word not in _good_words:
@@ -510,43 +535,48 @@ def getItemDataForFacebook(post):
             else:
                 pos = pos + 0.5
             _good_words.append(word)
-            print(word)
+            # print(word)
         if word in negative_vocab or word in swear_words:
             if word not in _bad_words:
                 neg = neg + 1
             else:
                 neg = neg + 0.5
             _bad_words.append(word)
-            print(word)
+            # print(word)
 
     if pos > neg:
         _meaning = 'positive'
-        print('positive')
+        # print('positive')
     elif neg > pos:
         _meaning = "negative"
-        print('negative')
+        # print('negative')
     else:
         _meaning = 'neutral'
-        print('neutral')
+        # print('neutral')
     
-    # print(_post_text)
-    _date = post['time']
-    # print(_date)
-    _image_h = post['images']
-    # print(_image_h)
-    _image_l = post['images_lowquality']
-    # print(_image_l)
-    _reactions = post.get("reactions")
-    # print(_reactions)
-    _comment = post['comments']
-    # print(_comment)
-    _post_url = post['post_url']
-    # print(_post_url)
-    _user_name = post['username']
-    # print(_user_name)
+    try:
+        # print(post)
+        # print(_post_text)
+        _date = post['time']
+        # print(_date)
+        _image_h = post['images']
+        # print(_image_h)
+        _image_l = post['images_lowquality']
+        # print(_image_l)
+        _reactions = post['likes']
+        # print(post['likes'])
+        _comment = post['comments']
+        # print(_comment)
+        _post_url = post['post_url']
+        # print(_post_url)
+        _user_name = post['username']
+        # print(_user_name)
+
+    except:
+        print("error")
     
 
-    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
     return{
         "user_name":_user_name,
@@ -711,6 +741,7 @@ elif (ss ==5):
     csv.setHeader(header_field)
     try:
         getDataFromPostForFacebook(keyword,page_count)
+        
 
     except TimeoutException:
             print ("Loading took too much time!-Try again")
