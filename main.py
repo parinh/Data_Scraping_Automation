@@ -50,7 +50,7 @@ with open("words/swear-words.txt", 'r') as f:
 chrome_options = Options()
 
 # input url site
-print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4 = JD]->>")
+print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4 = JD][5 = FaceBook]->>")
 ss = int(input())
 
 #page count
@@ -150,20 +150,6 @@ def getDataFromPostForFacebook(keyword,page_count):
 
     
     try:
-        # x = list(get_posts(
-        #     keyword,
-        #     pages = page_count, 
-        #     page_limit = 100,
-        #     timeout = 15,
-        #     options = {"posts_per_page": 10}
-        # ))
- 
-        # if (len(x) >=  page_count):
-        #     print("x >= page_count")
-        # else :
-        #     print("else")
-
-        # print("get success")
         if ( page_count <= 100):
             for post in get_posts(keyword,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10}):
                 print("processing..")
