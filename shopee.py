@@ -15,7 +15,7 @@ class Shopee:
     def getItem(self,soup):
         product=[]
         _name = 'no name'
-        _price = 'no price'
+        _price = 0
         _sold = 'no sold'
         _from = 'no from'
         _image = 'no image'
@@ -32,7 +32,7 @@ class Shopee:
         # Price 2
         price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
         if (price):
-            _price = price.text
+            _price = float(price.text.split(" ")[0].split("฿")[1])
         product.append(_price)
 
         #type 3

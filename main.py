@@ -100,7 +100,8 @@ if(ss == 1):
         except TimeoutException:
             print ("Loading took too much time!-Try again")
     
-    shopee.toCsv(shopee.products)
+    # shopee.toCsv(shopee.products)
+    printArr(shopee.products)
 
 
 
