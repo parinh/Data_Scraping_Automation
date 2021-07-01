@@ -33,13 +33,13 @@ class Amazon:
         # Price
         price = soup.select_one("span.a-price > span.a-offscreen")
         if (price):
-            _price = price.text
+            _price = float((price.text).split("$")[1])
         product.append(_price)
 
         # rating
         rating = soup.select_one("i > span.a-icon-alt")
         if (rating):
-            _rating = rating.text
+            _rating = float((rating.text).split(" ")[0])
         product.append(_rating)
         
         #review
@@ -69,8 +69,7 @@ class Amazon:
         
     def getData(self,html):
         soup = BeautifulSoup(html, "html.parser")
-        
-        for item in soup.find_all('div',  class_='sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'):
+        for item in soup.select('div[data-component-type=s-search-result]'):
             self.products.append(self.getItem(item))
         
 

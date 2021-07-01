@@ -42,14 +42,18 @@ lazada = Lazada()
 jd = JD()
 facebook = Facebook()
 nlp = NLP()
-
-
 chromedriver_path = config('CHROMEDRIVER')
 
 
-# select site
-print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4= jd][5 = facebook]->>")
+# input
+print ("select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4 = JD][5 = FaceBook]->>")
 ss = int(input())
+
+print ("enter number of pages//posts")
+page_count = int(input())
+
+print ("Enter the keyword for the selected site.. ->>")
+keyword = input()
 
 #close all popup
 chrome_options.add_argument('disable-notifications')
@@ -70,13 +74,9 @@ browser = webdriver.Chrome(executable_path = chromedriver_path,
 
 # for shopee
 if(ss == 1):
-    print ("enter number of pages")
-    page_count = int(input())
-    print ("Enter the keyword for the selected site.. ->>")
-    keyword = input()
     base_url = "https://shopee.co.th/search?keyword=" + keyword
-
     page = 0
+    page_count = page_count - 1
     while page<=page_count:
         try:
             browser.get(base_url + "&page=" +str(page))
@@ -102,19 +102,15 @@ if(ss == 1):
         except TimeoutException:
             print ("Loading took too much time!-Try again")
     
-    # shopee.toCsv(shopee.products)
-    printArr(shopee.products)
+    shopee.toCsv(shopee.products)
+    # printArr(shopee.products)
 
 
 
 # for amazon search
 elif (ss == 2):
-    print ("enter number of pages")
-    page_count = int(input())
-    print ("Enter the keyword for the selected site.. ->>")
-    keyword = input()
     base_url = "https://www.amazon.com/s?k=" + keyword
-    page=0
+    page=1
     while page<=page_count:
         try:
             browser.get(base_url + "&page=" +str(page))
@@ -132,11 +128,10 @@ elif (ss == 2):
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 9);")
             browser.execute_script("window.scrollTo(0, (document.body.scrollHeight /10) * 10);")
             sleep(5)
-            print ("Page is ready")
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             amazon.getData(html)    
-
             page+=1
+
         except TimeoutException:
             print ("Loading took too much time!-Try again")
     
