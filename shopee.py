@@ -5,15 +5,16 @@ import tocsv
 
 from numpy import product
 
+
 class Shopee:
-    
-    def __init__(self) :
+
+    def __init__(self):
         self.csv_count = 0
         self.products = []
-        
-    #get item
-    def getItem(self,soup):
-        product=[]
+
+    # get item
+    def getItem(self, soup):
+        product = []
         _name = 'no name'
         _price = 0
         _sold = 'no sold'
@@ -22,20 +23,21 @@ class Shopee:
         _url = 'no url'
         _type = 'general'
         _star = 0
+        _id = "no id"
 
         # Name 1
         name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF" )
         if (name):
             _name = name.text
         product.append(_name)
-       
+
         # Price 2
         price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
         if (price):
-            _price = float(price.text.split(" ")[0].split("฿")[1])
+            _price = float("".join((price.text).split(" ")[0].split("฿")[1].split(",")))
         product.append(_price)
 
-        #type 3
+        # type 3
         __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
         if(__type):
             _type = __type.text
@@ -44,7 +46,7 @@ class Shopee:
             _type = "shopee mall"
         product.append(_type)
 
-        #sold
+        # sold / month
         sold = soup.select_one("div.go5yPW")
         if (sold.text):
             if "พัน" not in sold.text:
@@ -55,15 +57,14 @@ class Shopee:
             _sold = "no sold"
         product.append(_sold)
 
-        #star
+        # star
         for star in soup.select('div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit'):
             _star = _star + float(star['style'].split(" ")[1].split("%")[0]) 
 
-        _star = round(_star / 100,4)
+        _star = round(_star / 100, 4)
         product.append(_star)
 
-           
-        #from 5
+        # from 5
         __from = soup.select_one("div._2CWevj")
         if (__from):
             _from = __from.text
@@ -74,26 +75,28 @@ class Shopee:
         try:
             _image = imgs['src']
             product.append(_image)
-         
         except:
             product.append(_image)
-        
-       #url 7
+
+       # url 7
         url = soup.select_one("a")
         _url = "https://shopee.co.th/"+url['href']
         product.append(_url)
-            
+
         return product
 
-
-    #get data to array
-    def getData(self,html):
+    # get data to array
+    def getData(self, html):
         soup = BeautifulSoup(html, "html.parser")
-        for item in soup.find_all('div',  class_='col-xs-2-4 shopee-search-item-result__item'):
-            if(item.select_one('div.shopee-image-placeholder')):
-                continue  
-            else:  
-                self.products.append(self.getItem(item))
+        print("get data form shopee")
+        soup = BeautifulSoup(html, "html.parser")
+        # bigloop
+        for item_n in soup.select('div[data-sqe=item]'):
+            if item_n.select_one('div.shopee-image-placeholder'):
+                continue
+            else:
+                data = self.getItem(item_n)
+                self.products.append(data)
 
         # return self.products
 

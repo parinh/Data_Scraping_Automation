@@ -20,6 +20,7 @@ from facebook_scraper import *
 from facebook import *
 from pythainlp.corpus.common import thai_words
 from pythainlp import *
+from decouple import config
 
 def printArr2D(arr):
     for i in arr:
@@ -43,6 +44,7 @@ facebook = Facebook()
 nlp = NLP()
 
 
+chromedriver_path = config('CHROMEDRIVER')
 
 
 # select site
@@ -61,7 +63,7 @@ chrome_options.add_experimental_option("prefs", {
     })
 
 #chrome driv ja
-browser = webdriver.Chrome(executable_path = r"C:/Users/Bell/Downloads/chromedriver_win32/chromedriver.exe",
+browser = webdriver.Chrome(executable_path = chromedriver_path,
                           options = chrome_options)
 # browser.get(base_url)
  
