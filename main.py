@@ -1,8 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
 from logging import exception
 from os import name
 import re
 from bs4 import BeautifulSoup
-import bs4
+# import bs4
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -34,15 +36,15 @@ positive_vocab = []
 negative_vocab = []
 swear_words = []
 
-with open("words/negative-sentiment-words.txt", 'r') as f:
+with open("/Users/mcmxcix/nodeJSDB/pythongetpostshopee1/words/negative-sentiment-words.txt", 'r',encoding='utf8') as f:
     for line in f:
         negative_vocab.append(line.rstrip())
 
-with open("words/positive-sentiment-words.txt", 'r') as f:
+with open("/Users/mcmxcix/nodeJSDB/pythongetpostshopee1/words/positive-sentiment-words.txt", 'r',encoding='utf8') as f:
     for line in f:
         positive_vocab.append(line.rstrip())
         
-with open("words/swear-words.txt", 'r') as f:
+with open("/Users/mcmxcix/nodeJSDB/pythongetpostshopee1/words/swear-words.txt", 'r',encoding='utf8') as f:
     for line in f:
         swear_words.append(line.rstrip())
 
@@ -114,15 +116,29 @@ def getDataFormPostForPantip(html):
     print ("get data Pantip")
     soup = BeautifulSoup(html, "html.parser") 
     ch = 0 
-    
+    current_len = 0
+    count = 0
 
-    while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')) ): 
+    while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))): 
+        
+        current_len = len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))
+        
         sh = browser.execute_script("return document.body.scrollHeight")
         browser.execute_script("window.scrollTo(0, %d);"% ch)
         ch += sh/3
         # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
         soup = BeautifulSoup(html, "html.parser")
+        print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+        if (current_len == len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))):
+            count += 1
+            if (count == 100):
+                break
+        else :
+            count = 0
+
+ 
+
     
 
     for item_n in soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'): 
@@ -161,13 +177,13 @@ def getDataFromPostForFacebook(keyword,page_count):
             print("cant get posts // pages limit was set on 100 ")
     except:
         print("get post error")
-        print("Unexpected error:", sys.exc_info()[0])
+        # print("Unexpected error:", sys.exc_info()[0])
 
 #sort data form all item na
 def getItemDataForShopee(soup):
 
     _name = 'no name'
-    _price = 'no price'
+    _price = 0
     _sold = 'no sold'
     _from = 'no from'
     _image = 'no image'
@@ -185,8 +201,10 @@ def getItemDataForShopee(soup):
     # Price
     price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
     if (price):
-        _price = price.text
+        _price = float("".join((price.text).split(" ")[0].split("฿")[1].split(",")))
 
+        print(_price)
+        
     #type
     __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
     if(__type):
@@ -286,8 +304,8 @@ def getItemDataForAmazonSearch(soup):
     # Price
     price = soup.select_one("span.a-price > span.a-offscreen")
     if (price):
-        _price = price.text
-        # print(price.get_text())
+        _price = float((price.text).split("$")[1])
+        print(_price)
 
     # rating
     rating = soup.select_one("i > span.a-icon-alt")
@@ -446,9 +464,9 @@ def getItemDataForJD(item):
         print("no name")
 
     try:
-        _price = item['jdPrice']
+        _price = float(item['jdPrice'])
     except:
-        print("na price")
+        print("no price")
 
     try:
         _image = item['imageurl']
@@ -457,9 +475,13 @@ def getItemDataForJD(item):
 
     try:
         _id = item['spuId']
-        _url = "https://www.jd.co.th/products/"+item['id']+".html"
     except:
         print("no id")
+    
+    try:
+        _url = "https://www.jd.co.th/product/"+ _id +".html"
+    except:
+        print("no url")
 
     try:
         _type = item['shopName']
@@ -492,8 +514,8 @@ def getItemDataForFacebook(post):
     _user_name = "no name"
     _comment = 0
     _date = "no time"
-    _image_h = []
-    _image_l = []
+    _image_h = ""
+    _image_l = ""
     _reactions = []
     _post_url = "no link"
     _post_id = "no post id"
@@ -545,9 +567,9 @@ def getItemDataForFacebook(post):
         # print(_post_text)
         _date = post['time']
         # print(_date)
-        _image_h = post['images']
+        _image_h = post['images'][0]
         # print(_image_h)
-        _image_l = post['images_lowquality']
+        _image_l = post['images_lowquality'][0]
         # print(_image_l)
         _reactions = post['likes']
         # print(post['likes'])
