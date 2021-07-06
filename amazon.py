@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import csv
+from decouple import config
 
-class Amazon:
-   
+class Amazon: 
     def __init__(self) :
         self.csv_count = 0
         self.products = []
@@ -22,49 +22,52 @@ class Amazon:
         item_code = soup['data-asin']
         if (item_code):  
             _id = item_code
-        product.append(_id)
 
-        # Get Name
+        #  Name
         name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
         if (name):
             _name = name.text
-        product.append(_name)
         
         # Price
         price = soup.select_one("span.a-price > span.a-offscreen")
         if (price):
             _price = float((price.text).split("$")[1])
-        product.append(_price)
 
         # rating
         rating = soup.select_one("i > span.a-icon-alt")
         if (rating):
             _rating = float((rating.text).split(" ")[0])
-        product.append(_rating)
         
         #review
         review = soup.select_one("a.a-link-normal > span.a-size-base")
         if (review):
             _review = review.text
-        product.append(_review)
+        
 
         #best?
         bestseller = soup.select_one("div.a-row.a-badge-region > span.a-badge > span.a-badge-label > span.a-badge-label-inner.a-text-ellipsis > span.a-badge-text ")
         if(bestseller):
             _bestseller = bestseller.text
-        product.append(_bestseller)
             
         imgs = soup.select_one("img.s-image")
         if (imgs):  
             _image = imgs['src']
-        product.append(_image)
-
+       
         #post url
         post_url = soup.select_one("span.rush-component > a.a-link-normal.s-no-outline")
         if(post_url):
             _url = "https://www.amazon.com/"+post_url['href']
-        product.append(_url)
 
+        product = {
+            "name": _name,
+            "id": _id,
+            "price": _price, 
+            "rating": _rating, 
+            "review": _review,
+            "img_src": _image,
+            "url": _url,
+            "bestseller" : _bestseller
+        }
         return product
         
     def getData(self,html):
@@ -75,8 +78,8 @@ class Amazon:
 
 
     def toCsv(self,products):
-        with open('csv/amazon-search.csv', 'w', newline='') as csvfile:
-            head_csv = ["num","id","name","price","rating","review","rank","img_src","url"]
+        with open(config("FILE"), 'w', newline='',encoding="utf-8") as csvfile:
+            head_csv = ["num","product_id","name","price","rating","review","img_src","url","rank"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
@@ -85,14 +88,14 @@ class Amazon:
                 thewriter.writerow(
                     {
                         "num": self.csv_count,
-                        "id": products[i][0],
-                        "name": products[i][1],
-                        "price": products[i][2],
-                        "rating": products[i][3],
-                        "review":products[i][4],
-                        "rank":products[i][5],
-                        "img_src":products[i][6],
-                        "url":products[i][7]
+                        "name" : products[i]['name'],
+                        "product_id" : products[i]['id'],
+                        "price": products[i]['price'],
+                        "rating" :products[i]['rating'],
+                        "review":products[i]['review'],
+                        "img_src" :products[i]['img_src'],
+                        "url" : products[i]['url'],
+                        "rank" : products[i]['bestseller']
                     }
                 )
                 

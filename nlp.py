@@ -2,6 +2,7 @@ from pythainlp import *
 from pythainlp.tag.named_entity import ThaiNameTagger
 from pythainlp.corpus.common import thai_words
 from pythainlp.util import dict_trie
+from decouple import config
 
 newWords = ["ไม่ดี","ไม่พอใจ","ชั่วคราว"]
 custom_words_list = set(thai_words())
@@ -16,15 +17,15 @@ class NLP:
         self.swear_words = []
         self.check_words = []
 
-        with open("word/negative-sentiment-words.txt",'r',encoding='utf-8') as f:
+        with open(config("NEGATIVE_SENTIMENT_WORDS"),'r',encoding='utf-8') as f:
             for line in f:
                 self.negative_words.append(line.rstrip())
 
-        with open("word/positive-sentiment-words.txt", 'r',encoding='utf-8') as f:
+        with open(config("POSITIVE_SENTIMENT_WORDS"), 'r',encoding='utf-8') as f:
             for line in f:
                 self.positive_words.append(line.rstrip())
                 
-        with open("word/swear-words.txt", 'r',encoding='utf-8') as f:
+        with open(config("SWEAR_WORDS"), 'r',encoding='utf-8') as f:
             for line in f:
                 self.swear_words.append(line.rstrip())
 
@@ -34,7 +35,6 @@ class NLP:
         score = 0
         good = []
         bad = []
-        # self.check_words.append(string)
         for word in words:
             if word in self.positive_words:
                 if word not in good:
@@ -58,8 +58,8 @@ class NLP:
         else: 
             self.check_words.append('negative')
 
-        # self.check_words.append(good)
-        # self.check_words.append(bad)
+        self.check_words.append(good)
+        self.check_words.append(bad)
        
 
 

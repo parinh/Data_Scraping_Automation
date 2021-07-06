@@ -2,11 +2,10 @@ from os import name
 from bs4 import BeautifulSoup
 import csv
 import json
-
 from numpy import product, select
 from numpy.lib.type_check import imag
+from decouple import config
 
-import tocsv
 
 class JD:
     def __init__(self) :
@@ -23,68 +22,77 @@ class JD:
     
     def getItem(self,item):
         product = []
-        _name = 'no name'
         _price = 'no price'
         _image = 'no image'
         _from = 'no data'
         _id = 'no id'
         _review = "no review"
         _type = 'general'
-
+        _url = "no url"
+        # ID
         try:
             _id = item['spuId']
-            product.append(_id)
         except:
-            product.append(_id)
-
+            _id = 'no id'
+            
+        # Name
         try:
             _name = item['wname']
-            product.append(_name)
-        
         except:
-            product.append(_name)
+            _name = 'no name'
 
+        # Price
         try:
-            _price = item['jdPrice']
-            product.append(_price)
+            _price = item['jdPrice'] 
         except:
-            product.append(_price)
+            _price = 'no price'
 
+        # Type
         try:
             _type = item['shopName']
-            product.append(_type)
         except:
-            product.append(_type)
-
+            _type = 'general'
+            
+        # Review
         try:
             _review = int((item['reviews']).split(" ")[0])
-            product.append(_review)
         except:
-            product.append(_review)
+            _review = "no review"
 
+        # Img
         try:
             _image = item['imageurl']
-            product.append(_image)
         except:
-            product.append(_image)
-        
+            _image = 'no image'
+            
+        # From
         try:
             _from = item['localDelivery']
-            product.append(_from)
         except:
-            product.append(_from)
+            _from = 'no data'
 
-        url = "https://www.jd.co.th/product/"+str(item['spuId'])+".html"
-        product.append(url)
+        # Url
+        try:
+            _url = "https://www.jd.co.th/product/"+ _id +".html"
+        except:
+            _url = "no url"
 
-
-
-
+        
+        product = {
+            "name" : _name,
+            "id" : _id,
+            "price" : _price,
+            "img_src":_image,
+            "type" : _type,
+            "review" : _review,
+            "from" : _from,
+            "url" : _url
+        }
         return product
 
     def toCsv(self,products):
-        with open('csv/jd-search.csv','w', encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","id","name","price","type","review","from","img_src","url"]
+        with open(config("FILE"),'w', encoding='utf-8',newline='') as csvfile:
+            head_csv = ["num","name","product_id","price","img_src","type","review","send_from","url"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
 
@@ -93,14 +101,14 @@ class JD:
                 thewriter.writerow(
                     {
                         "num": self.csv_count,
-                        "id": products[i][0],
-                        "name": products[i][1],
-                        "price": products[i][2],
-                        "type": products[i][3],
-                        "review":products[i][4],
-                        "from":products[i][5],
-                        "img_src":products[i][6],
-                        "url":products[i][7]
+                        "name" : products[i]['name'],
+                        "product_id" : products[i]['id'],
+                        "review" : products[i]['review'],
+                        "price" : products[i]['price'],
+                        "img_src":products[i]['img_src'],
+                        "send_from" :products[i]['from'],
+                        "type" : products[i]['type'],
+                        "url" : products[i]['url']
                     }
                 )
                 
