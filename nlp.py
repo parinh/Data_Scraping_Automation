@@ -31,6 +31,7 @@ class NLP:
 
         
     def check(self,string):
+        print("1")
         words = custom_tokenizer.word_tokenize(string)
         score = 0
         good = []
@@ -62,5 +63,7 @@ class NLP:
         self.check_words.append(bad)
        
 
-
+    def clearCheckWord(self):
+        self.check_words.clear()
+    
 

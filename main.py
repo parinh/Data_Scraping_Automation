@@ -19,10 +19,6 @@ from facebook import *
 from pythainlp.corpus.common import thai_words
 from pythainlp import *
 from decouple import config
-import sys
-
-# print("First: " + sys.argv[1])
-# print("last: " + sys.argv[2])
 
 
 def printArr2D(arr):

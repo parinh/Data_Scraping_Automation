@@ -12,13 +12,13 @@ class Facebook:
         self.posts =[]
 
     def getPosts(self,page_id,page_count):
+        nlp = NLP()
         for post in get_posts(account=page_id,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10}):
            
             print(post['post_id'])
-            self.posts.append(self.getData(post))
+            self.posts.append(self.getData(post,nlp))
 
-    def getData(self,post):
-        nlp = NLP()
+    def getData(self,post,nlp):
         _user_name = "no name"
         _comment = 0
         _date = "no time"
@@ -90,6 +90,7 @@ class Facebook:
             "badWords" : _bad_words,
             "meaning" : _meaning
         }
+        nlp.clearCheckWord()
 
         return face_post
 
