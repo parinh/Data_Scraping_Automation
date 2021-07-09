@@ -37,11 +37,13 @@ class Pantip:
         _post_link = "no link"
         _img_src = "no img"
         _post_id = "no post id"
-        _meaning = "notthing"
+        _meaning = "no thing"
         start_page = requests.get(link)
         start_page.encoding = 'utf-8'
         tree = html.fromstring(start_page.text)
 
+        _post_link = link
+        print(_post_link)
         _post_id = link.split("/")[len(link.split("/"))-1]
         _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
         _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
