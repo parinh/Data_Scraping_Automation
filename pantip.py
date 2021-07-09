@@ -34,7 +34,7 @@ class Pantip:
         _allemos = "no emos"
         _tags = "no tags"
         _datetime = "no time"
-        _post_link = "no link"
+        _post_link = link
         _img_src = "no img"
         _post_id = "no post id"
         _meaning = "notthing"

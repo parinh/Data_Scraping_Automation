@@ -207,7 +207,7 @@ elif ss == 3:
         )
         sh = browser.execute_script("return document.body.scrollHeight")
         browser.execute_script("window.scrollTo(0, %d);" % ch)
-        ch += sh / 2
+        ch += sh / 3
 
         html = browser.execute_script(
             "return document.getElementsByTagName('html')[0].innerHTML"
@@ -219,7 +219,7 @@ elif ss == 3:
             )
         ):
             count += 1
-            if count == 10:
+            if count == 100:
                 break
         else:
             count = 0
