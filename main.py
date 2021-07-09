@@ -185,46 +185,57 @@ elif ss == 2:
 elif ss == 3:
     base_url = "https://pantip.com/search?q=" + keyword
     browser.get(base_url)
-    ch = 0
-    count = 0
     WebDriverWait(browser, delay)
-    print("Page is ready")
-    sleep(5)
     browser.execute_script("window.scrollTo(0, 0);")
-    html = browser.execute_script(
-        "return document.getElementsByTagName('html')[0].innerHTML"
-    )
+
+    #sort search click
+    browser.execute_script("document.getElementById('timebias_2').checked = true")
+    browser.execute_script("document.getElementById('searchbutton').click()")
+    sleep(5)
+
+    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
     soup = BeautifulSoup(html, "html.parser")
+    sort = soup.select_one('div.pt-lists-item__form.pure-material-radio.m-t-2 > input')
 
-    while page_count > len(
-        soup.select("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in")
-    ):
-        current_len = len(
-            soup.select(
-                "div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in"
-            )
-        )
-        sh = browser.execute_script("return document.body.scrollHeight")
-        browser.execute_script("window.scrollTo(0, %d);" % ch)
-        ch += sh / 2
+    print ("Page is ready")
+    sleep(5)
 
-        html = browser.execute_script(
-            "return document.getElementsByTagName('html')[0].innerHTML"
-        )
-        soup = BeautifulSoup(html, "html.parser")
-        if current_len == len(
-            soup.select(
-                "div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in"
-            )
-        ):
-            count += 1
-            if count == 10:
-                break
-        else:
-            count = 0
-
-        pantip.getPosts(soup)
+    pantip.getPosts(html,page_count,browser)
     pantip.toCsv(pantip.posts)
+
+
+# elif ss == 3:
+#     base_url = "https://pantip.com/search?q=" + keyword
+#     browser.get(base_url)
+#     ch = 0
+#     count = 0
+#     WebDriverWait(browser, delay)
+#     browser.execute_script("window.scrollTo(0, 0);")
+#     browser.execute_script("document.getElementById('timebias_2').checked = true")
+#     browser.execute_script("document.getElementById('searchbutton').click()")
+#     print("Page is ready")
+#     sleep(5)
+#     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+#     soup = BeautifulSoup(html, "html.parser")
+#     sort = soup.select_one('div.pt-lists-item__form.pure-material-radio.m-t-2 > input')
+
+#     while page_count > len(soup.select("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in")):
+#         current_len = len(soup.select("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in"))
+#         sh = browser.execute_script("return document.body.scrollHeight")
+#         browser.execute_script("window.scrollTo(0, %d);" % ch)
+#         ch += sh / 3
+
+#         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+#         soup = BeautifulSoup(html, "html.parser")
+#         if current_len == len(soup.select("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in")):
+#             count += 1
+#             if count == 100:
+#                 break
+#         else:
+#             count = 0
+
+#         pantip.getPosts(soup)
+#     pantip.toCsv(pantip.posts)
 
 
 # JD

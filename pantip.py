@@ -16,7 +16,28 @@ class Pantip:
         self.posts = []
         # self.nlp = NLP()
 
-    def getPosts(self,soup):
+    def getPosts(self,html,page_count,browser):
+        print ("get data Pantip")
+        soup = BeautifulSoup(html, "html.parser") 
+        ch = 0 
+        current_len = 0
+        count = 0
+
+        while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))): 
+            current_len = len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))  
+            sh = browser.execute_script("return document.body.scrollHeight")
+            browser.execute_script("window.scrollTo(0, %d);"% ch)
+            ch += sh/3
+            # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            soup = BeautifulSoup(html, "html.parser")
+            print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+            if (current_len == len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))):
+                count += 1
+                if (count == 100):
+                    break
+            else :
+                count = 0
         for post in soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'): 
             # post_url = post.select_one("div.rowsearch.card.px-0 > div.title.col-md-12 > a.datasearch-in")
             self.posts.append(self.getItem(post['href']))
@@ -43,7 +64,7 @@ class Pantip:
         tree = html.fromstring(start_page.text)
 
         _post_link = link
-        print(_post_link)
+        # print(_post_link)
         _post_id = link.split("/")[len(link.split("/"))-1]
         _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
         _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
