@@ -280,9 +280,9 @@ elif ss == 4:
     )
     browser.get(base_url)
 
-    while page <= page_count:
+    while page < page_count:
         try:
-            # browser.get(base_url + "&page=" +str(page))
+            browser.get(base_url + "&page=" +str(page))
             WebDriverWait(browser, delay)
             sleep(5)
             browser.execute_script("window.scrollTo(0, 0);")
