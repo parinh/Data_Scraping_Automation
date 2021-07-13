@@ -76,6 +76,8 @@ browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_opt
 if ss == 1:
     base_url = "https://shopee.co.th/search?keyword=" + keyword
     page = 0
+    count = 0
+    last_results = 0
     page_count = page_count - 1
     while page <= page_count:
         try:
@@ -117,8 +119,18 @@ if ss == 1:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            shopee.getData(html)
+            results = shopee.getData(html)
+            if(results == last_results):
+                count += 1
+                # print(count)
+            else:
+                # print("enter else")
+                last_results = results
+                count = 0
+                # print(count)
 
+            if (count >= 3):
+                break
             page += 1
 
         except TimeoutException:
@@ -127,11 +139,14 @@ if ss == 1:
     shopee.toCsv(shopee.products)
     # printArr(shopee.products)
 
+# #################################################################################################
 
 # for amazon search
 elif ss == 2:
     base_url = "https://www.amazon.com/s?k=" + keyword
     page = 1
+    count = 0
+    last_results = 0
     while page <= page_count:
         try:
             browser.get(base_url + "&page=" + str(page))
@@ -172,7 +187,20 @@ elif ss == 2:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            amazon.getData(html)
+            results = amazon.getData(html)
+            # print(results)
+            if(results == last_results):
+                count += 1
+                # print(count)
+            else:
+                # print("enter else")
+                last_results = results
+                count = 0
+                # print(count)
+
+            if (count >= 3):
+                break
+
             page += 1
 
         except TimeoutException:
@@ -241,6 +269,8 @@ elif ss == 3:
 # JD
 elif ss == 4:
     page = 0
+    count = 0
+    last_results = 0
     base_url = (
         "https://api.jd.co.th/client.action?body={'pagesize':'60','page':'"
         + str(page)
@@ -289,8 +319,19 @@ elif ss == 4:
             sleep(5)
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
-            )
-            jd.getProducts(html)
+            )     
+            results = jd.getProducts(html)
+            if(results == last_results):
+                count += 1
+                # print(count)
+            else:
+                # print("enter else")
+                last_results = results
+                count = 0
+                # print(count)
+
+            if (count >= 3):
+                break
 
             page += 1
 
