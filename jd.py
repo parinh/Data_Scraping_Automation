@@ -18,6 +18,7 @@ class JD:
         info = json.loads(products.text)
         for item in info['wareInfo'] :    
             self.products.append(self.getItem(item))
+        return(len(self.products))
            
     
     def getItem(self,item):

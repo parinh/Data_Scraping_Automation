@@ -92,6 +92,7 @@ class Shopee:
             else:
                 data = self.getItem(item_n)
                 self.products.append(data)
+        return(len(self.products))
 
     def toCsv(self, products):
         with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:

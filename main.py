@@ -119,8 +119,18 @@ if ss == 1:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            shopee.getData(html)
+            results = shopee.getData(html)
+            if(results == last_results):
+                count += 1
+                # print(count)
+            else:
+                # print("enter else")
+                last_results = results
+                count = 0
+                # print(count)
 
+            if (count >= 3):
+                break
             page += 1
 
         except TimeoutException:
@@ -310,7 +320,18 @@ elif ss == 4:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )     
-            jd.getProducts(html)
+            results = jd.getProducts(html)
+            if(results == last_results):
+                count += 1
+                # print(count)
+            else:
+                # print("enter else")
+                last_results = results
+                count = 0
+                # print(count)
+
+            if (count >= 3):
+                break
 
             page += 1
 
