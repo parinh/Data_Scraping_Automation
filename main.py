@@ -76,6 +76,8 @@ browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_opt
 if ss == 1:
     base_url = "https://shopee.co.th/search?keyword=" + keyword
     page = 0
+    count = 0
+    last_results = 0
     page_count = page_count - 1
     while page <= page_count:
         try:
@@ -133,6 +135,8 @@ if ss == 1:
 elif ss == 2:
     base_url = "https://www.amazon.com/s?k=" + keyword
     page = 1
+    count = 0
+    last_results = 0
     while page <= page_count:
         try:
             browser.get(base_url + "&page=" + str(page))
@@ -173,7 +177,20 @@ elif ss == 2:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            amazon.getData(html)
+            results = amazon.getData(html)
+            # print(results)
+            if(results == last_results):
+                count += 1
+                # print(count)
+            else:
+                # print("enter else")
+                last_results = results
+                count = 0
+                # print(count)
+
+            if (count >= 3):
+                break
+
             page += 1
 
         except TimeoutException:
@@ -186,51 +203,64 @@ elif ss == 2:
 elif ss == 3:
     base_url = "https://pantip.com/search?q=" + keyword
     browser.get(base_url)
-    ch = 0
-    count = 0
     WebDriverWait(browser, delay)
-    print("Page is ready")
-    sleep(5)
     browser.execute_script("window.scrollTo(0, 0);")
-    html = browser.execute_script(
-        "return document.getElementsByTagName('html')[0].innerHTML"
-    )
+
+    #sort search click
+    browser.execute_script("document.getElementById('timebias_2').checked = true")
+    browser.execute_script("document.getElementById('searchbutton').click()")
+    sleep(5)
+
+    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
     soup = BeautifulSoup(html, "html.parser")
+    sort = soup.select_one('div.pt-lists-item__form.pure-material-radio.m-t-2 > input')
 
-    while page_count > len(
-        soup.select("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in")
-    ):
-        current_len = len(
-            soup.select(
-                "div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in"
-            )
-        )
-        sh = browser.execute_script("return document.body.scrollHeight")
-        browser.execute_script("window.scrollTo(0, %d);" % ch)
-        ch += sh / 3
+    print ("Page is ready")
+    sleep(5)
 
-        html = browser.execute_script(
-            "return document.getElementsByTagName('html')[0].innerHTML"
-        )
-        soup = BeautifulSoup(html, "html.parser")
-        if current_len == len(
-            soup.select(
-                "div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in"
-            )
-        ):
-            count += 1
-            if count == 100:
-                break
-        else:
-            count = 0
-
-        pantip.getPosts(soup)
+    pantip.getPosts(html,page_count,browser)
     pantip.toCsv(pantip.posts)
+
+
+# elif ss == 3:
+#     base_url = "https://pantip.com/search?q=" + keyword
+#     browser.get(base_url)
+#     ch = 0
+#     count = 0
+#     WebDriverWait(browser, delay)
+#     browser.execute_script("window.scrollTo(0, 0);")
+#     browser.execute_script("document.getElementById('timebias_2').checked = true")
+#     browser.execute_script("document.getElementById('searchbutton').click()")
+#     print("Page is ready")
+#     sleep(5)
+#     html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+#     soup = BeautifulSoup(html, "html.parser")
+#     sort = soup.select_one('div.pt-lists-item__form.pure-material-radio.m-t-2 > input')
+
+#     while page_count > len(soup.select("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in")):
+#         current_len = len(soup.select("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in"))
+#         sh = browser.execute_script("return document.body.scrollHeight")
+#         browser.execute_script("window.scrollTo(0, %d);" % ch)
+#         ch += sh / 3
+
+#         html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+#         soup = BeautifulSoup(html, "html.parser")
+#         if current_len == len(soup.select("div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in")):
+#             count += 1
+#             if count == 100:
+#                 break
+#         else:
+#             count = 0
+
+#         pantip.getPosts(soup)
+#     pantip.toCsv(pantip.posts)
 
 
 # JD
 elif ss == 4:
     page = 0
+    count = 0
+    last_results = 0
     base_url = (
         "https://api.jd.co.th/client.action?body={'pagesize':'60','page':'"
         + str(page)
@@ -279,7 +309,7 @@ elif ss == 4:
             sleep(5)
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
-            )
+            )     
             jd.getProducts(html)
 
             page += 1

@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import csv
 from decouple import config
+from numpy.core.fromnumeric import product
 
 class Amazon: 
     def __init__(self) :
@@ -74,6 +75,7 @@ class Amazon:
         soup = BeautifulSoup(html, "html.parser")
         for item in soup.select('div[data-component-type=s-search-result]'):
             self.products.append(self.getItem(item))
+        return(len(self.products))
         
 
 
