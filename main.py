@@ -268,21 +268,14 @@ elif ss == 3:
 
 # JD
 elif ss == 4:
-    page = 0
+    page = 1
     count = 0
     last_results = 0
-    base_url = (
-        "https://api.jd.co.th/client.action?body={'pagesize':'60','page':'"
-        + str(page)
-        + "','keyword':'"
-        + keyword
-        + "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0"
-    )
-    browser.get(base_url)
 
-    while page < page_count:
+    while page <= page_count:
         try:
-            browser.get(base_url + "&page=" +str(page))
+            base_url = ("https://api.jd.co.th/client.action?body={'pagesize':'60','page':'"+ str(page)+ "','keyword':'"+ keyword+ "'}&functionId=search&client=pc&clientVersion=2.0.0&lang=th_TH&area=184549376-185008128-185008132-0")
+            browser.get(base_url)
             WebDriverWait(browser, delay)
             sleep(5)
             browser.execute_script("window.scrollTo(0, 0);")
@@ -348,6 +341,22 @@ elif ss == 5:
         print("cant get posts // pages limit was set on 100 ")
 
     facebook.toCsv(facebook.posts)
+
+elif ss == 6:
+    page = 1
+    while page<=page_count:
+        try:
+            base_url = ("https://thaibiodiversity.org/bedo/bioDetail/"+str(page))
+            browser.get(base_url)
+            WebDriverWait(browser, delay)
+            sleep(5)
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            soup = BeautifulSoup(html, "html.parser")
+            page += 1
+        except:
+            print("error tai bio")
+
+
 
 
 browser.close()
