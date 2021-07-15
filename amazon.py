@@ -28,6 +28,10 @@ class Amazon:
         name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
         if (name):
             _name = name.text
+        else:
+            name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-medium.a-color-base.a-text-normal")
+            if (name):
+                _name = name.text
         
         # Price
         price = soup.select_one("span.a-price > span.a-offscreen")
