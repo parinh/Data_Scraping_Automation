@@ -1,3 +1,4 @@
+from thaibio import ThaiBio
 from selenium.webdriver.chrome.webdriver import WebDriver
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -16,6 +17,7 @@ from tocsv import *
 from jd import *
 from lazada import *
 from facebook import *
+from thaibio import *
 from pythainlp.corpus.common import thai_words
 from pythainlp import *
 from decouple import config
@@ -42,6 +44,7 @@ pantip = Pantip()
 lazada = Lazada()
 jd = JD()
 facebook = Facebook()
+thai_bio = ThaiBio()
 nlp = NLP()
 
 chromedriver_path = config("CHROMEDRIVER")
@@ -271,7 +274,6 @@ elif ss == 4:
     count = 0
     last_results = 0
     
-
     while page <= page_count:
         try:
             base_url = (
@@ -350,17 +352,19 @@ elif ss == 5:
 
 elif ss == 6:
     page = 1
-    while page<=page_count:
+    while page <= page_count:
         try:
             base_url = ("https://thaibiodiversity.org/bedo/bioDetail/"+str(page))
             browser.get(base_url)
             WebDriverWait(browser, delay)
             sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             soup = BeautifulSoup(html, "html.parser")
+            thai_bio.getData(soup)
             page += 1
         except:
-            print("error tai bio")
+            print("error thai bio")
 
 
 
