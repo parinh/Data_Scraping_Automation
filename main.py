@@ -136,6 +136,7 @@ if ss == 1:
             print("Loading took too much time!-Try again")
 
     shopee.toCsv(shopee.products)
+    browser.close()
     # printArr(shopee.products)
 
 # #################################################################################################
@@ -206,6 +207,7 @@ elif ss == 2:
             print("Loading took too much time!-Try again")
 
     amazon.toCsv(amazon.products)
+    browser.close()
 
 
 # pantip
@@ -229,6 +231,7 @@ elif ss == 3:
 
     pantip.getPosts(html,page_count,browser)
     pantip.toCsv(pantip.posts)
+    browser.close()
 
 
 # elif ss == 3:
@@ -338,6 +341,7 @@ elif ss == 4:
             print("Loading took too much time!-Try again")
 
     jd.toCsv(jd.products)
+    browser.close()
 
 # facebook
 elif ss == 5:
@@ -347,6 +351,7 @@ elif ss == 5:
         print("cant get posts // pages limit was set on 100 ")
 
     facebook.toCsv(facebook.posts)
+    browser.close()
 
 
 browser.close()
