@@ -88,6 +88,31 @@ csv = Tocsv("myfile.csv")
 
 c=[]
 
+
+def getDataFromPostForBedo(html):
+    print("get data form shopee")
+    soup = BeautifulSoup(html, "html.parser")
+    data = {
+        "group" : "",
+        "thai_name" : ""
+    }
+    #bigloop
+    for item in soup.select('ol[id=general_information] > li.metaContent-item'):
+        if ("กลุ่มทรัพยากรชีวภาพ" in item.select_one("div.title").text):
+            _group = item.select_one("div.value").text
+            data["group"] = _group
+
+        if ("ชื่อพันธุ์ไทย" in item.select_one("div.title").text):
+            _thai_name = item.select_one("div.value").text
+            data["thai_name"] = _thai_name
+        
+        else:  
+            print("else")
+
+    # data = getItemDataForBedo(item)
+    print(data)
+    products.append(data)
+
 #####################################################################################################################
 
 #get all item in shopee na
@@ -604,7 +629,28 @@ def getItemDataForFacebook(post):
 
 
     ###########################################################
+def getItemDataForBedo(item):
+    _group = "no group"
+    _thai_name = "no thai name"
+    data ={}
+ 
+    # print(item.select_one("div.title").text)
+    if ("กลุ่มทรัพยากรชีวภาพ" in item.select_one("div.title").text):
+        _group = item.select_one("div.value").text
 
+    if ("ชื่อพันธุ์ไทย" in item.select_one("div.title").text):
+        _thai_name = item.select_one("div.value").text
+    else:
+        print("else")
+
+
+    return {
+        "group" : _group,
+        "thai_name" : _thai_name
+    }
+    
+
+#############################################
 # shopee set
 if(ss == 1):
     base_url = "https://shopee.co.th/search?keyword=" + keyword
@@ -755,6 +801,31 @@ elif (ss ==5):
             print ("Loading took too much time!-Try again")
 
     csv.addDataForFacebook(products)
+
+elif(ss == 6):
+    page = 1
+    # header_field = ["bio_Group","number","group","thai_name","rev_amount","flowering_day","seeding",]
+    header_field = ["num","group","thai_name"]
+
+    csv.setHeader(header_field)
+    
+    while page <= page_count:
+        try:
+            base_url = ("https://www.thaibiodiversity.org/bedo/bioDetail/" + str(page))
+            browser.get(base_url)
+            WebDriverWait(browser,delay)
+            print ("Page is ready")
+            print("on page %d of %d" % (page,page_count))
+            sleep(5)
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            print("get DATA BEDO")
+            getDataFromPostForBedo(html)
+
+            page = page+1
+
+        except TimeoutException:
+            print ("Loading took too much time!-Try again")
+    csv.addDataForBedo(products)
 
 
 browser.close()

@@ -22,6 +22,19 @@ class Tocsv:
             thewriter.writeheader()
 
 
+    def addDataForBedo (self,products):
+        with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
+            thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
+
+            for i in range(len(products)):
+                
+                thewriter.writerow(
+                    {
+                        "num": self.num,
+                        "group" : products[i]['group'],
+                        "thai_name" : products[i]['thai_name'],
+                    })
+                self.num +=1
 
 
     def addDataForShopee (self,products):
