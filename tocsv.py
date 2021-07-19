@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class Tocsv:
-    file_name = "my_csv.csv"
+    file_name = "myfile.csv"
     num = 1
 
     def __init__(self,  file_name, header_field=[]):
@@ -83,7 +83,7 @@ class Tocsv:
 
     
     def addDataForPantip (self,products):
-        products.sort(key=lambda x: datetime.strptime(x['dateTime'], "%m/%d/%Y %H:%M:%S") ,reverse = True)
+        products.sort(key=lambda x: datetime.strptime(x['date_time'], "%m/%d/%Y %H:%M:%S") ,reverse = True)
         with open(self.file_name, mode='a', newline='',encoding="utf-8") as csvfile:
             thewriter = csv.DictWriter(csvfile, fieldnames = self.header_field)
 
@@ -96,17 +96,17 @@ class Tocsv:
                         "author" : products[i]['author'],
                         "author_id": products[i]['author_id'],
                         "story" :products[i]['story'],
-                        "likeCount":products[i]['likeCount'],
-                        "emocount" :products[i]['emocount'],
+                        "like_count":products[i]['like_count'],
+                        "emo_count" :products[i]['emo_count'],
                         "allemos" : products[i]['allemos'],
                         "tags" : products[i]['tags'],
-                        "dateTime" : products[i]['dateTime'],
+                        "date_time" : products[i]['date_time'],
                         "post_link" : products[i]['post_link'],
                         "img_src" : products[i]['img_src'],
                         "post_id" : products[i]['post_id'],
                         "meaning" : products[i]['meaning'],
-                        "goodWords" : products[i]['goodWords'],
-                        "badWords" : products[i]['badWords']
+                        "good_word" : products[i]['good_word'],
+                        "bad_word" : products[i]['bad_word']
                     })
                 self.num +=1
 
@@ -155,8 +155,8 @@ class Tocsv:
                         "post_id" : products[i]['post_id'],
                         "post_text" : products[i]['post_text'],
                         "meaning" : products[i]['meaning'],
-                        "goodWords" : products[i]['goodWords'],
-                        "badWords" : products[i]['badWords']
+                        "good_word" : products[i]['good_word'],
+                        "bad_word" : products[i]['bad_word']
 
                         
                     })

@@ -35,16 +35,15 @@ custom_tokenizer = Tokenizer(custom_dict=trie, engine='newmm',keep_whitespace=Fa
 positive_vocab = []
 negative_vocab = []
 swear_words = []
-
-with open("/Users/mcmxcix/nodeJSDB/pythongetpostshopee1/words/negative-sentiment-words.txt", 'r',encoding='utf8') as f:
+with open("/Users/mcmxcix/pythongetpostshopee/words/negative-sentiment-words.txt", 'r',encoding='utf8') as f:
     for line in f:
         negative_vocab.append(line.rstrip())
 
-with open("/Users/mcmxcix/nodeJSDB/pythongetpostshopee1/words/positive-sentiment-words.txt", 'r',encoding='utf8') as f:
+with open("/Users/mcmxcix/pythongetpostshopee/words/positive-sentiment-words.txt", 'r',encoding='utf8') as f:
     for line in f:
         positive_vocab.append(line.rstrip())
         
-with open("/Users/mcmxcix/nodeJSDB/pythongetpostshopee1/words/swear-words.txt", 'r',encoding='utf8') as f:
+with open("/Users/mcmxcix/pythongetpostshopee/words/swear-words.txt", 'r',encoding='utf8') as f:
     for line in f:
         swear_words.append(line.rstrip())
 
@@ -385,17 +384,17 @@ def getItemDataForPantip(link):
     _author = "no author"
     _author_id = "no author id"
     _story = "no story"
-    _likecount = "no like"
-    _emocount = "no emo"
+    _like_count = "no like"
+    _emo_count = "no emo"
     _allemos = "no emos"
     _tags = "no tags"
-    _datetime = "no time"
+    _date_time = "no time"
     _post_link = "no link"
     _img_src = "no img"
     _post_id = "no post id"
     _meaning = "notthing"
-    _good_words = []
-    _bad_words = []
+    _good_word = []
+    _bad_word = []
     pos = 0
     neg = 0
 
@@ -415,18 +414,18 @@ def getItemDataForPantip(link):
     
     for word in words:
         if word in positive_vocab:
-            if word not in _good_words:
+            if word not in _good_word:
                 pos = pos + 1
             else:
                 pos = pos + 0.5
-            _good_words.append(word)
+            _good_word.append(word)
             # print(word)
         if word in negative_vocab or word in swear_words:
-            if word not in _bad_words:
+            if word not in _bad_word:
                 neg = neg + 1
             else:
                 neg = neg + 0.5
-            _bad_words.append(word)
+            _bad_word.append(word)
             # print(word)
 
     if pos > neg:
@@ -441,11 +440,11 @@ def getItemDataForPantip(link):
 
 
 
-    _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
-    _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
+    _like_count = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
+    _emo_count = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
     _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
     _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item cs-tag_topic_title"]/text()')
-    _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
+    _date_time = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
     _img = tree.xpath('//img[@class="img-in-post"]/@src')
     if (len(_img) > 0):
         # print(_img[0])
@@ -456,17 +455,17 @@ def getItemDataForPantip(link):
         "author" : _author,
         "author_id" : _author_id,
         "story" : _story,
-        "likeCount" :_likecount,
-        "emocount" : _emocount,
+        "like_count" :_like_count,
+        "emo_count" : _emo_count,
         "allemos" : _allemos,
         "tags" : _tags,
-        "dateTime" : _datetime,
+        "date_time" : _date_time,
         "post_link" : _post_link,
         "img_src" : _img_src,
         "post_id" : _post_id,
         "meaning" : _meaning,
-        "goodWords" : _good_words,
-        "badWords" : _bad_words
+        "good_word" : _good_word,
+        "bad_word" : _bad_word
 
     }
     ###################################################################################
@@ -546,8 +545,8 @@ def getItemDataForFacebook(post):
     _post_id = "no post id"
     _post_text = "no text"
     _meaning = "nothing"
-    _good_words = []
-    _bad_words = []
+    _good_word = []
+    _bad_word = []
     pos = 0
     neg = 0
 
@@ -563,18 +562,18 @@ def getItemDataForFacebook(post):
     #find word i array files
     for word in words:
         if word in positive_vocab:
-            if word not in _good_words:
+            if word not in _good_word:
                 pos = pos + 1
             else:
                 pos = pos + 0.5
-            _good_words.append(word)
+            _good_word.append(word)
             # print(word)
         if word in negative_vocab or word in swear_words:
-            if word not in _bad_words:
+            if word not in _bad_word:
                 neg = neg + 1
             else:
                 neg = neg + 0.5
-            _bad_words.append(word)
+            _bad_word.append(word)
             # print(word)
 
     if pos > neg:
@@ -621,8 +620,8 @@ def getItemDataForFacebook(post):
         "post_url":_post_url,
         "post_id" :_post_id,
         "post_text":_post_text,
-        "goodWords" : _good_words,
-        "badWords" : _bad_words,
+        "good_word" : _good_word,
+        "bad_word" : _bad_word,
         "meaning" : _meaning
     }
 
@@ -729,7 +728,7 @@ elif (ss == 2):
 #pantip
 elif (ss == 3):
     base_url = "https://pantip.com/search?q=" + keyword
-    header_field = ["num","title","author","author_id","story","likeCount","emocount","allemos","tags","dateTime","post_link","img_src","post_id","meaning","goodWords","badWords"]
+    header_field = ["num","title","author","author_id","story","like_count","emo_count","allemos","tags","date_time","post_link","img_src","post_id","meaning","good_word","bad_word"]
     csv.setHeader(header_field)
     browser.get(base_url)
     WebDriverWait(browser, delay)
@@ -790,7 +789,7 @@ elif(ss == 4):
     csv.addDataForJD(products)
 
 elif (ss ==5):
-    header_field = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text","meaning","goodWords","badWords"]
+    header_field = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text","meaning","good_word","bad_word"]
     
     csv.setHeader(header_field)
     try:
