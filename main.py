@@ -351,7 +351,7 @@ elif ss == 5:
     facebook.toCsv(facebook.posts)
 
 elif ss == 6:
-    page = 1+900
+    page = 1+1400
     while page <= page_count:
         try:
             base_url = ("https://thaibiodiversity.org/bedo/bioDetail/"+str(page))
@@ -360,6 +360,7 @@ elif ss == 6:
             sleep(5)
             browser.execute_script("window.scrollTo(0, 0);")
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            print(page)
             thai_bio.getData(html)
             page += 1
         except:
