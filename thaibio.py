@@ -4,7 +4,7 @@ from decouple import config
 class ThaiBio :
     def __init__(self):
         self.datas = []
-        self.csv_count = 0+1400
+        self.csv_count = 0+5326
 
     def getData(self,html):
         soup = BeautifulSoup(html, "html.parser")

@@ -67,7 +67,8 @@ class Shopee:
         url = soup.select_one("a")
         _url = "https://shopee.co.th/" + url["href"]
         # product_id
-        _id = (url["href"]).split(".")[len((url["href"]).split(".")) - 1]
+        _id = (url["href"]).split(".")[len((url["href"]).split(".")) - 1].split("?")[0]
+        print(_id)
 
         product = {
             "name": _name,

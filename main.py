@@ -351,7 +351,7 @@ elif ss == 5:
     facebook.toCsv(facebook.posts)
 
 elif ss == 6:
-    page = 1+1400
+    page = 1+5326
     while page <= page_count:
         try:
             base_url = ("https://thaibiodiversity.org/bedo/bioDetail/"+str(page))
@@ -365,6 +365,7 @@ elif ss == 6:
             page += 1
         except:
             print("error thai bio")
+            break
 
     thai_bio.toCsv(thai_bio.datas)
 
