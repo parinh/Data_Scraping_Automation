@@ -354,5 +354,5 @@ elif ss == 5:
     browser.close()
 
 
-browser.close()
+# browser.close()
 print("End process")
