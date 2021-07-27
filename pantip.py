@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from lxml import html
 import json
+from numpy import exp
 import requests
 from requests.api import post
 from requests.exceptions import ConnectionError, ReadTimeout
@@ -58,28 +59,78 @@ class Pantip:
         _post_link = link
         _img_src = "no img"
         _post_id = "no post id"
-        _meaning = "no thing"
+        _meaning = "not thing"
+        _good_words = "not thing"
+        _bad_words = "not thing"
         start_page = requests.get(link)
         start_page.encoding = 'utf-8'
         tree = html.fromstring(start_page.text)
 
-        _post_link = link
+        try:
+            _post_link = link
+        except:
+            print("")
         # print(_post_link)
-        _post_id = link.split("/")[len(link.split("/"))-1]
-        _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
-        _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
-        nlp.check(_story)
-        _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
-        _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
-        _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
-        _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
-        _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
-        _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item"]/text()')
-        _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
+        try:
+            _post_id = link.split("/")[len(link.split("/"))-1]
+        except:
+            print("")
 
-        img = tree.xpath('//img[@class="img-in-post"]/@src')
-        if (len(img) > 0):
-            _img_src = img[0]
+        try:
+            _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
+        except:
+            print("")
+        
+        try:
+            _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
+            nlp.check(_story)
+            _meaning = nlp.check_words[1]
+            _good_words = nlp.check_words[2]
+            _bad_words = nlp.check_words[3]
+        except:
+            print("")
+        
+        try:
+            _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
+        except:
+            print("")
+        
+        try:
+            _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
+        except:
+            print("")
+
+        try:
+            _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
+        except:
+            print("")
+
+        try:
+            _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
+        except:
+            print("")
+
+        try:
+            _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
+        except:
+            print("")
+
+        try:
+            _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item"]/text()')
+        except:
+            print("")
+        
+        try:
+            _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
+        except:
+            print("")
+
+        try:
+            img = tree.xpath('//img[@class="img-in-post"]/@src')
+            if (len(img) > 0):
+                _img_src = img[0]
+        except:
+            print("")
 
         post = {
             "title" : _title,
@@ -94,9 +145,9 @@ class Pantip:
             "post_link" : _post_link,
             "img_src" : _img_src,
             "post_id" : _post_id,
-            "meaning" : nlp.check_words[1],
-            "good_words" : nlp.check_words[2],
-            "bad_words" : nlp.check_words[3]
+            "meaning" : _meaning,
+            "good_words" : _good_words,
+            "bad_words" : _bad_words
         }
         return post
 

@@ -25,51 +25,54 @@ class Shopee:
         _star = 0
         _id = "no id"
 
-        # Name
-        name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF")
-        if name:
-            _name = name.text
-        # Price
-        price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
-        if price:
-            _price = float("".join((price.text).split(" ")[0].split("฿")[1].split(",")))
-        # type
-        __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
-        if __type:
-            _type = __type.text
-        __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
-        if __type:
-            _type = "shopee mall"
-        # sold / month
-        sold = soup.select_one("div.go5yPW")
-        if sold.text:
-            if "พัน" not in sold.text:
-                _sold = float((sold.text).split(" ")[1])
-            else:
-                _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
-        # star
-        for star in soup.select(
-            "div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit"
-        ):
-            _star = _star + float(star["style"].split(" ")[1].split("%")[0])
-        _star = round(_star / 100, 4)
-        # from
-        __from = soup.select_one("div._2CWevj")
-        if __from:
-            _from = __from.text
-        # find img path
-        imgs = soup.select_one("div._25_r8I._2SHkSu > img")
         try:
-            _image = imgs["src"]
-        except:
-            _image = "no image"
-        # url
-        url = soup.select_one("a")
-        _url = "https://shopee.co.th/" + url["href"]
-        # product_id
-        _id = (url["href"]).split(".")[len((url["href"]).split(".")) - 1].split("?")[0]
-        print(_id)
+            # Name
+            name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF")
+            if name:
+                _name = name.text
+            # Price
+            price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
+            if price:
+                _price = float("".join((price.text).split(" ")[0].split("฿")[1].split(",")))
+            # type
+            __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
+            if __type:
+                _type = __type.text
+            else:
+                __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
+                if __type:
+                    _type = "shopee mall"
+            # sold / month
+            sold = soup.select_one("div.go5yPW")
+            if sold.text:
+                if "พัน" not in sold.text:
+                    _sold = float((sold.text).split(" ")[1])
+                else:
+                    _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
+            # star
+            for star in soup.select(
+                "div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit"
+            ):
+                _star = _star + float(star["style"].split(" ")[1].split("%")[0])
+            _star = round(_star / 100, 4)
+            # from
+            __from = soup.select_one("div._2CWevj")
+            if __from:
+                _from = __from.text
+            # find img path
+            imgs = soup.select_one("div._25_r8I._2SHkSu > img")
+            try:
+                _image = imgs["src"]
+            except:
+                _image = "no image"
+            # url
+            url = soup.select_one("a")
+            _url = "https://shopee.co.th/" + url["href"]
+            # product_id
+            _id = (url["href"]).split(".")[len((url["href"]).split(".")) - 1].split("?")[0]
 
+        except:
+            print("something wrong")
         product = {
             "name": _name,
             "price": _price,
