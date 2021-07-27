@@ -4,7 +4,7 @@ import csv
 import tocsv
 from decouple import config
 from numpy import product
-from decouple import config
+
 
 
 class Shopee:
@@ -99,7 +99,7 @@ class Shopee:
         return(len(self.products))
 
     def toCsv(self, products):
-        with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
+        with open(config("THAIBIO_FILE"), "w", encoding="utf-8", newline="") as csvfile:
             head_csv = [
                 "num",
                 "name",
