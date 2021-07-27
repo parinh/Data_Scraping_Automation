@@ -351,7 +351,7 @@ elif ss == 5:
     facebook.toCsv(facebook.posts)
 
 elif ss == 6:
-    page = 1+5326
+    page = 1+5366
     while page <= page_count:
         try:
             base_url = ("https://thaibiodiversity.org/bedo/bioDetail/"+str(page))
