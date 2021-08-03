@@ -12,15 +12,15 @@ class Thaijo:
         self.posts = []
 
     def getItem(self,response):
-        # posts = []
-        # _abstract_clean = "noting"
-        # _title = "noting"
-        # _articleUrl = "noting"
-        # _issueDatePublished = "noting"
-        # _issueCoverImage = "noting"
-        # _authors_full_name = "noting"
-        # _authors_affiliation = "noting"
-        # _issus_date = "noting"
+        posts = []
+        _abstract_clean = "noting"
+        _title = "noting"
+        _articleUrl = "noting"
+        _issueDatePublished = "noting"
+        _issueCoverImage = "noting"
+        _authors_full_name = "noting"
+        _authors_affiliation = "noting"
+        _issus_date = "noting"
 
         # _abstract_clean = response.json().get("result")[0].get("abstract_clean").get('th_TH')
         # response.json().get("result")[0].get("title").get('th_TH'))

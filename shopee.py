@@ -1,10 +1,11 @@
+from ntpath import join
 from os import name
 from bs4 import BeautifulSoup
 import csv
 import tocsv
 from decouple import config
 from numpy import product
-from decouple import config
+
 
 
 class Shopee:
@@ -26,15 +27,15 @@ class Shopee:
         _id = "no id"
 
         try:
-
             # Name
             name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF")
             if name:
                 _name = name.text
             # Price
-            price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
+            price = soup.select_one("div.WTFwws._1k2Ulw._5W0f35 > span._24JoLh")
+            print("".join(price.text.split(",")))
             if price:
-                _price = float("".join((price.text).split(" ")[0].split("฿")[1].split(",")))
+                _price = float("".join(price.text.split(",")))
             # type
             __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
             if __type:
@@ -74,7 +75,6 @@ class Shopee:
 
         except:
             print("something wrong")
-
         product = {
             "name": _name,
             "price": _price,

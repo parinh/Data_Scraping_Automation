@@ -1,3 +1,4 @@
+from thaibio import ThaiBio
 from selenium.webdriver.chrome.webdriver import WebDriver
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -16,6 +17,7 @@ from tocsv import *
 from jd import *
 from lazada import *
 from facebook import *
+from thaibio import *
 from pythainlp.corpus.common import thai_words
 from pythainlp import *
 from decouple import config
@@ -45,6 +47,7 @@ lazada = Lazada()
 jd = JD()
 facebook = Facebook()
 thaijo = Thaijo()
+thai_bio = ThaiBio()
 nlp = NLP()
 
 chromedriver_path = config("CHROMEDRIVER")
@@ -141,8 +144,6 @@ if ss == 1:
     shopee.toCsv(shopee.products)
     # printArr(shopee.products)
 
-# #################################################################################################
-
 # for amazon search
 elif ss == 2:
     base_url = "https://www.amazon.com/s?k=" + keyword
@@ -232,7 +233,7 @@ elif ss == 3:
 
     pantip.getPosts(html,page_count,browser)
     pantip.toCsv(pantip.posts)
-
+    
 
 # elif ss == 3:
 #     base_url = "https://pantip.com/search?q=" + keyword
@@ -274,8 +275,7 @@ elif ss == 4:
     count = 0
     last_results = 0
     
-
-    while page < page_count:
+    while page <= page_count:
         try:
             base_url = (
             "https://api.jd.co.th/client.action?body={'pagesize':'60','page':'"
@@ -352,6 +352,35 @@ elif ss == 5:
     facebook.toCsv(facebook.posts)
 
 elif ss == 6:
+    page = 1+5366
+    while page <= page_count:
+        try:
+            base_url = ("https://thaibiodiversity.org/bedo/bioDetail/"+str(page))
+            browser.get(base_url)
+            WebDriverWait(browser, delay)
+            sleep(5)
+            browser.execute_script("window.scrollTo(0, 0);")
+            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+            print(page)
+            thai_bio.getData(html)
+            page += 1
+        except:
+            print("error thai bio")
+            break
+
+    thai_bio.toCsv(thai_bio.datas)
+
+elif ss == 7:
+    page = 0
+    try:
+        base_url = ("https://www.sciencedirect.com/search/api?qs=chicken&t=ZNS1ixW4GGlMjTKbRHccgcML%252BaxSRKhvfLPhn5%252FngR7q2yS0Xo9jYGehwK6EP%252BXLBQmO3M1qEYx%252FhyQ9F73W6aWzCL7gRpIEXR39JSVyCujf6EajB%252BYREjbhdYoZjlowvKdDbfVcomCzYflUlyb3MA%253D%253D&hostname=www.sciencedirect.com")
+        browser.get(base_url)
+        WebDriverWait(browser, delay)
+        sleep(5)
+    except:
+        print("error science")
+
+elif ss == 8:
     page = 1
     while page <= page_count:
         try:
@@ -359,10 +388,6 @@ elif ss == 6:
         except:
             print("")
         page += 1
-
-
-
-
 
 browser.close()
 print("End process")

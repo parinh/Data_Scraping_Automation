@@ -18,7 +18,7 @@ class Amazon:
         _image = 'no image'
         _url = 'no url'
         _bestseller = 'not be a best'
-
+   
         try:
             #item id
             item_code = soup['data-asin']
@@ -65,7 +65,7 @@ class Amazon:
                 _url = "https://www.amazon.com/"+post_url['href']
         except:
             print("something wrong")
-
+            
         product = {
             "name": _name,
             "id": _id,
