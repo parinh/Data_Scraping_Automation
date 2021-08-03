@@ -19,6 +19,8 @@ from facebook import *
 from pythainlp.corpus.common import thai_words
 from pythainlp import *
 from decouple import config
+from thaijo import *
+import requests
 
 
 def printArr2D(arr):
@@ -42,6 +44,7 @@ pantip = Pantip()
 lazada = Lazada()
 jd = JD()
 facebook = Facebook()
+thaijo = Thaijo()
 nlp = NLP()
 
 chromedriver_path = config("CHROMEDRIVER")
@@ -347,6 +350,18 @@ elif ss == 5:
         print("cant get posts // pages limit was set on 100 ")
 
     facebook.toCsv(facebook.posts)
+
+elif ss == 6:
+    page = 1
+    while page <= page_count:
+        try:
+            result = thaijo.getItem(keyword,page)
+        except:
+            print("")
+        page += 1
+
+
+
 
 
 browser.close()

@@ -18,50 +18,53 @@ class Amazon:
         _image = 'no image'
         _url = 'no url'
         _bestseller = 'not be a best'
-   
-        #item id
-        item_code = soup['data-asin']
-        if (item_code):  
-            _id = item_code
 
-        #  Name
-        name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
-        if (name):
-            _name = name.text
-        else:
-            name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-medium.a-color-base.a-text-normal")
+        try:
+            #item id
+            item_code = soup['data-asin']
+            if (item_code):  
+                _id = item_code
+
+            #  Name
+            name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
             if (name):
                 _name = name.text
-        
-        # Price
-        price = soup.select_one("span.a-price > span.a-offscreen")
-        if (price):
-            _price = float((price.text).split("$")[1])
-
-        # rating
-        rating = soup.select_one("i > span.a-icon-alt")
-        if (rating):
-            _rating = float((rating.text).split(" ")[0])
-        
-        #review
-        review = soup.select_one("a.a-link-normal > span.a-size-base")
-        if (review):
-            _review = review.text
-        
-
-        #best?
-        bestseller = soup.select_one("div.a-row.a-badge-region > span.a-badge > span.a-badge-label > span.a-badge-label-inner.a-text-ellipsis > span.a-badge-text ")
-        if(bestseller):
-            _bestseller = bestseller.text
+            else:
+                name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-medium.a-color-base.a-text-normal")
+                if (name):
+                    _name = name.text
             
-        imgs = soup.select_one("img.s-image")
-        if (imgs):  
-            _image = imgs['src']
-       
-        #post url
-        post_url = soup.select_one("span.rush-component > a.a-link-normal.s-no-outline")
-        if(post_url):
-            _url = "https://www.amazon.com/"+post_url['href']
+            # Price
+            price = soup.select_one("span.a-price > span.a-offscreen")
+            if (price):
+                _price = float((price.text).split("$")[1])
+
+            # rating
+            rating = soup.select_one("i > span.a-icon-alt")
+            if (rating):
+                _rating = float((rating.text).split(" ")[0])
+            
+            #review
+            review = soup.select_one("a.a-link-normal > span.a-size-base")
+            if (review):
+                _review = review.text
+            
+
+            #best?
+            bestseller = soup.select_one("div.a-row.a-badge-region > span.a-badge > span.a-badge-label > span.a-badge-label-inner.a-text-ellipsis > span.a-badge-text ")
+            if(bestseller):
+                _bestseller = bestseller.text
+                
+            imgs = soup.select_one("img.s-image")
+            if (imgs):  
+                _image = imgs['src']
+        
+            #post url
+            post_url = soup.select_one("span.rush-component > a.a-link-normal.s-no-outline")
+            if(post_url):
+                _url = "https://www.amazon.com/"+post_url['href']
+        except:
+            print("something wrong")
 
         product = {
             "name": _name,

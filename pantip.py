@@ -58,28 +58,32 @@ class Pantip:
         _post_link = link
         _img_src = "no img"
         _post_id = "no post id"
-        _meaning = "no thing"
+        _meaning = "not thing"
         start_page = requests.get(link)
         start_page.encoding = 'utf-8'
         tree = html.fromstring(start_page.text)
 
-        _post_link = link
-        # print(_post_link)
-        _post_id = link.split("/")[len(link.split("/"))-1]
-        _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
-        _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
-        nlp.check(_story)
-        _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
-        _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
-        _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
-        _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
-        _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
-        _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item"]/text()')
-        _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
 
-        img = tree.xpath('//img[@class="img-in-post"]/@src')
-        if (len(img) > 0):
-            _img_src = img[0]
+        try:
+            _post_link = link
+            # print(_post_link)
+            _post_id = link.split("/")[len(link.split("/"))-1]
+            _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
+            _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
+            nlp.check(_story)
+            _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
+            _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
+            _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
+            _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
+            _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
+            _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item"]/text()')
+            _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
+
+            img = tree.xpath('//img[@class="img-in-post"]/@src')
+            if (len(img) > 0):
+                _img_src = img[0]
+        except:
+            print("something wrong")
 
         post = {
             "title" : _title,
