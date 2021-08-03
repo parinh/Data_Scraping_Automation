@@ -139,10 +139,7 @@ if ss == 1:
             print("Loading took too much time!-Try again")
 
     shopee.toCsv(shopee.products)
-    browser.close()
     # printArr(shopee.products)
-
-# #################################################################################################
 
 # for amazon search
 elif ss == 2:
@@ -210,7 +207,6 @@ elif ss == 2:
             print("Loading took too much time!-Try again")
 
     amazon.toCsv(amazon.products)
-    browser.close()
 
 
 # pantip
@@ -234,8 +230,7 @@ elif ss == 3:
 
     pantip.getPosts(html,page_count,browser)
     pantip.toCsv(pantip.posts)
-    browser.close()
-
+    
 
 # elif ss == 3:
 #     base_url = "https://pantip.com/search?q=" + keyword
@@ -343,7 +338,6 @@ elif ss == 4:
             print("Loading took too much time!-Try again")
 
     jd.toCsv(jd.products)
-    browser.close()
 
 # facebook
 elif ss == 5:
@@ -353,7 +347,6 @@ elif ss == 5:
         print("cant get posts // pages limit was set on 100 ")
 
     facebook.toCsv(facebook.posts)
-    browser.close()
 
 elif ss == 6:
     page = 1+5366
@@ -374,8 +367,21 @@ elif ss == 6:
 
     thai_bio.toCsv(thai_bio.datas)
 
+elif ss == 7:
+    page = 0
+    try:
+        base_url = ("https://www.sciencedirect.com/search/api?qs=chicken&t=ZNS1ixW4GGlMjTKbRHccgcML%252BaxSRKhvfLPhn5%252FngR7q2yS0Xo9jYGehwK6EP%252BXLBQmO3M1qEYx%252FhyQ9F73W6aWzCL7gRpIEXR39JSVyCujf6EajB%252BYREjbhdYoZjlowvKdDbfVcomCzYflUlyb3MA%253D%253D&hostname=www.sciencedirect.com")
+        browser.get(base_url)
+        WebDriverWait(browser, delay)
+        sleep(5)
+    except:
+        print("error science")
 
+elif ss == 8:
+    try:
+        base_url = ()
+    except:
+        print("error thaijo")
 
-
-# browser.close()
+browser.close()
 print("End process")

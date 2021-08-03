@@ -1,3 +1,4 @@
+from ntpath import join
 from os import name
 from bs4 import BeautifulSoup
 import csv
@@ -31,9 +32,10 @@ class Shopee:
             if name:
                 _name = name.text
             # Price
-            price = soup.select_one("div.WTFwws._1lK1eK._5W0f35")
+            price = soup.select_one("div.WTFwws._1k2Ulw._5W0f35 > span._24JoLh")
+            print("".join(price.text.split(",")))
             if price:
-                _price = float("".join((price.text).split(" ")[0].split("฿")[1].split(",")))
+                _price = float("".join(price.text.split(",")))
             # type
             __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
             if __type:

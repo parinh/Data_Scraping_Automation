@@ -69,17 +69,17 @@ class Pantip:
         try:
             _post_link = link
         except:
-            print("")
+            print("error link")
         # print(_post_link)
         try:
             _post_id = link.split("/")[len(link.split("/"))-1]
         except:
-            print("")
+            print("error post id")
 
         try:
             _title = tree.xpath('//h2[@class="display-post-title"]/text()')[0]
         except:
-            print("")
+            print("error title")
         
         try:
             _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
@@ -88,49 +88,49 @@ class Pantip:
             _good_words = nlp.check_words[2]
             _bad_words = nlp.check_words[3]
         except:
-            print("")
+            print("error story")
         
         try:
             _author = tree.xpath('//a[@class="display-post-name owner"]/text()')[0]
         except:
-            print("")
+            print("error a")
         
         try:
             _author_id = tree.xpath('//a[@class="display-post-name owner"]/@id')[0]
         except:
-            print("")
+            print("error a id")
 
         try:
             _likecount = tree.xpath('//span[starts-with(@class,"like-score")]/text()')[0]
         except:
-            print("")
+            print("error like")
 
         try:
             _emocount = tree.xpath('//span[starts-with(@class,"emotion-score")]/text()')[0]
         except:
-            print("")
+            print("error c emo")
 
         try:
             _allemos = tree.xpath('//span[@class="emotion-choice-score"]/text()')
         except:
-            print("")
+            print("error emo")
 
         try:
             _tags = tree.xpath('//div[@class="display-post-tag-wrapper"]/a[@class="tag-item"]/text()')
         except:
-            print("")
+            print("error tag")
         
         try:
             _datetime = tree.xpath('//abbr[@class="timeago"]/@data-utime')[0]
         except:
-            print("")
+            print("error time")
 
         try:
             img = tree.xpath('//img[@class="img-in-post"]/@src')
             if (len(img) > 0):
                 _img_src = img[0]
         except:
-            print("")
+            print("error img")
 
         post = {
             "title" : _title,
