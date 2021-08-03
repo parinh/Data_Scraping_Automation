@@ -73,6 +73,7 @@ class Shopee:
 
         except:
             print("something wrong")
+
         product = {
             "name": _name,
             "price": _price,
@@ -99,7 +100,7 @@ class Shopee:
         return(len(self.products))
 
     def toCsv(self, products):
-        with open(config("THAIBIO_FILE"), "w", encoding="utf-8", newline="") as csvfile:
+        with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
             head_csv = [
                 "num",
                 "name",
