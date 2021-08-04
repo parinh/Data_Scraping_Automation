@@ -1,3 +1,4 @@
+from sciencedirect import ScienceDirect
 from thaibio import ThaiBio
 from selenium.webdriver.chrome.webdriver import WebDriver
 from bs4 import BeautifulSoup
@@ -48,6 +49,7 @@ jd = JD()
 facebook = Facebook()
 thaijo = Thaijo()
 thai_bio = ThaiBio()
+science_direct = ScienceDirect()
 nlp = NLP()
 
 chromedriver_path = config("CHROMEDRIVER")
@@ -55,7 +57,7 @@ chromedriver_path = config("CHROMEDRIVER")
 
 # input
 print(
-    "select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4 = JD][5 = FaceBook]->>"
+    "select a number of site that need to scrapper.. [1 = shopee][2 = amazon-search][3 = pantip][4 = JD][5 = FaceBook][6 = thaibio][7 = sciencedirect][8 = thaijo]->>"
 )
 ss = int(input())
 
@@ -373,10 +375,32 @@ elif ss == 6:
 elif ss == 7:
     page = 0
     try:
-        base_url = ("https://www.sciencedirect.com/search/api?qs=chicken&t=ZNS1ixW4GGlMjTKbRHccgcML%252BaxSRKhvfLPhn5%252FngR7q2yS0Xo9jYGehwK6EP%252BXLBQmO3M1qEYx%252FhyQ9F73W6aWzCL7gRpIEXR39JSVyCujf6EajB%252BYREjbhdYoZjlowvKdDbfVcomCzYflUlyb3MA%253D%253D&hostname=www.sciencedirect.com")
+        # base_url = ("https://www.sciencedirect.com/search/api?qs=chicken&t=ZNS1ixW4GGlMjTKbRHccgcML%252BaxSRKhvfLPhn5%252FngR7q2yS0Xo9jYGehwK6EP%252BXLBQmO3M1qEYx%252FhyQ9F73W6aWzCL7gRpIEXR39JSVyCujf6EajB%252BYREjbhdYoZjlowvKdDbfVcomCzYflUlyb3MA%253D%253D&hostname=www.sciencedirect.com")
+        base_url = ("https://www.sciencedirect.com/search?qs="+str(keyword))
         browser.get(base_url)
         WebDriverWait(browser, delay)
         sleep(5)
+        browser.execute_script("window.scrollTo(0, 0);")
+        browser.execute_script(
+            "window.scrollTo(0, (document.body.scrollHeight /10) * 1);"
+        )
+        sleep(3)
+        browser.execute_script("document.querySelector('.button-link.facet-link-container.u-font-sans.button-link-primary').click()")
+        # print(11111111)
+        # browser.execute_script(
+        #     "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
+        # )
+        # sleep(5)
+        html = browser.execute_script(
+                "return document.getElementsByTagName('html')[0].innerHTML"
+            ) 
+        science_direct.getData(html)
+        print(1)
+        science_direct.toCsv(science_direct.datas)
+        print(2)
+        # science_direct.sum(science_direct.datas)
+        
+        
     except:
         print("error science")
 

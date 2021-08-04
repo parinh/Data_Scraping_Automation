@@ -89,7 +89,6 @@ class Shopee:
         return product
 
     def getData(self, html):
-        soup = BeautifulSoup(html, "html.parser")
         print("get data form shopee")
         soup = BeautifulSoup(html, "html.parser")
         for item_n in soup.select("div[data-sqe=item]"):
