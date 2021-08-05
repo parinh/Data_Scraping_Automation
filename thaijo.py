@@ -23,7 +23,8 @@ class Thaijo:
         _issus_date = "noting"
 
         # _abstract_clean = response.json().get("result")[0].get("abstract_clean").get('th_TH')
-        # response.json().get("result")[0].get("title").get('th_TH'))
+        _title=response.json().get("result")[0].get("title").get('th_TH')
+        print(_title)
         # response.json().get("result")[0].get("articleUrl"))
         # response.json().get("result")[0].get("issueDatePublished"))
         # response.json().get("result")[0].get("issueCoverImage").get("en_US"))
@@ -31,7 +32,7 @@ class Thaijo:
         # response.json().get("result")[0].get("authors")[0].get("affiliation").get("th_TH"))
         # response.json().get("result")[0].get("issue_id"))
 
-        self.posts.append
+        # self.posts.append
 
     def getData (self,keyword,page):
         query = {"term":keyword,"page":page,"size":1,"strict":True,"title":True,"author":True,"abstract":True}

@@ -395,8 +395,8 @@ elif ss == 7:
                 "return document.getElementsByTagName('html')[0].innerHTML"
             ) 
         science_direct.getData(html)
-        print(1)
-        science_direct.toCsv(science_direct.datas)
+        # print(1)
+        science_direct.toCsv(science_direct.datas,keyword)
         print(2)
         # science_direct.sum(science_direct.datas)
         
@@ -410,7 +410,7 @@ elif ss == 8:
         try:
             result = thaijo.getItem(keyword,page)
         except:
-            print("")
+            print("error thaijo")
         page += 1
 
 browser.close()
