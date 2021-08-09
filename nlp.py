@@ -65,11 +65,11 @@ class NLP:
         spa = []
         travel = []
         health = []
-        is_food = 0
-        is_health = 0
-        is_beauty = 0
-        is_spa = 0
-        is_travel = 0
+        food_words_count = 0
+        health_words_count = 0
+        beauty_words_count = 0
+        spa_words_count = 0
+        travel_words_count = 0
         nlp = []
 
         for word in words:
@@ -87,30 +87,27 @@ class NLP:
                     score = score - 0.5
                 bad.append(word)
 
-            if word in self.beauty_words:
-                beauty.append(word)
-                is_beauty = 1
+            if word in self.food_words:
+                food.append(word)
+                food_words_count += 1
             if word in self.spa_words:
                 spa.append(word)
-                is_spa = 1
+                spa_words_count = 1
             if word in self.travel_words:
                 travel.append(word)
-                is_travel = 1
+                travel_words_count += 1
             if word in self.health_words:
                 health.append(word)
-                is_health = 1
+                health_words_count += 1
             if word in self.beauty_words:
                 beauty.append(word)
-                is_beauty = 1
+                beauty_words_count += 1
         
         if(score>0):
-            # self.check_words.append('positive')
             meaning = 'positive'
         elif(score==0):
-            # self.check_words.append('neutral')
             meaning = 'neutral'
         else: 
-            # self.check_words.append('negative')
             meaning = 'negative'
 
         self.check_words = {
@@ -122,12 +119,12 @@ class NLP:
             'health_words': health,
             'beauty_words': beauty,
             'spa_words': spa,
-            'travel_word': travel,
-            'is_food': is_food,
-            'is_beauty': is_beauty,
-            'is_health': is_health,
-            'is_spa': is_spa,
-            'is_travel': is_travel
+            'travel_words': travel,
+            'food_words_count': food_words_count,
+            'beauty_words_count': beauty_words_count,
+            'health_words_count': health_words_count,
+            'spa_words_count': spa_words_count,
+            'travel_words_count': travel_words_count,
         }
         
 

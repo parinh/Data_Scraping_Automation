@@ -62,11 +62,16 @@ class Pantip:
         _meaning = "not thing"
         _good_words = "not thing"
         _bad_words = "not thing"
-        _is_food = 0
-        _is_spa = 0
-        _is_beauty = 0
-        _is_travel = 0
-        _is_health = 0
+        _food_words_count = 0
+        _spa_words_count = 0
+        _beauty_words_count = 0
+        _travel_words_count = 0
+        _health_words_count = 0
+        _food_words=[]
+        _spa_words=[]
+        _beauty_words=[]
+        _travel_words=[]
+        _health_words=[]
         start_page = requests.get(link)
         start_page.encoding = 'utf-8'
         tree = html.fromstring(start_page.text)
@@ -92,11 +97,16 @@ class Pantip:
             _meaning = nlp.check_words['meaning']
             _good_words = nlp.check_words['good_words']
             _bad_words = nlp.check_words['bad_words']
-            _is_beauty = nlp.check_words['is_beauty']
-            _is_food = nlp.check_words['is_food']
-            _is_health = nlp.check_words['is_health']
-            _is_spa = nlp.check_words['is_spa']
-            _is_travel = nlp.check_words['is_travel']
+            _beauty_words_count = nlp.check_words['beauty_words_count']
+            _food_words_count = nlp.check_words['food_words_count']
+            _health_words_count = nlp.check_words['health_words_count']
+            _spa_words_count = nlp.check_words['spa_words_count']
+            _travel_words_count = nlp.check_words['travel_words_count']
+            _food_words=nlp.check_words['food_words']
+            _spa_words=nlp.check_words['spa_words']
+            _beauty_words=nlp.check_words['beauty_words']
+            _travel_words=nlp.check_words['travel_words']
+            _health_words=nlp.check_words['health_words']
         except:
             print("error story")
         
@@ -158,17 +168,25 @@ class Pantip:
             "meaning" : _meaning,
             "good_words" : _good_words,
             "bad_words" : _bad_words,
-            "is_food": _is_food,
-            "is_health": _is_health,
-            "is_beauty": _is_beauty,
-            "is_spa":_is_spa,
-            "is_travel":_is_travel
+            "food_words_count": _food_words_count,
+            "health_words_count": _health_words_count,
+            "beauty_words_count": _beauty_words_count,
+            "spa_words_count":_spa_words_count,
+            "travel_words_count":_travel_words_count,
+            'food_words': _food_words,
+            'health_words': _health_words,
+            'beauty_words': _beauty_words,
+            'spa_words': _spa_words,
+            'travel_words': _travel_words,
         }
         return post
 
     def toCsv(self,posts):
         with open(config("FILE"), 'w', encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","title","author","author_id","story","like_count","emo_count","allemos","tags","date_time","post_link","img_src","post_id","meaning","good_word","bad_word","is_food","is_health","is_beauty","is_spa","is_travel"]
+            head_csv = ["num","title","author","author_id","story","like_count","emo_count","allemos","tags",
+            "date_time","post_link","img_src","post_id","meaning","good_word","bad_word",
+            "food_word_count","health_word_count","beauty_word_count","spa_word_count",
+            "travel_word_count",'food_word','health_word','beauty_word','spa_word','travel_word']
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
             for i in range(len(posts)):
@@ -191,11 +209,17 @@ class Pantip:
                         "meaning" : posts[i]['meaning'],
                         "good_word" : posts[i]['good_words'],
                         "bad_word" : posts[i]['bad_words'],
-                        "is_food": posts[i]['is_food'],
-                        "is_health": posts[i]['is_health'],
-                        "is_beauty": posts[i]['is_beauty'],
-                        "is_spa": posts[i]['is_spa'],
-                        "is_travel": posts[i]['is_travel']
+                        "food_word_count": posts[i]['food_words_count'],
+                        "health_word_count": posts[i]['health_words_count'],
+                        "beauty_word_count": posts[i]['beauty_words_count'],
+                        "spa_word_count": posts[i]['spa_words_count'],
+                        "travel_word_count": posts[i]['travel_words_count'],
+                        "food_word": posts[i]['food_words'],
+                        "health_word": posts[i]['health_words'],
+                        "beauty_word": posts[i]['beauty_words'],
+                        "spa_word": posts[i]['spa_words'],
+                        "travel_word": posts[i]['travel_words'],
+                        
                     }
                 )
         
