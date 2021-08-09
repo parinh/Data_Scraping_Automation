@@ -31,6 +31,11 @@ class Facebook:
         _meaning = "nothing"
         _good_words = []
         _bad_words = []
+        _is_food = 0
+        _is_spa = 0
+        _is_beauty = 0
+        _is_travel = 0
+        _is_health = 0
        
         try:
             _post_id = post['post_id']
@@ -71,10 +76,15 @@ class Facebook:
             print("no username")
 
         nlp.check(post['post_text'])
-        _meaning = nlp.check_words[1]
-        _good_words =nlp.check_words[2]
-        _bad_words = nlp.check_words[3]
-       
+        _meaning = nlp.check_words['meaning']
+        _good_words =nlp.check_words['good_words']
+        _bad_words = nlp.check_words['bad_words']
+        _is_beauty = nlp.check_words['is_beauty']
+        _is_food = nlp.check_words['is_food']
+        _is_health = nlp.check_words['is_health']
+        _is_spa = nlp.check_words['is_spa']
+        _is_travel = nlp.check_words['is_travel']
+    
 
         face_post = {
             "user_name":_user_name,
@@ -86,9 +96,14 @@ class Facebook:
             "post_url":_post_url,
             "post_id" :_post_id,
             "post_text":_post_text,
-            "goodWords" : _good_words,
-            "badWords" : _bad_words,
-            "meaning" : _meaning
+            "good_words" : _good_words,
+            "bad_words" : _bad_words,
+            "meaning" : _meaning,
+            "is_food": _is_food,
+            "is_health": _is_health,
+            "is_beauty": _is_beauty,
+            "is_spa":_is_spa,
+            "is_travel":_is_travel
         }
         nlp.clearCheckWord()
 
@@ -97,7 +112,7 @@ class Facebook:
         
     def toCsv(self,posts):
         with open(config("FILE"),'w', encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text","meaning","good_word","bad_word"]
+            head_csv = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text","meaning","good_word","bad_word","is_food","is_health","is_beauty","is_spa","is_travel"]
             # sorted_posts = sorted(posts,key=lambda x:x['date'],reverse = True)
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
@@ -116,7 +131,12 @@ class Facebook:
                         "post_id" : posts[i]['post_id'],
                         "post_text" : posts[i]['post_text'],
                         "meaning" : posts[i]['meaning'],
-                        "good_word" : posts[i]['goodWords'],
-                        "bad_word" : posts[i]['badWords']
+                        "good_word" : posts[i]['good_words'],
+                        "bad_word" : posts[i]['bad_words'],
+                        "is_food": posts[i]['is_food'],
+                        "is_health": posts[i]['is_health'],
+                        "is_beauty": posts[i]['is_beauty'],
+                        "is_spa": posts[i]['is_spa'],
+                        "is_travel": posts[i]['is_travel']
                     }
                 )
