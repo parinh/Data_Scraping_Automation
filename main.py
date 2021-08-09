@@ -234,6 +234,7 @@ elif ss == 3:
     sleep(5)
 
     pantip.getPosts(html,page_count,browser)
+    # printArr(pantip.posts)
     pantip.toCsv(pantip.posts)
     
 

@@ -32,7 +32,7 @@ class Pantip:
             # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
             html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
             soup = BeautifulSoup(html, "html.parser")
-            print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+            # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
             if (current_len == len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))):
                 count += 1
                 if (count == 100):
@@ -62,6 +62,11 @@ class Pantip:
         _meaning = "not thing"
         _good_words = "not thing"
         _bad_words = "not thing"
+        _is_food = 0
+        _is_spa = 0
+        _is_beauty = 0
+        _is_travel = 0
+        _is_health = 0
         start_page = requests.get(link)
         start_page.encoding = 'utf-8'
         tree = html.fromstring(start_page.text)
@@ -84,9 +89,14 @@ class Pantip:
         try:
             _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
             nlp.check(_story)
-            _meaning = nlp.check_words[1]
-            _good_words = nlp.check_words[2]
-            _bad_words = nlp.check_words[3]
+            _meaning = nlp.check_words['meaning']
+            _good_words = nlp.check_words['good_words']
+            _bad_words = nlp.check_words['bad_words']
+            _is_beauty = nlp.check_words['is_beauty']
+            _is_food = nlp.check_words['is_food']
+            _is_health = nlp.check_words['is_health']
+            _is_spa = nlp.check_words['is_spa']
+            _is_travel = nlp.check_words['is_travel']
         except:
             print("error story")
         
@@ -147,13 +157,18 @@ class Pantip:
             "post_id" : _post_id,
             "meaning" : _meaning,
             "good_words" : _good_words,
-            "bad_words" : _bad_words
+            "bad_words" : _bad_words,
+            "is_food": _is_food,
+            "is_health": _is_health,
+            "is_beauty": _is_beauty,
+            "is_spa":_is_spa,
+            "is_travel":_is_travel
         }
         return post
 
     def toCsv(self,posts):
         with open(config("FILE"), 'w', encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","title","author","author_id","story","like_count","emo_count","allemos","tags","date_time","post_link","img_src","post_id","meaning","good_word","bad_word"]
+            head_csv = ["num","title","author","author_id","story","like_count","emo_count","allemos","tags","date_time","post_link","img_src","post_id","meaning","good_word","bad_word","is_food","is_health","is_beauty","is_spa","is_travel"]
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
             for i in range(len(posts)):
@@ -164,9 +179,9 @@ class Pantip:
                         "title" : posts[i]['title'],
                         "author" : posts[i]['author'],
                         "author_id": posts[i]['author_id'],
-                        "story" :posts[i]['story'],
-                        "like_count":posts[i]['likeCount'],
-                        "emo_count" :posts[i]['emocount'],
+                        "story" : posts[i]['story'],
+                        "like_count": posts[i]['likeCount'],
+                        "emo_count" : posts[i]['emocount'],
                         "allemos" : posts[i]['allemos'],
                         "tags" : posts[i]['tags'],
                         "date_time" : posts[i]['dateTime'],
@@ -175,7 +190,12 @@ class Pantip:
                         "post_id" : posts[i]['post_id'],
                         "meaning" : posts[i]['meaning'],
                         "good_word" : posts[i]['good_words'],
-                        "bad_word" : posts[i]['bad_words']
+                        "bad_word" : posts[i]['bad_words'],
+                        "is_food": posts[i]['is_food'],
+                        "is_health": posts[i]['is_health'],
+                        "is_beauty": posts[i]['is_beauty'],
+                        "is_spa": posts[i]['is_spa'],
+                        "is_travel": posts[i]['is_travel']
                     }
                 )
         
