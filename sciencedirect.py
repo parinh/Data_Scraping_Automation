@@ -42,8 +42,8 @@ class ScienceDirect:
         return count_in_year
 
     def toCsv(self, datas,keyword):
-        filename = config("SCIENCE_DIRECT")+"-"+str(keyword)+".csv"
-        with open(filename, "w", encoding="utf-8", newline="") as csvfile:
+        # filename = config("SCIENCE_DIRECT")+"-"+str(keyword)+".csv"
+        with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
             head_csv = [
                 "num",
                 "year",

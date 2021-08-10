@@ -31,6 +31,16 @@ class Facebook:
         _meaning = "nothing"
         _good_words = []
         _bad_words = []
+        _food_words_count = 0
+        _spa_words_count = 0
+        _beauty_words_count = 0
+        _travel_words_count = 0
+        _health_words_count = 0
+        _food_words=[]
+        _spa_words=[]
+        _beauty_words=[]
+        _travel_words=[]
+        _health_words=[]
        
         try:
             _post_id = post['post_id']
@@ -71,10 +81,21 @@ class Facebook:
             print("no username")
 
         nlp.check(post['post_text'])
-        _meaning = nlp.check_words[1]
-        _good_words =nlp.check_words[2]
-        _bad_words = nlp.check_words[3]
-       
+        _meaning = nlp.check_words['meaning']
+        _good_words =nlp.check_words['good_words']
+        _bad_words = nlp.check_words['bad_words']
+        _beauty_words_count = nlp.check_words['beauty_words_count']
+        _food_words_count = nlp.check_words['food_words_count']
+        _health_words_count = nlp.check_words['health_words_count']
+        _spa_words_count = nlp.check_words['spa_words_count']
+        _travel_words_count = nlp.check_words['travel_words_count']
+        _food_words=nlp.check_words['food_words']
+        _spa_words=nlp.check_words['spa_words']
+        _beauty_words=nlp.check_words['beauty_words']
+        _travel_words=nlp.check_words['travel_words']
+        _health_words=nlp.check_words['health_words']
+
+    
 
         face_post = {
             "user_name":_user_name,
@@ -86,9 +107,19 @@ class Facebook:
             "post_url":_post_url,
             "post_id" :_post_id,
             "post_text":_post_text,
-            "goodWords" : _good_words,
-            "badWords" : _bad_words,
-            "meaning" : _meaning
+            "good_words" : _good_words,
+            "bad_words" : _bad_words,
+            "meaning" : _meaning,
+            "food_words_count": _food_words_count,
+            "health_words_count": _health_words_count,
+            "beauty_words_count": _beauty_words_count,
+            "spa_words_count":_spa_words_count,
+            "travel_words_count":_travel_words_count,
+            'food_words': _food_words,
+            'health_words': _health_words,
+            'beauty_words': _beauty_words,
+            'spa_words': _spa_words,
+            'travel_words': _travel_words,
         }
         nlp.clearCheckWord()
 
@@ -97,7 +128,9 @@ class Facebook:
         
     def toCsv(self,posts):
         with open(config("FILE"),'w', encoding='utf-8',newline='') as csvfile:
-            head_csv = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text","meaning","good_word","bad_word"]
+            head_csv = ["num","user_name","comment","date","image_h","image_l","reaction","post_url","post_id","post_text","meaning","good_word","bad_word"
+            ,"food_word_count","health_word_count","beauty_word_count","spa_word_count",
+            "travel_word_count",'food_word','health_word','beauty_word','spa_word','travel_word']
             # sorted_posts = sorted(posts,key=lambda x:x['date'],reverse = True)
             thewriter = csv.DictWriter(csvfile, fieldnames = head_csv)
             thewriter.writeheader()
@@ -116,7 +149,17 @@ class Facebook:
                         "post_id" : posts[i]['post_id'],
                         "post_text" : posts[i]['post_text'],
                         "meaning" : posts[i]['meaning'],
-                        "good_word" : posts[i]['goodWords'],
-                        "bad_word" : posts[i]['badWords']
+                        "good_word" : posts[i]['good_words'],
+                        "bad_word" : posts[i]['bad_words'],
+                        "food_word_count": posts[i]['food_words_count'],
+                        "health_word_count": posts[i]['health_words_count'],
+                        "beauty_word_count": posts[i]['beauty_words_count'],
+                        "spa_word_count": posts[i]['spa_words_count'],
+                        "travel_word_count": posts[i]['travel_words_count'],
+                        "food_word": posts[i]['food_words'],
+                        "health_word": posts[i]['health_words'],
+                        "beauty_word": posts[i]['beauty_words'],
+                        "spa_word": posts[i]['spa_words'],
+                        "travel_word": posts[i]['travel_words'],
                     }
                 )

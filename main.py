@@ -234,6 +234,7 @@ elif ss == 3:
     sleep(5)
 
     pantip.getPosts(html,page_count,browser)
+    # printArr(pantip.posts)
     pantip.toCsv(pantip.posts)
     
 
@@ -353,6 +354,7 @@ elif ss == 5:
 
     facebook.toCsv(facebook.posts)
 
+# thai_bio
 elif ss == 6:
     page = 1+5366
     while page <= page_count:
@@ -372,6 +374,7 @@ elif ss == 6:
 
     thai_bio.toCsv(thai_bio.datas)
 
+# science_direct
 elif ss == 7:
     page = 0
     try:
@@ -404,11 +407,12 @@ elif ss == 7:
     except:
         print("error science")
 
+# thaijo
 elif ss == 8:
     page = 1
     while page <= page_count:
         try:
-            result = thaijo.getItem(keyword,page)
+            result = thaijo.getData(keyword,page)
         except:
             print("error thaijo")
         page += 1
