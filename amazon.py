@@ -45,9 +45,13 @@ class Amazon:
                 _rating = float((rating.text).split(" ")[0])
             
             #review
-            review = soup.select_one("a.a-link-normal > span.a-size-base")
+            # a.a-link-normal > span.a-size-base
+            review = soup.select_one("div.a-section.a-spacing-none.a-spacing-top-micro > div.a-row.a-size-small > span > a.a-link-normal > span.a-size-base")
             if (review):
-                _review = review.text
+                _review = float("".join(review.text.split(",")))
+                # _review = review.text
+            print(_review)
+            # print("\n")
             
 
             #best?
@@ -81,6 +85,7 @@ class Amazon:
     def getData(self,html):
         soup = BeautifulSoup(html, "html.parser")
         for item in soup.select('div[data-component-type=s-search-result]'):
+            # print(item,"\n")
             self.products.append(self.getItem(item))
         return(len(self.products))
         

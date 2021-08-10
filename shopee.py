@@ -33,7 +33,7 @@ class Shopee:
                 _name = name.text
             # Price
             price = soup.select_one("div.WTFwws._1k2Ulw._5W0f35 > span._24JoLh")
-            print("".join(price.text.split(",")))
+            # print("".join(price.text.split(",")))
             if price:
                 _price = float("".join(price.text.split(",")))
             # type
@@ -51,6 +51,7 @@ class Shopee:
                     _sold = float((sold.text).split(" ")[1])
                 else:
                     _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
+            # print(_sold)
             # star
             for star in soup.select(
                 "div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit"
@@ -90,8 +91,7 @@ class Shopee:
         return product
 
     def getData(self, html):
-        soup = BeautifulSoup(html, "html.parser")
-        print("get data form shopee")
+        print("get data from shopee")
         soup = BeautifulSoup(html, "html.parser")
         for item_n in soup.select("div[data-sqe=item]"):
             if item_n.select_one("div.shopee-image-placeholder"):
