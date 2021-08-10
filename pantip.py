@@ -95,7 +95,7 @@ class Pantip:
             _story = tree.xpath('//div[@class="display-post-story"]')[0].text_content()
             nlp.check(_story)
             _meaning = nlp.check_words['meaning']
-            _good_words = nlp.check_words['good_words']
+            _good_words = nlp.check_words['good_words'] 
             _bad_words = nlp.check_words['bad_words']
             _beauty_words_count = nlp.check_words['beauty_words_count']
             _food_words_count = nlp.check_words['food_words_count']

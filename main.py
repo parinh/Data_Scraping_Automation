@@ -404,8 +404,8 @@ elif ss == 7:
         # science_direct.sum(science_direct.datas)
         
         
-    except:
-        print("error science")
+    except Exception as e:
+        print(e)
 
 # thaijo
 elif ss == 8:
