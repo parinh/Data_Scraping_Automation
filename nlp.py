@@ -92,7 +92,7 @@ class NLP:
                 food_words_count += 1
             if word in self.spa_words:
                 spa.append(word)
-                spa_words_count = 1
+                spa_words_count += 1
             if word in self.travel_words:
                 travel.append(word)
                 travel_words_count += 1

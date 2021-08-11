@@ -404,18 +404,21 @@ elif ss == 7:
         # science_direct.sum(science_direct.datas)
         
         
-    except:
-        print("error science")
+    except Exception as e:
+        print(e)
 
 # thaijo
 elif ss == 8:
     page = 1
     while page <= page_count:
         try:
-            result = thaijo.getData(keyword,page)
+            thaijo.getData(keyword,page)
+            # print(thaijo.datas)
         except:
             print("error thaijo")
         page += 1
+        
+    thaijo.toCsv(thaijo.datas)
 
 browser.close()
 print("End process")
