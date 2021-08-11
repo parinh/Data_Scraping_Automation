@@ -65,6 +65,14 @@ class NLP:
         spa = []
         travel = []
         health = []
+
+        _good = []
+        _bad = []
+        _beauty = []
+        _food = []
+        _spa = []
+        _travel = []
+        _health = []
         food_words_count = 0
         health_words_count = 0
         beauty_words_count = 0
@@ -73,34 +81,44 @@ class NLP:
         nlp = []
 
         for word in words:
+
             if word in self.positive_words:
                 if word not in good:
                     score = score + 1
+                    _good.append(word)
                 else:
                     score = score + 0.5
-                good.append(word)
 
             if word in self.negative_words:
                 if word not in bad:
                     score = score - 1
+                    _bad.append(word)
                 else:
                     score = score - 0.5
-                bad.append(word)
 
             if word in self.food_words:
-                food.append(word)
+                if (word not in food):
+                   _food.append(word)  
                 food_words_count += 1
+
             if word in self.spa_words:
-                spa.append(word)
+                if (word not in spa):
+                    _spa.append(word)
                 spa_words_count += 1
+
             if word in self.travel_words:
-                travel.append(word)
+                if (word not in travel):
+                    _travel.append(word)
                 travel_words_count += 1
+
             if word in self.health_words:
-                health.append(word)
+                if (word not in health):
+                    _health.append(word)
                 health_words_count += 1
+
             if word in self.beauty_words:
-                beauty.append(word)
+                if (word not in beauty):
+                    _beauty.append(word)
                 beauty_words_count += 1
         
         if(score>0):
@@ -109,6 +127,14 @@ class NLP:
             meaning = 'neutral'
         else: 
             meaning = 'negative'
+        
+        good = ",".join(_good)
+        bad = ",".join(_bad)
+        food = ",".join(_food)
+        health = ",".join(_health)
+        beauty = ",".join(_beauty)
+        spa = ",".join(_spa)
+        travel = ",".join(_travel)
 
         self.check_words = {
             'score':score,
