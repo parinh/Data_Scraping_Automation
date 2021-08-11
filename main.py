@@ -414,8 +414,8 @@ elif ss == 8:
         try:
             thaijo.getData(keyword,page)
             # print(thaijo.datas)
-        except:
-            print("error thaijo")
+        except Exception as e:
+            print(e)
         page += 1
         
     thaijo.toCsv(thaijo.datas)
