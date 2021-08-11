@@ -85,7 +85,7 @@ class Thaijo:
         self.datas.append(self.getItem(response))
 
     def toCsv (self,datas):
-        with open(config("THAIJO_FILE"), "w", encoding="utf-8", newline="") as csvfile:
+        with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
             head_csv = ["num","issue_id","title","abstract_clean","article_url","issue_date_published",
             "issue_cover_image", "authors_full_name", "authors_affiliation"]
             thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)

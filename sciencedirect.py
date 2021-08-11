@@ -33,10 +33,10 @@ class ScienceDirect:
         count_in_year = []
         data=soup.select_one("span.checkbox-label-value.checkbox-small.checkbox-label-indent").text
         year=data.split(" ")[0]
-        research_count = float("".join(data.split(" ")[1].split("(")[1].split(")")[0].split(",")))
+        amount = float("".join(data.split(" ")[1].split("(")[1].split(")")[0].split(",")))
         count_in_year = {
             "year":year,
-            "research_count":research_count
+            "amount":amount
         }
         # print(count_in_year)
         return count_in_year
@@ -47,7 +47,7 @@ class ScienceDirect:
             head_csv = [
                 "num",
                 "year",
-                "research_count",
+                "amount",
             ]
             thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
             thewriter.writeheader()
@@ -57,13 +57,13 @@ class ScienceDirect:
                     {
                         "num": self.csv_count,
                         "year": datas[i]["year"],
-                        "research_count": datas[i]["research_count"],
+                        "amount": datas[i]["amount"],
                         
                     }
                 )
 
     def sum(self,datas):
-        a = sum(data.research_count for data in datas)
+        a = sum(data.amount for data in datas)
         print(a)
 
 #

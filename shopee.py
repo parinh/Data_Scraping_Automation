@@ -24,7 +24,7 @@ class Shopee:
         _url = "no url"
         _type = "general"
         _star = 0
-        _id = "no id"
+        _id = 0
 
         try:
             # Name
