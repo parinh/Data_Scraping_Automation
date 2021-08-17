@@ -1,1 +1,1 @@
-num,issue_id,title,abstract_clean,article_url,issue_date_published,issue_cover_image,authors_full_name,authors_affiliation
+num,product_id,name,price,rating,review,img_src,url,rank

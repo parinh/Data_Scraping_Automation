@@ -91,6 +91,7 @@ class Thaijo:
             
         except Exception as e:
             print(e)
+            
 
     def toCsv (self,datas):
         with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
