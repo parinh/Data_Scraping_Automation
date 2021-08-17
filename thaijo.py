@@ -74,6 +74,7 @@ class Thaijo:
 
             return research
         except Exception as e:
+            print("get item error")
             print(e)
             
 
@@ -81,17 +82,32 @@ class Thaijo:
 
     def getData (self,keyword,page):
         try:
+            print(page)
             query = {"term":keyword,"page":page,"size":1,"strict":True,"title":True,"author":True,"abstract":True}
             response = requests.post('https://www.tci-thaijo.org/api/articles/search/', json=query)
             result = response.json().get("result")[0]
+            print(result)
+
+            # if(result == "list index out of range"):
+            #     page = 1000
+            #     return(page)
+            # else:
+            self.datas.append(self.getItem(response))
+            return(page)
+
             # print(result)
             # print("\n")
             # self.getItem(response)
-            self.datas.append(self.getItem(response))
+
             
+            
+
         except Exception as e:
+            print("error getData")
             print(e)
-            
+            page = 1000
+            return(page)            
+            # pass
 
     def toCsv (self,datas):
         with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:

@@ -411,11 +411,11 @@ elif ss == 7:
 elif ss == 8:
     page = 1
     while page <= page_count:
-        # try:
-        thaijo.getData(keyword,page)
+        try:
+            page = thaijo.getData(keyword,page)
             # print(thaijo.datas)
-        # except Exception as e:
-        #     print(e)
+        except Exception as e:
+            print(e)
         page += 1
         
     thaijo.toCsv(thaijo.datas)
