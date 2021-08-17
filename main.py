@@ -66,6 +66,9 @@ page_count = int(input())
 
 print("Enter the keyword for the selected site.. ->>")
 keyword = input()
+
+print(page_count)
+print(keyword)
 # close all popup
 chrome_options.add_argument("disable-notifications")
 chrome_options.add_argument("--disable-infobars")
