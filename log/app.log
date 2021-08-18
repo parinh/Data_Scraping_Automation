@@ -1,0 +1,4 @@
+root - WARNING - enter py
+root - WARNING - keyword_input
+root - WARNING - read
+root - WARNING - _log() got an unexpected keyword argument 'encoding'

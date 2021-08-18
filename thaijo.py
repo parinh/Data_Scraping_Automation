@@ -7,6 +7,7 @@ from decouple import config
 from numpy import product, tile
 from decouple import config
 import requests
+import logging
 
 class Thaijo:
     def __init__(self):
@@ -93,7 +94,7 @@ class Thaijo:
             }
         
 
-            print(research)
+            # print(research)
 
             return research
 
@@ -108,12 +109,13 @@ class Thaijo:
     def getData (self,keyword,page):
         try:
             # print(page)
-            print(keyword)
+            # print(keyword)
             query = {"term":keyword,"page":page,"size":1,"strict":True,"title":True,"author":True,"abstract":True}
             response = requests.post('https://www.tci-thaijo.org/api/articles/search/', json=query)
             # print(response.text)
             result = response.json()
-            print(result)
+            logging.info(result)
+            # print(result)
 
             # if(result == "list index out of range"):
             #     page = 1000
@@ -128,7 +130,8 @@ class Thaijo:
             # self.getItem(response)
         except Exception as e:
             print("error getData")
-            print(e)          
+            print(e)    
+            logging.warning(e)      
 
 
     def toCsv (self,datas):
