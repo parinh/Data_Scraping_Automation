@@ -26,7 +26,7 @@ class Thaijo:
         _issue_id = "no id"
 
         try:
-            # print(response.get("result"))
+            print(response.json().get("result")[0])
             try:
                 abstract_clean = response.json().get("result")[0].get("abstract_clean").get('th_TH')
                 if(abstract_clean):
@@ -56,7 +56,7 @@ class Thaijo:
                 pass
             
             try:
-                issue_cover_image=response.json().get("result")[0].get("issueCoverImage").get("en_US")
+                issue_cover_image=response.json().get("result")[0].get("issueCoverImage")
                 if(issue_cover_image):
                     _issue_cover_image=issue_cover_image
             except Exception:
