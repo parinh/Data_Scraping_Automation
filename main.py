@@ -413,14 +413,17 @@ elif ss == 7:
 # thaijo
 elif ss == 8:
     page = 1
+    print(keyword)
+    print(page_count)
     while page <= page_count:
         try:
+            
             page = thaijo.getData(keyword,page)
             # print(thaijo.datas)
         except Exception as e:
             print(e)
         page += 1
-        
+    
     thaijo.toCsv(thaijo.datas)
 
 browser.close()
