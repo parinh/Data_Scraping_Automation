@@ -101,7 +101,7 @@ class Thaijo:
     def getData (self,keyword,page):
         try:
             print(page)
-            query = {"term":keyword,"page":page,"size":1,"strict":True,"title":True,"author":True,"abstract":True}
+            query = {"term":keyword,"page":page,"size":1000,"strict":True,"title":True,"author":True,"abstract":True}
             response = requests.post('https://www.tci-thaijo.org/api/articles/search/', json=query)
             
             result = response.json().get("result")[0]
