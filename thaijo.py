@@ -56,9 +56,19 @@ class Thaijo:
                 pass
             
             try:
-                issue_cover_image=response.json().get("result")[0].get("issueCoverImage")
+                issue_cover_image=response.json().get("result")[0].get("issue_cover_image")
                 if(issue_cover_image):
                     _issue_cover_image=issue_cover_image
+                    print(_issue_cover_image)
+                else:
+                    issue_cover_image=response.json().get("result")[0].get("issueCoverImage").get("th_TH")
+                    if(issue_cover_image):
+                        _issue_cover_image=issue_cover_image
+                    else:
+                        issue_cover_image=response.json().get("result")[0].get("issueCoverImage").get("en_US")
+                        if(issue_cover_image):
+                            _issue_cover_image=issue_cover_image
+
             except Exception:
                 pass
 
