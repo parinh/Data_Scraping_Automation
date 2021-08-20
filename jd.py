@@ -44,7 +44,7 @@ class JD:
 
         # Price
         try:
-            _price = item['jdPrice'] 
+            _price = float(item['jdPrice'])
         except:
             _price = 'no price'
 
