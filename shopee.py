@@ -76,6 +76,7 @@ class Shopee:
 
         except:
             print("something wrong")
+
         product = {
             "name": _name,
             "price": _price,

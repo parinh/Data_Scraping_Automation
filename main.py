@@ -1,3 +1,4 @@
+from numpy import log
 from sciencedirect import ScienceDirect
 from thaibio import ThaiBio
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -24,6 +25,11 @@ from pythainlp import *
 from decouple import config
 from thaijo import *
 import requests
+import logging
+
+logging.basicConfig(filename='C:\\Users\\Administrator\\Desktop\\pythongetpostshopee\\log\\app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+logging.warning("enter py")
+
 
 
 def printArr2D(arr):
@@ -66,6 +72,9 @@ page_count = int(input())
 
 print("Enter the keyword for the selected site.. ->>")
 keyword = input()
+
+print(page_count)
+# print(keyword)
 # close all popup
 chrome_options.add_argument("disable-notifications")
 chrome_options.add_argument("--disable-infobars")
@@ -409,15 +418,25 @@ elif ss == 7:
 
 # thaijo
 elif ss == 8:
-    page = 1
+    try:
+        page = 1
+        keyword_input = open(config("INPUT_FILE"),"r",encoding = "utf8").read()
+
+    except Exception as e:
+        logging.warning("read")
+        logging.warning(e)
+    
     while page <= page_count:
         try:
-            thaijo.getData(keyword,page)
+            
+            page = thaijo.getData(keyword_input,page)
+
             # print(thaijo.datas)
         except Exception as e:
+            logging.warning(e)
             print(e)
         page += 1
-        
+    
     thaijo.toCsv(thaijo.datas)
 
 browser.close()
