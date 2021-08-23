@@ -109,20 +109,29 @@ class Shopee:
         _description = "no description"
         soup = BeautifulSoup(html, "html.parser")
         rating = soup.select("div.OitLRu")[1].text
-        if(rating):
-            if "พัน" in rating:
-                _rating=float((rating).split(" ")[1].split("พัน")[0]) * 1000
-            else:
-                _rating=float(rating)
+        try:
+            if(rating):
+                if "พัน" in rating: 
+                    _rating=float((rating).split("พัน")[0]) * 1000
+                else:
+                    _rating=float(rating)
+        except:
+            pass
         
-        brand = soup.select_one("div._3uf2ae").text
-        if(brand):
-            _brand=brand
+        try:
+            brand = soup.select_one("div._3uf2ae").text
+            if(brand):
+                _brand=brand
+        except:
+            pass
         
-        description = soup.select_one("div._3yZnxJ > span").text
-        if(description):
-            _description=description
-        
+        try:
+            description = soup.select_one("div._3yZnxJ > span").text
+            if(description):
+                _description=description
+        except:
+            pass
+            
         detail = {
             'product_id':product_id,
             'rating': _rating,
@@ -173,18 +182,17 @@ class Shopee:
                 "rating",
                 "description",
             ]
-        thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
-        thewriter.writeheader()
-        for i in range(len(details)):
-            self.csv_count += 1
-            thewriter.writerow(
-                {
-                    "product_id": details[i]["product_id"],
-                    "brand": details[i]["brand"],
-                    "rating": details[i]["rating"],
-                    "description": details[i]["description"],
-                }
-            )
+            thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
+            thewriter.writeheader()
+            for i in range(len(details)):
+                thewriter.writerow(
+                    {
+                        "product_id": details[i]["product_id"],
+                        "brand": details[i]["brand"],
+                        "rating": details[i]["rating"],
+                        "description": details[i]["description"],
+                    }
+                )
 
 
 #
