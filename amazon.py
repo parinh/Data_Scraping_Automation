@@ -105,7 +105,6 @@ class Amazon:
             for item in soup.select("ul.a-unordered-list.a-vertical.a-spacing-mini > li "):
                 description += item.text
             
-            # print(description)
             if(description):
                 _description=description
         except: pass
