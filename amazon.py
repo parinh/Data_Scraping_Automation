@@ -7,6 +7,7 @@ class Amazon:
     def __init__(self) :
         self.csv_count = 0
         self.products = []
+        self.details = []
     
     def getItem(self,soup):
         product = []
@@ -89,7 +90,9 @@ class Amazon:
             self.products.append(self.getItem(item))
         return(len(self.products))
         
-
+    def getDetail(self,html):
+        soup = BeautifulSoup(html,"html.parser")
+        
 
     def toCsv(self,products):
         with open(config("FILE"), 'w', newline='',encoding="utf-8") as csvfile:

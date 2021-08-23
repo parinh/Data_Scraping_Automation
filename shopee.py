@@ -111,7 +111,7 @@ class Shopee:
         rating = soup.select("div.OitLRu")[1].text
         if(rating):
             if "พัน" in rating:
-                _rating=float((rating).split(" ")[1].split("พัน")[0]) * 1000
+                _rating=float(rating.split("พัน")[0]) * 1000
             else:
                 _rating=float(rating)
         
