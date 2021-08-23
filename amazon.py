@@ -92,7 +92,10 @@ class Amazon:
         
     def getDetail(self,html):
         soup = BeautifulSoup(html,"html.parser")
-        
+        star = soup.select_one("span.a-span9")
+        # brand = 
+        # description = 
+        print(star)
 
     def toCsv(self,products):
         with open(config("FILE"), 'w', newline='',encoding="utf-8") as csvfile:

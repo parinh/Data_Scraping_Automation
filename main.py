@@ -59,7 +59,6 @@ thaijo = Thaijo()
 thai_bio = ThaiBio()
 science_direct = ScienceDirect()
 nlp = NLP()
-shopee_detail = Shopee()
 
 chromedriver_path = config("CHROMEDRIVER")
 
@@ -448,9 +447,9 @@ elif ss == 9:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            shopee_detail.getDetail(row[0],html) 
-        shopee_detail.detailToCsv(shopee_detail.details)
-        # print(shopee_detail.details)
+            shopee.getDetail(row[0],html) 
+    shopee.detailToCsv(shopee.details)
+        
 
 elif ss == 10:
     with open(config("TEST"),'r',encoding='utf-8') as f:
@@ -495,7 +494,9 @@ elif ss == 10:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            amazon.get
+            amazon.getDetail(html)
+    # amazon.
+        
 
 
 browser.close()
