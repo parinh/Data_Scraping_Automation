@@ -77,8 +77,6 @@ if( ss != 9 ):
     print("Enter the keyword for the selected site.. ->>")
     keyword = input()
 
-    print(page_count)
-# print(keyword)
 # close all popup
 chrome_options.add_argument("disable-notifications")
 chrome_options.add_argument("--disable-infobars")
@@ -91,7 +89,6 @@ chrome_options.add_experimental_option(
 )
 # # chrome driv ja
 browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
-ss=1
 # for shopee
 if ss == 1:
     base_url = "https://shopee.co.th/search?keyword=" + keyword
@@ -451,8 +448,9 @@ elif ss == 9:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            shopee.getDetail(row[0],html) 
-        s
+            shopee_detail.getDetail(row[0],html) 
+        shopee_detail.detailToCsv(shopee_detail.details)
+        # print(shopee_detail.details)
 
             
 

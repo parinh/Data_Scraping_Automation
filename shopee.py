@@ -173,18 +173,17 @@ class Shopee:
                 "rating",
                 "description",
             ]
-        thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
-        thewriter.writeheader()
-        for i in range(len(details)):
-            self.csv_count += 1
-            thewriter.writerow(
-                {
-                    "product_id": details[i]["product_id"],
-                    "brand": details[i]["brand"],
-                    "rating": details[i]["rating"],
-                    "description": details[i]["description"],
-                }
-            )
+            thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
+            thewriter.writeheader()
+            for i in range(len(details)):
+                thewriter.writerow(
+                    {
+                        "product_id": details[i]["product_id"],
+                        "brand": details[i]["brand"],
+                        "rating": details[i]["rating"],
+                        "description": details[i]["description"],
+                    }
+                )
 
 
 #
