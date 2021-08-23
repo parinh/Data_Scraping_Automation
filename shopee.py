@@ -12,6 +12,7 @@ class Shopee:
     def __init__(self):
         self.csv_count = 0
         self.products = []
+        self.details = []
 
     # get item
     def getItem(self, soup):
@@ -101,6 +102,36 @@ class Shopee:
                 self.products.append(data)
         return(len(self.products))
 
+    def getDetail(self,product_id,html):
+        detail={}
+        _rating = "no rating"
+        _brand = "no brand"
+        _description = "no description"
+        soup = BeautifulSoup(html, "html.parser")
+        rating = soup.select("div.OitLRu")[1].text
+        if(rating):
+            if "พัน" in rating:
+                _rating=float((rating).split(" ")[1].split("พัน")[0]) * 1000
+            else:
+                _rating=float(rating)
+        
+        brand = soup.select_one("div._3uf2ae").text
+        if(brand):
+            _brand=brand
+        
+        description = soup.select_one("div._3yZnxJ > span").text
+        if(description):
+            _description=description
+        
+        detail = {
+            'product_id':product_id,
+            'rating': _rating,
+            'brand': _brand,
+            'description': _description
+        }
+        self.details.append(detail)
+        # print(product_id,rating,brand,description)
+
     def toCsv(self, products):
         with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
             head_csv = [
@@ -133,6 +164,27 @@ class Shopee:
                         "product_id": products[i]["product_id"]
                     }
                 )
+
+    def detailToCsv(self,details):
+        with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
+            head_csv = [
+                "product_id",
+                "brand",
+                "rating",
+                "description",
+            ]
+        thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
+        thewriter.writeheader()
+        for i in range(len(details)):
+            self.csv_count += 1
+            thewriter.writerow(
+                {
+                    "product_id": details[i]["product_id"],
+                    "brand": details[i]["brand"],
+                    "rating": details[i]["rating"],
+                    "description": details[i]["description"],
+                }
+            )
 
 
 #
