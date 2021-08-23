@@ -90,12 +90,34 @@ class Amazon:
             self.products.append(self.getItem(item))
         return(len(self.products))
         
-    def getDetail(self,html):
+    def getDetail(self,product_id,html):
         soup = BeautifulSoup(html,"html.parser")
-        star = soup.select_one("span.a-span9")
-        # brand = 
-        # description = 
-        print(star)
+        _brand  = "no brand"
+        _description = "no description"
+        try:
+            brand = soup.select_one("tr.a-spacing-small > td.a-span9 > span.a-size-base").text
+            if(brand):
+                _brand=brand
+        except: pass
+
+        try:
+            description = ""
+            for item in soup.select("ul.a-unordered-list.a-vertical.a-spacing-mini > li "):
+                description += item.text
+            
+            # print(description)
+            if(description):
+                _description=description
+        except: pass
+
+        detail = {
+            "product_id": product_id,    
+            "brand": _brand,
+            "description": _description 
+        }
+
+        self.details.append(detail)
+
 
     def toCsv(self,products):
         with open(config("FILE"), 'w', newline='',encoding="utf-8") as csvfile:
@@ -120,4 +142,21 @@ class Amazon:
                 )
                 
 
-                
+    def detailToCsv(self,details):
+        with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
+            head_csv = [
+                "product_id",
+                "brand",
+                "description",
+            ]
+            thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
+            thewriter.writeheader()
+            for i in range(len(details)):
+                thewriter.writerow(
+                    {
+                        "product_id": details[i]["product_id"],
+                        "brand": details[i]["brand"],
+                        "description": details[i]["description"],
+                    }
+                )
+

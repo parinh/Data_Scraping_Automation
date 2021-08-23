@@ -69,7 +69,7 @@ print(
 )
 ss = int(input())
 
-if( ss != 9 ):
+if( ss < 9 ):
     print("enter number of pages//posts")
     page_count = int(input())
 
@@ -385,7 +385,7 @@ elif ss == 7:
 elif ss == 8:
     try:
         page = 1
-        keyword_input = open(config("INPUT_FILE"),"r",encoding = "utf8").read()
+        keyword_input = open(config("INPUT_FILE_TXT"),"r",encoding = "utf8").read()
 
     except Exception as e:
         logging.warning("read")
@@ -405,7 +405,7 @@ elif ss == 8:
     thaijo.toCsv(thaijo.datas)
 
 elif ss == 9:
-    with open(config("TEST"),'r',encoding='utf-8') as f:
+    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
         next(datas)
         for row in datas:
@@ -443,7 +443,7 @@ elif ss == 9:
             browser.execute_script(
                 "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
             )
-            sleep(3)
+
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
@@ -494,10 +494,9 @@ elif ss == 10:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            amazon.getDetail(html)
-    # amazon.
+            amazon.getDetail(row[0],html)
+    amazon.detailToCsv(amazon.details)
         
-
 
 browser.close()
 print("End process")
