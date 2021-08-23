@@ -26,7 +26,7 @@ class Thaijo:
         _issue_id = "no id"
 
         try:
-            print(response.json().get("result")[0])
+            # print(response.json().get("result")[0])
             try:
                 abstract_clean = response.json().get("result")[0].get("abstract_clean").get('th_TH')
                 if(abstract_clean):
@@ -59,7 +59,7 @@ class Thaijo:
                 issue_cover_image=response.json().get("result")[0].get("issue_cover_image")
                 if(issue_cover_image):
                     _issue_cover_image=issue_cover_image
-                    print(_issue_cover_image)
+                    # print(_issue_cover_image)
                 else:
                     issue_cover_image=response.json().get("result")[0].get("issueCoverImage").get("th_TH")
                     if(issue_cover_image):

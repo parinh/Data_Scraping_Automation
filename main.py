@@ -67,13 +67,14 @@ print(
 )
 ss = int(input())
 
-print("enter number of pages//posts")
-page_count = int(input())
+if(ss != 9 or ss != 10):
+    print("enter number of pages//posts")
+    page_count = int(input())
 
-print("Enter the keyword for the selected site.. ->>")
-keyword = input()
+    print("Enter the keyword for the selected site.. ->>")
+    keyword = input()
 
-print(page_count)
+    print(page_count)
 # print(keyword)
 # close all popup
 chrome_options.add_argument("disable-notifications")
@@ -438,6 +439,10 @@ elif ss == 8:
         page += 1
     
     thaijo.toCsv(thaijo.datas)
+
+
+elif ss == 9:
+    print("inside shopee")
 
 browser.close()
 print("End process")
