@@ -30,7 +30,6 @@ import csv
 
 # print(config("LOG_FILE"))
 logging.basicConfig(filename=config("LOG_FILE"), filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-logging.warning("enter py")
 
 
 
@@ -406,51 +405,56 @@ elif ss == 8:
     thaijo.toCsv(thaijo.datas)
 
 elif ss == 9:
-    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
-        datas = csv.reader(f)
-        next(datas)
-        for row in datas:
-            base_url = row[1]
-            browser.get(base_url)
-            WebDriverWait(browser, delay)
-            sleep(3)
-            browser.execute_script("window.scrollTo(0, 0);")
-            browser.execute_script(
-            "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
-            )
+    try:
+        with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
+            datas = csv.reader(f)
+            next(datas)
+            for row in datas:
+                base_url = row[1]
+                browser.get(base_url)
+                WebDriverWait(browser, delay)
+                sleep(3)
+                browser.execute_script("window.scrollTo(0, 0);")
+                browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
+                )
 
-            html = browser.execute_script(
-                "return document.getElementsByTagName('html')[0].innerHTML"
-            )
-            shopee_detail.getDetail(row[0],html) 
-        shopee_detail.detailToCsv(shopee_detail.details)
-        # print(shopee_detail.details)
+                html = browser.execute_script(
+                    "return document.getElementsByTagName('html')[0].innerHTML"
+                )
+                shopee_detail.getDetail(row[0],html)
+            shopee_detail.detailToCsv(shopee_detail.details)
+            # print(shopee_detail.details)
+    except Exception as e:
+        logging.warning("ss = 9")
+        logging.warning(e)
+        print(e)
 
 elif ss == 10:
     print("amazon detail")
