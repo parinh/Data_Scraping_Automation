@@ -409,7 +409,9 @@ elif ss == 9:
     with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
         next(datas)
+        count = 0
         for row in datas:
+            count += 1
             base_url = row[1]
             browser.get(base_url)
             WebDriverWait(browser, delay)
@@ -448,7 +450,11 @@ elif ss == 9:
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
-            shopee_detail.getDetail(row[0],html) 
+            shopee_detail.getDetail(row[0],html)
+            if (count == 10):
+                count = 0
+                browser.close()
+                browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
         shopee_detail.detailToCsv(shopee_detail.details)
         # print(shopee_detail.details)
 
