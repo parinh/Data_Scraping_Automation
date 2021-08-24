@@ -59,7 +59,6 @@ thai_bio = ThaiBio()
 science_direct = ScienceDirect()
 nlp = NLP()
 shopee_detail = Shopee()
-
 chromedriver_path = config("CHROMEDRIVER")
 
 
@@ -69,7 +68,7 @@ print(
 )
 ss = int(input())
 
-if( ss != 9 ):
+if( ss < 9 ):
     print("enter number of pages//posts")
     page_count = int(input())
 
@@ -405,61 +404,104 @@ elif ss == 8:
     thaijo.toCsv(thaijo.datas)
 
 elif ss == 9:
-    try:
-        with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
-            datas = csv.reader(f)
-            next(datas)
-            for row in datas:
-                base_url = row[1]
-                browser.get(base_url)
-                WebDriverWait(browser, delay)
-                sleep(3)
-                browser.execute_script("window.scrollTo(0, 0);")
-                browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
-                )
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
-                )
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
-                )
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
-                )
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
-                )
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
-                )
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
-                )
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
-                )
-                browser.execute_script(
-                    "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
-                )
+    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
+        datas = csv.reader(f)
+        next(datas)
+        count = 0
+        for row in datas:
+            count += 1
+            base_url = row[1]
+            browser.get(base_url)
+            WebDriverWait(browser, delay)
+            sleep(3)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script(
+            "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
+            )
 
-                html = browser.execute_script(
-                    "return document.getElementsByTagName('html')[0].innerHTML"
-                )
-                shopee_detail.getDetail(row[0],html)
-            shopee_detail.detailToCsv(shopee_detail.details)
-            # print(shopee_detail.details)
-    except Exception as e:
-        logging.warning("ss = 9")
-        logging.warning(e)
-        print(e)
+            html = browser.execute_script(
+                "return document.getElementsByTagName('html')[0].innerHTML"
+            )
+            shopee_detail.getDetail(row[0],html)
+            if (count == 500):
+                count = 0
+                browser.close()
+                browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+        shopee_detail.detailToCsv(shopee_detail.details)
+        # print(shopee_detail.details)
 
 elif ss == 10:
-    print("amazon detail")
-            
-
+    with open(config("TEST"),'r',encoding='utf-8') as f:
+        datas = csv.reader(f)
+        next(datas)
+        for row in datas:
+            base_url = row[1]
+            browser.get(base_url)
+            WebDriverWait(browser, delay)
+            sleep(3)
+            browser.execute_script("window.scrollTo(0, 0);")
+            browser.execute_script(
+            "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
+            )
+            browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
+            )
+            sleep(3)
+            html = browser.execute_script(
+                "return document.getElementsByTagName('html')[0].innerHTML"
+            )
+            amazon.getDetail(row[0],html)
+    amazon.detailToCsv(amazon.details)
+        
 
 browser.close()
 print("End process")

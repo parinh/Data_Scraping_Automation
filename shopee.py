@@ -112,8 +112,7 @@ class Shopee:
         soup = BeautifulSoup(html, "html.parser")
         try:
             rating = soup.select("div.OitLRu")[1].text
-        except Exception as e:
-            logging.warning(e)
+        except:
             pass
         try:
             if(rating):
