@@ -73,10 +73,11 @@ class Shopee:
             url = soup.select_one("a")
             _url = "https://shopee.co.th/" + url["href"]
             # product_id
-            _id = (url["href"]).split(".")[len((url["href"]).split(".")) - 1].split("?")[0]
+            _id = int((url["href"]).split(".")[len((url["href"]).split(".")) - 1].split("?")[0])
 
         except:
             print("something wrong")
+            pass
 
         product = {
             "name": _name,
@@ -108,7 +109,10 @@ class Shopee:
         _brand = "no brand"
         _description = "no description"
         soup = BeautifulSoup(html, "html.parser")
-        rating = soup.select("div.OitLRu")[1].text
+        try:
+            rating = soup.select("div.OitLRu")[1].text
+        except:
+            pass
         try:
             if(rating):
                 if "พัน" in rating: 
