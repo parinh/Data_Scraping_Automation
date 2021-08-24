@@ -452,7 +452,7 @@ elif ss == 9:
         
 
 elif ss == 10:
-    with open(config("TEST"),'r',encoding='utf-8') as f:
+    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
         next(datas)
         for row in datas:
