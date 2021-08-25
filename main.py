@@ -450,7 +450,7 @@ elif ss == 9:
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
             shopee_detail.getDetail(row[0],html)
-            if (count == 500):
+            if (count == 10):
                 count = 0
                 browser.close()
                 browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
@@ -458,11 +458,13 @@ elif ss == 9:
         # print(shopee_detail.details)
 
 elif ss == 10:
-    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
+    with open(config("TEST"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
         next(datas)
+        count = 0
         for row in datas:
             base_url = row[1]
+            count += 1
             browser.get(base_url)
             WebDriverWait(browser, delay)
             sleep(3)
@@ -501,6 +503,10 @@ elif ss == 10:
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
             amazon.getDetail(row[0],html)
+            if (count == 500):
+                count = 0
+                browser.close()
+                browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
     amazon.detailToCsv(amazon.details)
         
 
