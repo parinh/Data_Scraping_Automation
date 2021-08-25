@@ -30,7 +30,6 @@ import csv
 
 # print(config("LOG_FILE"))
 logging.basicConfig(filename=config("LOG_FILE"), filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-logging.warning("enter py")
 
 
 
@@ -445,7 +444,6 @@ elif ss == 9:
             browser.execute_script(
                 "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
             )
-
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
@@ -458,11 +456,12 @@ elif ss == 9:
         # print(shopee_detail.details)
 
 elif ss == 10:
-    with open(config("TEST"),'r',encoding='utf-8') as f:
+    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
         next(datas)
         count = 0
         for row in datas:
+            count += 1
             base_url = row[1]
             count += 1
             browser.get(base_url)
@@ -498,7 +497,6 @@ elif ss == 10:
             browser.execute_script(
                 "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
             )
-            sleep(3)
             html = browser.execute_script(
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )

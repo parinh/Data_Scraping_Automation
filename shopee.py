@@ -5,6 +5,7 @@ import csv
 import tocsv
 from decouple import config
 from numpy import product
+import logging
 
 
 
@@ -119,21 +120,26 @@ class Shopee:
                     _rating=float((rating).split("พัน")[0]) * 1000
                 else:
                     _rating=float(rating)
-        except:
+        except Exception as e:
+            logging.warning(e)
             pass
         
         try:
             brand = soup.select_one("div._3uf2ae").text
             if(brand):
                 _brand=brand
-        except:
+        except Exception as e:
+            logging.warning("brand")
+            logging.warning(e)
             pass
         
         try:
             description = soup.select_one("div._3yZnxJ > span").text
             if(description):
                 _description=description
-        except:
+        except Exception as e:
+            logging.warning("descrip")
+            logging.warning(e)
             pass
             
         detail = {
