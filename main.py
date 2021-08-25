@@ -448,7 +448,7 @@ elif ss == 9:
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
             shopee_detail.getDetail(row[0],html)
-            if (count == 500):
+            if (count == 10):
                 count = 0
                 browser.close()
                 browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
@@ -463,6 +463,7 @@ elif ss == 10:
         for row in datas:
             count += 1
             base_url = row[1]
+            count += 1
             browser.get(base_url)
             WebDriverWait(browser, delay)
             sleep(3)
