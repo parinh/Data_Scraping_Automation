@@ -1,0 +1,382 @@
+facebook_scraper.extractors - WARNING - [10160849254337439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849254337439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849254337439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849254337439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849426397439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849426397439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849426397439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849426397439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849426397439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849426397439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849426397439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849426397439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849414292439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849414292439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849414292439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849414292439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849414292439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849414292439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849414292439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849414292439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849253442439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849253442439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849253442439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849253442439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849253442439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849396982439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849396982439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849396982439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849396982439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849396982439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849396982439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849396982439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849396982439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849252672439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849252672439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849252672439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849252672439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849252672439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849369387439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849369387439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849369387439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849369387439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849369387439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849369387439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849369387439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849369387439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849206587439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849206587439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849206587439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849206587439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849206587439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849206587439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849206587439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849206587439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849251727439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849251727439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849251727439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849251727439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849251727439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849351227439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849351227439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849351227439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849351227439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849351227439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849351227439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849351227439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849351227439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849350577439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849350577439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849350577439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849350577439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849350577439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849350577439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849350577439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849350577439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849350577439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160846008597439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160846008597439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160846008597439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160846008597439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849332502439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332502439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332502439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332502439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332502439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332502439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332502439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332502439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849332212439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332212439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332212439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332212439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332212439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332212439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332212439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849332212439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849250907439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849250907439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849250907439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849250907439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849250907439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849323712439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849323712439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849323712439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849323712439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849323712439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849323712439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849323712439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849323712439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160841262577439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160841262577439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160841262577439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160841262577439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160841262577439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160841262577439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160841262577439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160841262577439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849306577439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849306577439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849306577439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849306577439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849306577439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849306577439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849306577439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849306577439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849305502439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849305502439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849305502439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849305502439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849305502439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849305502439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849305502439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849305502439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849249972439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849249972439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849249972439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849249972439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849249972439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849292457439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849292457439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849292457439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849292457439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849292457439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849292457439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849292457439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849292457439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849287882439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849287882439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849287882439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849287882439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849287882439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849287882439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849287882439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849287882439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849285162439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849285162439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849285162439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849285162439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849285162439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849285162439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849285162439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849285162439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849227397439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849227397439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849227397439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849227397439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849227397439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849214167439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849214167439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849214167439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849214167439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849214167439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849226697439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849226697439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849226697439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849226697439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849226697439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849198247439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849198247439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849198247439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849198247439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849198247439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849198247439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849198247439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849198247439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849209322439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849209322439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849209322439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849209322439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849209322439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849234932439] Exception while running extract_text: AttributeError("'NoneType' object has no attribute 'find'")
+facebook_scraper.extractors - WARNING - [10160849234932439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - ERROR - data-ft attribute not found
+facebook_scraper.extractors - WARNING - [10160849234932439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849234932439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849225857439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849225857439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849225857439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849225857439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849225857439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849221892439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849221892439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849221892439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849221892439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849221892439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849221892439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849221892439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849221892439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849208107439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849208107439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849208107439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849208107439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849208107439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849208107439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849208107439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849208107439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849190722439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849190722439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849190722439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849190722439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849190722439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849190722439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849190722439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849190722439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849183272439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849183272439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849183272439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849183272439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849183272439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849183272439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849183272439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849183272439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849146617439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849146617439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849146617439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849146617439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849146617439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849146617439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849146617439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849146617439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849120902439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849120902439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849120902439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849120902439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849120902439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849120902439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849120902439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849120902439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849101447439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849101447439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849101447439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849101447439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849101447439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849101447439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849101447439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849101447439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849084312439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849084312439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849084312439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849084312439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849084312439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849084312439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849084312439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849084312439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849084312439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849081142439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849081142439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849081142439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849081142439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849081142439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849081142439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849081142439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849081142439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849067567439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849067567439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849067567439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849067567439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849067567439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849067567439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849067567439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849067567439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849062917439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849062917439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849062917439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849062917439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849062917439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849062917439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849062917439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849062917439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849055917439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849055917439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849055917439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849055917439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849055917439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849055917439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849055917439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849055917439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849054977439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849054977439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849054977439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849054977439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849054977439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849054977439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849054977439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849054977439] Exception while extracting reactions: AttributeError("'NoneType' object has no attribute 'items'")
+facebook_scraper.extractors - WARNING - [10160849021237439] Extract method extract_link didn't return anything
+facebook_scraper.extractors - WARNING - [10160849021237439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849021237439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849021237439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849021237439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849038477439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849038477439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849038477439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849038477439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849038477439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849038477439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849038477439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849038477439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849028722439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849028722439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849028722439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849028722439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849028722439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849028722439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849028722439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849028722439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849025277439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849025277439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849025277439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849025277439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849025277439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849025277439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849025277439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849025277439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849009282439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849009282439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849009282439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849009282439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849009282439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849009282439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849009282439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849009282439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849003447439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003447439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003447439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003447439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003447439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003447439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003447439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003447439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849003237439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003237439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003237439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003237439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003237439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003237439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003237439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003237439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160849003107439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003107439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003107439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003107439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003107439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003107439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003107439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160849003107439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160848987422439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160848987422439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160848987422439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160848987422439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160848987422439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160848987422439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160848987422439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160848987422439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')
+facebook_scraper.extractors - WARNING - [10160848969352439] Extract method extract_video didn't return anything
+facebook_scraper.extractors - WARNING - [10160848969352439] Extract method extract_video_thumbnail didn't return anything
+facebook_scraper.extractors - WARNING - [10160848969352439] Extract method extract_video_id didn't return anything
+facebook_scraper.extractors - WARNING - [10160848969352439] Extract method extract_video_meta didn't return anything
+facebook_scraper.extractors - WARNING - [10160848969352439] Extract method extract_factcheck didn't return anything
+facebook_scraper.extractors - WARNING - [10160848969352439] Extract method extract_share_information didn't return anything
+facebook_scraper.extractors - WARNING - [10160848969352439] Extract method extract_listing didn't return anything
+facebook_scraper.extractors - WARNING - [10160848969352439] Exception while extracting reactions: LoginRequired('A login (cookies) is required to see this page')

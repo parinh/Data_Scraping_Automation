@@ -385,6 +385,7 @@ elif ss == 8:
     try:
         page = 1
         keyword_input = open(config("INPUT_FILE_TXT"),"r",encoding = "utf8").read()
+        print(keyword_input)
 
     except Exception as e:
         logging.warning("read")
@@ -398,7 +399,7 @@ elif ss == 8:
             # print(thaijo.datas)
         except Exception as e:
             logging.warning(e)
-            print(e)
+            page = 1000
         page += 1
     
     thaijo.toCsv(thaijo.datas)
@@ -448,7 +449,7 @@ elif ss == 9:
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
             shopee_detail.getDetail(row[0],html)
-            if (count == 10):
+            if (count == 300):
                 count = 0
                 browser.close()
                 browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)

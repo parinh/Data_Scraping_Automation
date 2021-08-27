@@ -17,7 +17,7 @@ class Facebook:
             print(post['post_id'])
             self.posts.append(self.getData(post))
 
-    def getData(self,post,nlp):
+    def getData(self,post):
         nlp = NLP()
         _user_name = "no name"
         _comment = 0
