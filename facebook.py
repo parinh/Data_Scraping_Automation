@@ -11,10 +11,12 @@ class Facebook:
         self.csv_count =0
         self.posts =[]
 
-    def getPosts(self,page_id,page_count):
+    def getPosts(self,page_id,page_count,lasted_post_id):
         for post in get_posts(account=page_id,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10}):
-           
             print(post['post_id'])
+            if(post['post_id'] == lasted_post_id):
+                print(post['post_id'])
+                break            
             self.posts.append(self.getData(post))
 
     def getData(self,post):

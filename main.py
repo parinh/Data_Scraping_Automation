@@ -75,6 +75,9 @@ if( ss < 9 ):
     print("Enter the keyword for the selected site.. ->>")
     keyword = input()
 
+if(ss == 5):
+    print("enter lasted post_id")
+    lasted_post_id = input()
 # close all popup
 chrome_options.add_argument("disable-notifications")
 chrome_options.add_argument("--disable-infobars")
@@ -320,8 +323,9 @@ elif ss == 4:
 
 # facebook
 elif ss == 5:
+    print(lasted_post_id)
     if page_count <= 100:
-        facebook.getPosts(keyword, page_count)
+        facebook.getPosts(keyword, page_count,lasted_post_id)
     else:
         print("cant get posts // pages limit was set on 100 ")
 
