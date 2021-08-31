@@ -105,7 +105,6 @@ class Amazon:
                 _brand=brand
 
         except Exception as e:
-            print(e)
             pass
 
         try:
