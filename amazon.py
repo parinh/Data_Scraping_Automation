@@ -91,14 +91,22 @@ class Amazon:
         return(len(self.products))
         
     def getDetail(self,product_id,html):
-        soup = BeautifulSoup(html,"html.parser")
         _brand  = "no brand"
         _description = "no description"
+        
         try:
-            brand = soup.select_one("tr.a-spacing-small > td.a-span9 > span.a-size-base").text
+            soup = BeautifulSoup(html,"html.parser")
+            brand = ""
+            for item in soup.select("tr.a-spacing-small"):
+                if item.select_one("td.a-span3 > span").text == 'Brand':
+                    brand = item.select_one("td.a-span9 > span.a-size-base").text
+                    break
             if(brand):
                 _brand=brand
-        except: pass
+
+        except Exception as e:
+            print(e)
+            pass
 
         try:
             description = ""
