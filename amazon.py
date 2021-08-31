@@ -95,6 +95,7 @@ class Amazon:
         _brand  = "no brand"
         _description = "no description"
         try:
+            brand = ""
             for item in soup.select("tr.a-spacing-small"):
                 if item.select_one("td.a-span3 > span").text == 'Brand':
                     brand = item.select_one("td.a-span9 > span.a-size-base").text

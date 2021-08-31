@@ -453,10 +453,6 @@ elif ss == 9:
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
             shopee_detail.getDetail(row[0],html)
-            if (count == 300):
-                count = 0
-                browser.close()
-                browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
         shopee_detail.detailToCsv(shopee_detail.details)
         # print(shopee_detail.details)
 
@@ -506,10 +502,6 @@ elif ss == 10:
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
             amazon.getDetail(row[0],html)
-            if (count == 500):
-                count = 0
-                browser.close()
-                browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
     amazon.detailToCsv(amazon.details)
         
 

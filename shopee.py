@@ -111,6 +111,7 @@ class Shopee:
         _description = "no description"
         soup = BeautifulSoup(html, "html.parser")
         try:
+            rating = ""
             rating = soup.select("div.OitLRu")[1].text
         except:
             pass
@@ -125,6 +126,7 @@ class Shopee:
             pass
         
         try:
+            brand = ""
             brand = soup.select_one("div._3uf2ae").text
             if(brand):
                 _brand=brand
@@ -134,6 +136,7 @@ class Shopee:
             pass
         
         try:
+            description = ""
             description = soup.select_one("div._3yZnxJ > span").text
             if(description):
                 _description=description
