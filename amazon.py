@@ -102,6 +102,17 @@ class Amazon:
                     break
             if(brand):
                 _brand=brand
+            else:
+                try:
+                    brand = soup.select_one("#bylineInfo").text
+                    if "Brand:" in brand:
+                        brand = brand.split("Brand: ")[1]
+                    if "Visit" in brand:
+                        brand = brand.split("Visit the ")[1].split("Store")[0]
+                    _brand = brand
+                    # print(brand)
+                except:
+                    pass
 
         except: pass
 
@@ -109,8 +120,10 @@ class Amazon:
             description = ""
             for item in soup.select("ul.a-unordered-list.a-vertical.a-spacing-mini > li "):
                 description += item.text
+                print(description)
             
             if(description):
+                print(description)
                 _description=description
         except: pass
 
