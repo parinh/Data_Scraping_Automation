@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import csv
 from decouple import config
-from numpy.core.fromnumeric import product
+
 
 class Amazon: 
     def __init__(self) :

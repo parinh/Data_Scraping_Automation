@@ -17,7 +17,6 @@ from amazon import *
 from pantip import *
 from tocsv import *
 from jd import *
-from lazada import *
 from facebook import *
 from thaibio import *
 from pythainlp.corpus.common import thai_words
@@ -408,8 +407,9 @@ elif ss == 8:
     
     thaijo.toCsv(thaijo.datas)
 
+#Shopee detail
 elif ss == 9:
-    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
+    with open(config("KK"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
         next(datas)
         count = 0

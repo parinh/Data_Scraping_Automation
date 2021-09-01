@@ -1,9 +1,6 @@
-from os import name
 from bs4 import BeautifulSoup
 import csv
 import json
-from numpy import product, select
-from numpy.lib.type_check import imag
 from decouple import config
 
 
