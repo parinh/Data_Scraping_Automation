@@ -1,9 +1,7 @@
 from nlp import NLP
 from facebook_scraper import *
-from datetime import datetime
 import csv
 from decouple import config
-from requests.api import options
 
 
 class Facebook:

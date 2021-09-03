@@ -1,10 +1,5 @@
-from json import loads
-from os import name
-from bs4 import BeautifulSoup
 import csv
-import tocsv
 from decouple import config
-from numpy import product, tile
 from decouple import config
 import requests
 import logging

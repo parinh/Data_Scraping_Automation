@@ -1,7 +1,0 @@
-คุยในนี้ได้ๆๆๆๆ
-โอเคพี่
-เดี๋ยวเบลทำเป็น class ให้
-ตัดให่หน่อยดิ55555
-"http://localhost/api/v1/plants/74"
-เป็น
-http://api.bedo.or.th/api/v1/plants/74

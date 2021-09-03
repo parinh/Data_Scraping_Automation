@@ -17,7 +17,6 @@ from amazon import *
 from pantip import *
 from tocsv import *
 from jd import *
-from lazada import *
 from facebook import *
 from thaibio import *
 from pythainlp.corpus.common import thai_words
@@ -30,8 +29,6 @@ import csv
 
 # print(config("LOG_FILE"))
 logging.basicConfig(filename=config("LOG_FILE"), filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-
-
 
 # def printArr2D(arr):
 #     for i in arr:
@@ -51,7 +48,6 @@ chrome_options = Options()
 shopee = Shopee()
 amazon = Amazon()
 pantip = Pantip()
-lazada = Lazada()
 jd = JD()
 facebook = Facebook()
 thaijo = Thaijo()
@@ -408,6 +404,7 @@ elif ss == 8:
     
     thaijo.toCsv(thaijo.datas)
 
+# shopee detail
 elif ss == 9:
     with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
@@ -456,8 +453,9 @@ elif ss == 9:
         shopee_detail.detailToCsv(shopee_detail.details)
         # print(shopee_detail.details)
 
+# amazon detail
 elif ss == 10:
-    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
+    with open(config("TEST"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
         next(datas)
         count = 0
