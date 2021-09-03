@@ -19,6 +19,7 @@ from tocsv import *
 from jd import *
 from facebook import *
 from thaibio import *
+from api_bedo import *
 from pythainlp.corpus.common import thai_words
 from pythainlp import *
 from decouple import config
@@ -508,31 +509,31 @@ elif ss == 10:
 
 elif ss == 11:
     try:
-        print("input type {plants,animals,micros}")
-        type = input()
-        items = []
-        auth_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3QiLCJhdWQiOiJodHRwOlwvXC9sb2NhbGhvc3QiLCJpYXQiOjE2MzA2NDAyNTYsIm5iZiI6MTYzMDY0MDI1NiwiZXhwIjoxNjMzMjMyMjU2LCJ1aWQiOiJiZWRvX2FpIn0.gFfMgIjhcZ7qyeWzVXOduutGBmSD0T_BBRTFe0rHnmQ'
-        i = 1
-        while True:
-            response = requests.get('http://api.bedo.or.th/api/v1/'+ type +'?page='+ str(i) +'&size=50',headers={'Authorization': 'Bearer ' + auth_token})
-            results = response.json().get("data").get("items")        
-            if(results == []):
-                break
-            else:
-                 for result in results:
-                    index_id = result.get("id")
-                    index_name = result.get("name")
-                    index_url = result.get("url").replace("http://localhost","http://api.bedo.or.th")
-                    
-                    items.append({"id":index_id,"name":index_name,"url":index_url})
-            i+=1
-        
-        print(items)
+        types = ['plants','animals','micros']
+        for type in types:
+            api_bedo = ApiBedo()
+            filename = ""
+            if type == "animals":
+                filename = "ANIMALS_BEDO"
+            elif type == "micros":
+                filename = "MICROS_BEDO"
+            elif type == "plants":
+                filename = "PLANTS_BEDO"
 
-            
-        
-        
+            auth_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3QiLCJhdWQiOiJodHRwOlwvXC9sb2NhbGhvc3QiLCJpYXQiOjE2MzA2NDAyNTYsIm5iZiI6MTYzMDY0MDI1NiwiZXhwIjoxNjMzMjMyMjU2LCJ1aWQiOiJiZWRvX2FpIn0.gFfMgIjhcZ7qyeWzVXOduutGBmSD0T_BBRTFe0rHnmQ'
+            i = 1
+            while True:
+                response = requests.get('http://api.bedo.or.th/api/v1/'+ type +'?page='+ str(i) +'&size=50',headers={'Authorization': 'Bearer ' + auth_token})
+                results = response.json().get("data").get("items")        
+                if(results == []):
+                    break
+                else:
+                    api_bedo.getData(results)
+                i+=1
 
+            print(api_bedo.datas)
+            api_bedo.toCsv(api_bedo.datas,filename)
+                  
     except Exception as e:
         print(e)
 
