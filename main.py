@@ -462,47 +462,82 @@ elif ss == 10:
         next(datas)
         count = 0
         for row in datas:
-            count += 1
-            base_url = row[1]
-            count += 1
-            browser.get(base_url)
-            WebDriverWait(browser, delay)
-            sleep(3)
-            browser.execute_script("window.scrollTo(0, 0);")
-            browser.execute_script(
-            "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
-            )
-            html = browser.execute_script(
-                "return document.getElementsByTagName('html')[0].innerHTML"
-            )
-            amazon.getDetail(row[0],html)
+            try:
+                count += 1
+                base_url = row[1]
+                count += 1
+                browser.get(base_url)
+                WebDriverWait(browser, delay)
+                sleep(3)
+                browser.execute_script("window.scrollTo(0, 0);")
+                browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
+                )
+                html = browser.execute_script(
+                    "return document.getElementsByTagName('html')[0].innerHTML"
+                )
+                amazon.getDetail(row[0],html)
+            except Exception as e:
+                print(e)
+                logging.warning(e)
     amazon.detailToCsv(amazon.details)
+
+elif ss == 11:
+    try:
+        print("input type {plants,animals,micros}")
+        type = input()
+        items = []
+        auth_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3QiLCJhdWQiOiJodHRwOlwvXC9sb2NhbGhvc3QiLCJpYXQiOjE2MzA2NDAyNTYsIm5iZiI6MTYzMDY0MDI1NiwiZXhwIjoxNjMzMjMyMjU2LCJ1aWQiOiJiZWRvX2FpIn0.gFfMgIjhcZ7qyeWzVXOduutGBmSD0T_BBRTFe0rHnmQ'
+        i = 1
+        while True:
+            response = requests.get('http://api.bedo.or.th/api/v1/'+ type +'?page='+ str(i) +'&size=50',headers={'Authorization': 'Bearer ' + auth_token})
+            results = response.json().get("data").get("items")        
+            if(results == []):
+                break
+            else:
+                 for result in results:
+                    index_id = result.get("id")
+                    index_name = result.get("name")
+                    index_url = result.get("url").replace("http://localhost","http://api.bedo.or.th")
+                    
+                    items.append({"id":index_id,"name":index_name,"url":index_url})
+            i+=1
+        
+        print(items)
+
+            
+        
+        
+
+    except Exception as e:
+        print(e)
+
         
 
 browser.close()
