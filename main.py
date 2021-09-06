@@ -17,7 +17,6 @@ from amazon import *
 from pantip import *
 from tocsv import *
 from jd import *
-from lazada import *
 from facebook import *
 from thaibio import *
 from pythainlp.corpus.common import thai_words
@@ -30,8 +29,6 @@ import csv
 
 # print(config("LOG_FILE"))
 logging.basicConfig(filename=config("LOG_FILE"), filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-
-
 
 # def printArr2D(arr):
 #     for i in arr:
@@ -51,7 +48,6 @@ chrome_options = Options()
 shopee = Shopee()
 amazon = Amazon()
 pantip = Pantip()
-lazada = Lazada()
 jd = JD()
 facebook = Facebook()
 thaijo = Thaijo()
@@ -75,6 +71,9 @@ if( ss < 9 ):
     print("Enter the keyword for the selected site.. ->>")
     keyword = input()
 
+if(ss == 5):
+    print("enter lasted post_id")
+    lasted_post_id = input()
 # close all popup
 chrome_options.add_argument("disable-notifications")
 chrome_options.add_argument("--disable-infobars")
@@ -320,8 +319,9 @@ elif ss == 4:
 
 # facebook
 elif ss == 5:
+    print(lasted_post_id)
     if page_count <= 100:
-        facebook.getPosts(keyword, page_count)
+        facebook.getPosts(keyword, page_count,lasted_post_id)
     else:
         print("cant get posts // pages limit was set on 100 ")
 
@@ -385,6 +385,7 @@ elif ss == 8:
     try:
         page = 1
         keyword_input = open(config("INPUT_FILE_TXT"),"r",encoding = "utf8").read()
+        print(keyword_input)
 
     except Exception as e:
         logging.warning("read")
@@ -398,11 +399,12 @@ elif ss == 8:
             # print(thaijo.datas)
         except Exception as e:
             logging.warning(e)
-            print(e)
+            page = 1000
         page += 1
     
     thaijo.toCsv(thaijo.datas)
 
+# shopee detail
 elif ss == 9:
     with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
         datas = csv.reader(f)
@@ -448,24 +450,23 @@ elif ss == 9:
                 "return document.getElementsByTagName('html')[0].innerHTML"
             )
             shopee_detail.getDetail(row[0],html)
-            if (count == 300):
-                count = 0
-                browser.close()
-                browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
         shopee_detail.detailToCsv(shopee_detail.details)
         # print(shopee_detail.details)
 
+# amazon detail
 elif ss == 10:
-    try:
-        with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
-            datas = csv.reader(f)
-            next(datas)
-            count = 0
-            for row in datas:
+    with open(config("INPUT_FILE_CSV"),'r',encoding='utf-8') as f:
+        datas = csv.reader(f)
+        next(datas)
+        count = 0
+        for row in datas:
+            try:
                 count += 1
                 base_url = row[1]
+                count += 1
                 browser.get(base_url)
                 WebDriverWait(browser, delay)
+                sleep(3)
                 browser.execute_script("window.scrollTo(0, 0);")
                 browser.execute_script(
                 "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
@@ -500,13 +501,12 @@ elif ss == 10:
                     "return document.getElementsByTagName('html')[0].innerHTML"
                 )
                 amazon.getDetail(row[0],html)
-                if (count == 300):
-                    count = 0
-                    browser.close()
-                    browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
-        amazon.detailToCsv(amazon.details)
-    except Exception as e:
-        print(e)        
+                
+            except Exception as e:
+                print(e)
+                pass
+    amazon.detailToCsv(amazon.details)
+        
 
 browser.close()
 print("End process")

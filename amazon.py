@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import csv
 from decouple import config
-from numpy.core.fromnumeric import product
+
 
 class Amazon: 
     def __init__(self) :
@@ -103,6 +103,17 @@ class Amazon:
                     break
             if(brand):
                 _brand=brand
+            else:
+                try:
+                    brand = soup.select_one("#bylineInfo").text
+                    if "Brand:" in brand:
+                        brand = brand.split("Brand: ")[1]
+                    if "Visit" in brand:
+                        brand = brand.split("Visit the ")[1].split("Store")[0]
+                    _brand = brand
+                    # print(brand)
+                except:
+                    pass
 
         except Exception as e:
             pass

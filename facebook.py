@@ -1,9 +1,7 @@
 from nlp import NLP
 from facebook_scraper import *
-from datetime import datetime
 import csv
 from decouple import config
-from requests.api import options
 
 
 class Facebook:
@@ -11,14 +9,16 @@ class Facebook:
         self.csv_count =0
         self.posts =[]
 
-    def getPosts(self,page_id,page_count):
-        nlp = NLP()
-        for post in get_posts(account=page_id,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10}):
-           
+    def getPosts(self,page_id,page_count,lasted_post_id):
+        for post in get_posts(account=page_id,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10}, cookies="facebook.com_cookies.txt"):
             print(post['post_id'])
-            self.posts.append(self.getData(post,nlp))
+            if(post['post_id'] == lasted_post_id):
+                print(post['post_id'])
+                break            
+            self.posts.append(self.getData(post))
 
-    def getData(self,post,nlp):
+    def getData(self,post):
+        nlp = NLP()
         _user_name = "no name"
         _comment = 0
         _date = "no time"
