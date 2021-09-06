@@ -107,10 +107,21 @@ class Amazon:
                     brand = soup.select_one("#bylineInfo").text
                     if "Brand:" in brand:
                         brand = brand.split("Brand: ")[1]
+                        _brand = brand
                     if "Visit" in brand:
                         brand = brand.split("Visit the ")[1].split("Store")[0]
-                    _brand = brand
-                    # print(brand)
+                        _brand = brand
+
+                    else:
+                        brand = soup.select_one("div.a-section.feature.detail-bullets-wrapper.bucket > div[id=detailBullets_feature_div] ")
+                        for row in brand.select("li"):
+                            if("Publisher" in row.text):
+                                row = row.select("span")[2].text.split(";")[0]
+                                _brand = row
+                                # print(_brand)
+                                break
+                            
+            
                 except:
                     pass
 
@@ -120,11 +131,13 @@ class Amazon:
             description = ""
             for item in soup.select("ul.a-unordered-list.a-vertical.a-spacing-mini > li "):
                 description += item.text
-                print(description)
             
             if(description):
-                print(description)
                 _description=description
+            else:
+                description = soup.select_one("div[id=editorialReviews_feature_div]")
+                if(description):
+                    _description=description.text
         except: pass
 
         detail = {
