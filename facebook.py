@@ -10,12 +10,12 @@ class Facebook:
         self.posts =[]
 
     def getPosts(self,page_id,page_count,lasted_post_id):
-        for post in get_posts(account=page_id,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10}, cookies="facebook.com_cookies.txt"):
-            print(post['post_id'])
+        for post in get_posts(account=page_id,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10},
+        cookies="/Users/mcmxcix/pythongetpostshopee/facebook_cookies/facebook.com_cookies.txt"):
             if(post['post_id'] == lasted_post_id):
-                print(post['post_id'])
                 break            
             self.posts.append(self.getData(post))
+            print(len(self.posts))
 
     def getData(self,post):
         nlp = NLP()

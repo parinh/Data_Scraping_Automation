@@ -1,0 +1,12 @@
+num,id,name,url
+1,1,ปลา,http://api.bedo.or.th/api/v1/animals/1
+2,2,จระเข้,http://api.bedo.or.th/api/v1/animals/2
+3,3,Animal-ThaiBio,http://api.bedo.or.th/api/v1/animals/3
+4,4,ไก่,http://api.bedo.or.th/api/v1/animals/4
+5,5,ไหม,http://api.bedo.or.th/api/v1/animals/5
+6,6,ผึ้ง,http://api.bedo.or.th/api/v1/animals/6
+7,7,หอย,http://api.bedo.or.th/api/v1/animals/7
+8,8,ปู,http://api.bedo.or.th/api/v1/animals/8
+9,9,กุ้ง,http://api.bedo.or.th/api/v1/animals/9
+10,10,นก,http://api.bedo.or.th/api/v1/animals/10
+11,11,นกชายเลน,http://api.bedo.or.th/api/v1/animals/11

@@ -1,0 +1,84 @@
+num,id,name,url
+1,1,ขิง ข่า,http://api.bedo.or.th/api/v1/plants/1
+2,4,หมากเม่า,http://api.bedo.or.th/api/v1/plants/4
+3,7,เงาะ,http://api.bedo.or.th/api/v1/plants/7
+4,13,พริกไทย,http://api.bedo.or.th/api/v1/plants/13
+5,16,สมุนไพร(เพื่อทดสอบ),http://api.bedo.or.th/api/v1/plants/16
+6,21,สมุนไพรพื้นบ้าน (ราชบุรี เพชรบุรี),http://api.bedo.or.th/api/v1/plants/21
+7,23,สมุนไพรพื้นบ้าน (สุพรรณบุรี ชัยนาท),http://api.bedo.or.th/api/v1/plants/23
+8,26,กล้วยไม้,http://api.bedo.or.th/api/v1/plants/26
+9,28,ไผ่,http://api.bedo.or.th/api/v1/plants/28
+10,29,มะม่วง,http://api.bedo.or.th/api/v1/plants/29
+11,31,พืช ป่าสกลนคร,http://api.bedo.or.th/api/v1/plants/31
+12,33,สมุนไพร(Barcode),http://api.bedo.or.th/api/v1/plants/33
+13,35,กล้วยไม้ดิน03,http://api.bedo.or.th/api/v1/plants/35
+14,36,สมุนไพรพื้นบ้าน (นครศรีธรรมราช),http://api.bedo.or.th/api/v1/plants/36
+15,37,Plantae-ThaiBio,http://api.bedo.or.th/api/v1/plants/37
+16,38,สมุนไพรพื้นบ้าน (พะเยา แพร่),http://api.bedo.or.th/api/v1/plants/38
+17,39,สมุนไพรพื้นบ้าน (ระยอง ชลบุรี),http://api.bedo.or.th/api/v1/plants/39
+18,40,สมุนไพรพื้นบ้าน(บุรีรัมย์สุรินทร์ชัยภูมิ),http://api.bedo.or.th/api/v1/plants/40
+19,41,สมุนไพรพื้นบ้าน (สุโขทัย อุตรดิตถ์),http://api.bedo.or.th/api/v1/plants/41
+20,42,สมุนไพรพื้นบ้าน (นครราชสีมา),http://api.bedo.or.th/api/v1/plants/42
+21,43,สมุนไพร01,http://api.bedo.or.th/api/v1/plants/43
+22,44,ข้าว,http://api.bedo.or.th/api/v1/plants/44
+23,45,กล้วย,http://api.bedo.or.th/api/v1/plants/45
+24,47,ลำไย,http://api.bedo.or.th/api/v1/plants/47
+25,48,มะพร้าว,http://api.bedo.or.th/api/v1/plants/48
+26,49,ทุเรียน,http://api.bedo.or.th/api/v1/plants/49
+27,50,อ้อย,http://api.bedo.or.th/api/v1/plants/50
+28,51,มะขาม,http://api.bedo.or.th/api/v1/plants/51
+29,52,ต้นหมี่,http://api.bedo.or.th/api/v1/plants/52
+30,53,ต้นชา,http://api.bedo.or.th/api/v1/plants/53
+31,54,อัญชัน,http://api.bedo.or.th/api/v1/plants/54
+32,55,ขิง,http://api.bedo.or.th/api/v1/plants/55
+33,56,ขมิ้น,http://api.bedo.or.th/api/v1/plants/56
+34,57,มะเฟือง,http://api.bedo.or.th/api/v1/plants/57
+35,58,ว่านหางจระเข้,http://api.bedo.or.th/api/v1/plants/58
+36,59,มะหาด,http://api.bedo.or.th/api/v1/plants/59
+37,60,บัวบก,http://api.bedo.or.th/api/v1/plants/60
+38,61,ส้มป่อย,http://api.bedo.or.th/api/v1/plants/61
+39,62,ไพล,http://api.bedo.or.th/api/v1/plants/62
+40,63,ฟักข้าว,http://api.bedo.or.th/api/v1/plants/63
+41,64,ตะไคร้,http://api.bedo.or.th/api/v1/plants/64
+42,65,งา,http://api.bedo.or.th/api/v1/plants/65
+43,66,มะกรูด,http://api.bedo.or.th/api/v1/plants/66
+44,67,มะนาว,http://api.bedo.or.th/api/v1/plants/67
+45,68,ส้มซ่า,http://api.bedo.or.th/api/v1/plants/68
+46,69,ผักเชียงดา,http://api.bedo.or.th/api/v1/plants/69
+47,70,รางจืด,http://api.bedo.or.th/api/v1/plants/70
+48,71,มะรุม,http://api.bedo.or.th/api/v1/plants/71
+49,72,กระเจี๊ยบ,http://api.bedo.or.th/api/v1/plants/72
+50,73,พลูคาว,http://api.bedo.or.th/api/v1/plants/73
+51,74,มะตูม,http://api.bedo.or.th/api/v1/plants/74
+52,75,มะขามป้อม,http://api.bedo.or.th/api/v1/plants/75
+53,76,ถั่ว,http://api.bedo.or.th/api/v1/plants/76
+54,77,น้ำนมราชสีห์,http://api.bedo.or.th/api/v1/plants/77
+55,78,กะเม็ง,http://api.bedo.or.th/api/v1/plants/78
+56,79,เสลดพังพอน,http://api.bedo.or.th/api/v1/plants/79
+57,80,เจตมูลเพลิง,http://api.bedo.or.th/api/v1/plants/80
+58,81,เหงือกปลาหมอ,http://api.bedo.or.th/api/v1/plants/81
+59,82,สะตอ,http://api.bedo.or.th/api/v1/plants/82
+60,83,มังคุด,http://api.bedo.or.th/api/v1/plants/83
+61,84,เตยหอม,http://api.bedo.or.th/api/v1/plants/84
+62,85,ส้ม,http://api.bedo.or.th/api/v1/plants/85
+63,86,ชะมวง,http://api.bedo.or.th/api/v1/plants/86
+64,87,สละ,http://api.bedo.or.th/api/v1/plants/87
+65,88,ยางนา,http://api.bedo.or.th/api/v1/plants/88
+66,89,ขลู่,http://api.bedo.or.th/api/v1/plants/89
+67,90,โกงกาง,http://api.bedo.or.th/api/v1/plants/90
+68,91,ประสักดอกแดง,http://api.bedo.or.th/api/v1/plants/91
+69,92,มะม่วงหิมพานต์,http://api.bedo.or.th/api/v1/plants/92
+70,93,หม่อน,http://api.bedo.or.th/api/v1/plants/93
+71,94,รางแดง,http://api.bedo.or.th/api/v1/plants/94
+72,95,ย่านาง,http://api.bedo.or.th/api/v1/plants/95
+73,96,โปร่งฟ้า,http://api.bedo.or.th/api/v1/plants/96
+74,97,หญ้าหวาน,http://api.bedo.or.th/api/v1/plants/97
+75,98,ผักหวาน,http://api.bedo.or.th/api/v1/plants/98
+76,99,กระเทียม,http://api.bedo.or.th/api/v1/plants/99
+77,100,ข้าวพันธุ์พื้นเมือง 2018,http://api.bedo.or.th/api/v1/plants/100
+78,101,ขมิ้นชัน,http://api.bedo.or.th/api/v1/plants/101
+79,102,ข้าว2018,http://api.bedo.or.th/api/v1/plants/102
+80,103,ฟักทอง,http://api.bedo.or.th/api/v1/plants/103
+81,104,เท้ายายม่อม,http://api.bedo.or.th/api/v1/plants/104
+82,105,ไผ่จืด,http://api.bedo.or.th/api/v1/plants/105
+83,106,สมุนไพรพื้นบ้าน (ุสุพรรณบุรี ชัยนาท),http://api.bedo.or.th/api/v1/plants/106
