@@ -11,6 +11,7 @@ class ApiBedo:
         _id = "no id"
         _name = "no name"
         _url = "no url"
+        _total = 0
         index_id = result.get("id")
         if(index_id):
             _id = index_id
@@ -20,11 +21,15 @@ class ApiBedo:
         index_url = result.get("url")
         if(index_url):
             _url = index_url.replace("http://localhost", "http://api.bedo.or.th")
+        index_total = result.get("total")
+        if(index_total):
+            _total = index_total
         
         data = {
             "id": _id,
             "name": _name,
-            "url": _url
+            "url": _url,
+            "total" : _total
         }
         return data
 
@@ -34,7 +39,7 @@ class ApiBedo:
 
     def toCsv(self,datas,filename):
         with open(config(filename), "w", encoding="utf-8", newline="") as csvfile:
-            head_csv = ["num","id","name","url"]
+            head_csv = ["num","id","name","url","total"]
             thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
             thewriter.writeheader()
             for i in range(len(datas)):
@@ -45,6 +50,7 @@ class ApiBedo:
                         "num": self.csv_count,
                         "id": datas[i]["id"],
                         "name": datas[i]["name"],
-                        "url": datas[i]["url"]
+                        "url": datas[i]["url"],
+                        "total" : datas[i]["total"]
                     }
                 )

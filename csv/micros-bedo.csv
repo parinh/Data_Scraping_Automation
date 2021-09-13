@@ -1,4 +1,4 @@
-num,id,name,url
-1,1,เห็ด,http://api.bedo.or.th/api/v1/micros/1
-2,2,Monera-ThaiBio,http://api.bedo.or.th/api/v1/micros/2
-3,3, Fungi-ThaiBio,http://api.bedo.or.th/api/v1/micros/3
+num,id,name,url,total
+1,1,เห็ด,http://api.bedo.or.th/api/v1/micros/1,2564
+2,2,Monera-ThaiBio,http://api.bedo.or.th/api/v1/micros/2,38
+3,3, Fungi-ThaiBio,http://api.bedo.or.th/api/v1/micros/3,0
