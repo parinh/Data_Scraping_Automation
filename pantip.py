@@ -1,3 +1,4 @@
+import logging
 from bs4 import BeautifulSoup
 from lxml import html
 import json
@@ -19,29 +20,33 @@ class Pantip:
 
     def getPosts(self,html,page_count,browser):
         print ("get data Pantip")
-        soup = BeautifulSoup(html, "html.parser") 
-        ch = 0 
-        current_len = 0
-        count = 0
+        try:
+            soup = BeautifulSoup(html, "html.parser") 
+            ch = 0 
+            current_len = 0
+            count = 0
 
-        while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))): 
-            current_len = len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))  
-            sh = browser.execute_script("return document.body.scrollHeight")
-            browser.execute_script("window.scrollTo(0, %d);"% ch)
-            ch += sh/3
-            # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
-            html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-            soup = BeautifulSoup(html, "html.parser")
-            # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
-            if (current_len == len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))):
-                count += 1
-                if (count == 100):
-                    break
-            else :
-                count = 0
-        for post in soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'): 
-            # post_url = post.select_one("div.rowsearch.card.px-0 > div.title.col-md-12 > a.datasearch-in")
-            self.posts.append(self.getItem(post['href']))
+            while (page_count > len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))): 
+                current_len = len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))  
+                sh = browser.execute_script("return document.body.scrollHeight")
+                browser.execute_script("window.scrollTo(0, %d);"% ch)
+                ch += sh/3
+                # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+                html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+                soup = BeautifulSoup(html, "html.parser")
+                # print(len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in')))
+                if (current_len == len(soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'))):
+                    count += 1
+                    if (count == 100):
+                        break
+                else :
+                    count = 0
+            for post in soup.select('div.rowsearch.card.px-0 > div.desc.col-md-12 > a.datasearch-in'): 
+                # post_url = post.select_one("div.rowsearch.card.px-0 > div.title.col-md-12 > a.datasearch-in")
+                self.posts.append(self.getItem(post['href']))
+                
+        except Exception as e:
+            logging.warning(e)
 
 
     def getItem(self,link):

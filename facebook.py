@@ -11,7 +11,7 @@ class Facebook:
 
     def getPosts(self,page_id,page_count,lasted_post_id):
         for post in get_posts(account=page_id,pages = page_count, page_limit = 100,timeout = 10,options = {"posts_per_page": 10},
-        cookies="/Users/mcmxcix/pythongetpostshopee/facebook_cookies/facebook.com_cookies.txt"):
+        cookies=config("FACEBOOK_COOKIES")):
             if(post['post_id'] == lasted_post_id):
                 break            
             self.posts.append(self.getData(post))

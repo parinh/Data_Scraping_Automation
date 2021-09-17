@@ -224,27 +224,30 @@ elif ss == 2:
 
 # pantip
 elif ss == 3:
-    base_url = "https://pantip.com/search?q=" + keyword
-    browser.get(base_url)
-    WebDriverWait(browser, delay)
-    browser.execute_script("window.scrollTo(0, 0);")
+    try:
+        base_url = "https://pantip.com/search?q=" + keyword
+        browser.get(base_url)
+        WebDriverWait(browser, delay)
+        browser.execute_script("window.scrollTo(0, 0);")
 
-    #sort search click
-    browser.execute_script("document.getElementById('timebias_2').checked = true")
-    browser.execute_script("document.getElementById('searchbutton').click()")
-    sleep(5)
+        #sort search click
+        browser.execute_script("document.getElementById('timebias_2').checked = true")
+        browser.execute_script("document.getElementById('searchbutton').click()")
+        sleep(5)
 
-    html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-    soup = BeautifulSoup(html, "html.parser")
-    sort = soup.select_one('div.pt-lists-item__form.pure-material-radio.m-t-2 > input')
+        html = browser.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+        soup = BeautifulSoup(html, "html.parser")
+        sort = soup.select_one('div.pt-lists-item__form.pure-material-radio.m-t-2 > input')
 
-    print ("Page is ready")
-    sleep(5)
+        print ("Page is ready")
+        sleep(5)
 
-    pantip.getPosts(html,page_count,browser)
-    # printArr(pantip.posts)
-    pantip.toCsv(pantip.posts)
-    
+        pantip.getPosts(html,page_count,browser)
+        # printArr(pantip.posts)
+        pantip.toCsv(pantip.posts)
+    except Exception as e:
+        logging.warning(e)
+        
 # JD
 elif ss == 4:
     page = 1
@@ -362,8 +365,11 @@ elif ss == 7:
             "window.scrollTo(0, (document.body.scrollHeight /10) * 1);"
         )
         sleep(3)
-        browser.execute_script("document.querySelector('.button-link.facet-link-container.u-font-sans.button-link-primary').click()")
-        # print(11111111)
+        try:
+            browser.execute_script("document.querySelector('.button-link.facet-link-container.u-font-sans.button-link-primary').click()")
+            print("clikced")
+        except:
+            print("not clicked")
         # browser.execute_script(
         #     "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
         # )
