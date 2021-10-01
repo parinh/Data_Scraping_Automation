@@ -20,7 +20,7 @@ class Shopee:
         product = []
         _name = "no name"
         _price = 0
-        _sold = "no sold"
+        _sold = 0
         _from = "no from"
         _image = "no image"
         _url = "no url"
@@ -30,53 +30,87 @@ class Shopee:
 
         try:
             # Name
-            name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF")
-            if name:
-                _name = name.text
-            # Price
-            price = soup.select_one("div.WTFwws._1k2Ulw._5W0f35 > span._24JoLh")
-            # print("".join(price.text.split(",")))
-            if price:
-                _price = float("".join(price.text.split(",")))
-            # type
-            __type = soup.select_one("div.Oi0pcf.KRP-a_ > span._2_d9RP")
-            if __type:
-                _type = __type.text
-            else:
-                __type = soup.select_one("div._1qt0vU > div.Oi0pcf._3Bekkv")
-                if __type:
-                    _type = "shopee mall"
-            # sold / month
-            sold = soup.select_one("div.go5yPW")
-            if sold.text:
-                if "พัน" not in sold.text:
-                    _sold = float((sold.text).split(" ")[1])
-                else:
-                    _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
-            # print(_sold)
-            # star
-            for star in soup.select(
-                "div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit"
-            ):
-                _star = _star + float(star["style"].split(" ")[1].split("%")[0])
-            _star = round(_star / 100, 4)
-            # from
-            __from = soup.select_one("div._2CWevj")
-            if __from:
-                _from = __from.text
-            # find img path
-            imgs = soup.select_one("div._25_r8I._2SHkSu > img")
             try:
-                _image = imgs["src"]
-            except:
-                _image = "no image"
+                name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF")
+                if name:
+                    _name = name.text
+                else:
+                    name = soup.select_one("div._10Wbs-._5SSWfi.UjjMrh")
+                    if name:
+                        _name = name.text
+            except Exception as e:
+                pass
+            # Price
+
+            try:
+                price = soup.select_one("div.WTFwws._1k2Ulw._5W0f35 > span._24JoLh")
+                # print("".join(price.text.split(",")))
+                if price:
+                    _price = float("".join(price.text.split(",")))
+
+                else:
+                   price = soup.select_one("div.zp9xm9.xSxKlK._1heB4J > span._1d9_77")
+                   if price:
+                       _price = float("".join(price.text.split(",")))
+            except Exception as e:
+                pass
+            # type
+            try:
+                __type = soup.select_one("div.T_lEwS._3yYsYA> span._3SZzfE")
+                if __type:
+                    _type = __type.text
+                else:
+                    __type = soup.select_one("div.T_lEwS._25E9FD > div._2_QOzr")
+                    if __type:
+                        _type = "shopee mall"
+            except Exception as e:
+                pass
+            # sold / month
+            try:
+                sold = soup.select_one("div._2VIlt8")
+                if sold.text:
+                    if "พัน" not in sold.text:
+                        _sold = float((sold.text).split(" ")[1])
+                    else:
+                        _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
+            except Exception as e:
+                pass
+            # print(_sold)
+
+            # star
+            try:
+                for star in soup.select(
+                    "div.shopee-rating-stars__star-wrapper > div.shopee-rating-stars__lit"
+                ):
+                    _star = _star + float(star["style"].split(" ")[1].split("%")[0])
+                _star = round(_star / 100, 4)
+            except Exception as e:
+                pass
+
+            # from
+            try:
+                __from = soup.select_one("div._1w5FgK")
+                if __from:
+                    _from = __from.text
+            except Exception as e:
+                pass
+            # find img path
+
+            #img src
+            try:
+                imgs = soup.select_one("div.customized-overlay-image > img")
+                if imgs:
+                    _image = imgs["src"]
+            except Exception as e:
+                pass
             # url
             url = soup.select_one("a")
             _url = "https://shopee.co.th/" + url["href"]
             # product_id
             _id = int((url["href"]).split(".")[len((url["href"]).split(".")) - 1].split("?")[0])
 
-        except:
+        except Exception as e:
+            print(e)
             print("something wrong")
             pass
 

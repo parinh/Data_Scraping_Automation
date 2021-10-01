@@ -14,60 +14,83 @@ class Amazon:
         _name = 'no name'
         _id = 'no id'
         _price = 'out of stock'
-        _rating = 'no rating'
-        _review = 'no review'
+        _rating = 0
+        _review = 0
         _image = 'no image'
         _url = 'no url'
         _bestseller = 'not be a best'
    
         try:
             #item id
-            item_code = soup['data-asin']
-            if (item_code):  
-                _id = item_code
+            try:
+                item_code = soup['data-asin']
+                if (item_code):  
+                    _id = item_code
+            except Exception as e:
+                pass
+            
 
             #  Name
-            name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
-            if (name):
-                _name = name.text
-            else:
-                name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-medium.a-color-base.a-text-normal")
+            try:
+                name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-base-plus.a-color-base.a-text-normal" )
                 if (name):
                     _name = name.text
+                else:
+                    name = soup.select_one("a.a-link-normal.a-text-normal > span.a-size-medium.a-color-base.a-text-normal")
+                    if (name):
+                        _name = name.text
+            except Exception as e:
+                pass
             
             # Price
-            price = soup.select_one("span.a-price > span.a-offscreen")
-            if (price):
-                _price = float((price.text).split("$")[1])
+            try:
+                price = soup.select_one("span.a-price > span.a-offscreen")
+                if (price):
+                    _price = float((price.text).split("$")[1])
+            except Exception as e:
+                pass
 
             # rating
-            rating = soup.select_one("i > span.a-icon-alt")
-            if (rating):
-                _rating = float((rating.text).split(" ")[0])
-            
+            try:
+                rating = soup.select_one("i > span.a-icon-alt")
+                if (rating):
+                    _rating = float((rating.text).split(" ")[0])
+            except Exception as e:
+                pass
             #review
             # a.a-link-normal > span.a-size-base
-            review = soup.select_one("div.a-section.a-spacing-none.a-spacing-top-micro > div.a-row.a-size-small > span > a.a-link-normal > span.a-size-base")
-            if (review):
-                _review = float("".join(review.text.split(",")))
-                # _review = review.text
-            print(_review)
+            try:
+                review = soup.select_one("div.a-section.a-spacing-none.a-spacing-top-micro > div.a-row.a-size-small > span > a.a-link-normal > span.a-size-base")
+                if (review):
+                    _review = float("".join(review.text.split(",")))
+                    # _review = review.text
+            except Exception as e:
+                pass
             # print("\n")
             
 
             #best?
-            bestseller = soup.select_one("div.a-row.a-badge-region > span.a-badge > span.a-badge-label > span.a-badge-label-inner.a-text-ellipsis > span.a-badge-text ")
-            if(bestseller):
-                _bestseller = bestseller.text
-                
-            imgs = soup.select_one("img.s-image")
-            if (imgs):  
-                _image = imgs['src']
-        
+            try:            
+                bestseller = soup.select_one("div.a-row.a-badge-region > span.a-badge > span.a-badge-label > span.a-badge-label-inner.a-text-ellipsis > span.a-badge-text ")
+                if(bestseller):
+                    _bestseller = bestseller.text
+            except Exception as e:
+                pass
+
+            try:
+                imgs = soup.select_one("img.s-image")
+                if (imgs):  
+                    _image = imgs['src']
+            except Exception as e :
+                pass
+
+            try:
             #post url
-            post_url = soup.select_one("span.rush-component > a.a-link-normal.s-no-outline")
-            if(post_url):
-                _url = "https://www.amazon.com/"+post_url['href']
+                post_url = soup.select_one("span.rush-component > a.a-link-normal.s-no-outline")
+                if(post_url):
+                    _url = "https://www.amazon.com/"+post_url['href']
+            except Exception as e:
+                pass
         except:
             print("something wrong")
             
