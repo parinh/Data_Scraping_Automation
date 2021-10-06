@@ -62,7 +62,6 @@ class Shopee:
                     __type = selected.find("div",attrs={"style":"color: rgb(208, 1, 27);"})
                     if(__type):
                         _type = "Mall"
-                print(_type)
             except Exception as e:
                 pass
 
@@ -74,7 +73,6 @@ class Shopee:
                         _sold = float((sold.text).split(" ")[1])
                     else:
                         _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
-                    print(_sold)
             except Exception as e:
                 pass
             # print(_sold)
@@ -94,14 +92,13 @@ class Shopee:
                 __from = soup.select_one("a > div > div > div:nth-child(2) > div:nth-child(4)")
                 if __from.text:
                     _from = __from.text
-                print(_from)
             except Exception as e:
                 pass
             # find img path
 
             #img src
             try:
-                imgs = soup.select_one("div.customized-overlay-image > img")
+                imgs = soup.select_one("a > div > div > div > img ")
                 if imgs:
                     _image = imgs["src"]
             except Exception as e:
