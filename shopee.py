@@ -18,7 +18,7 @@ class Shopee:
     # get item
     def getItem(self, soup):
         product = []
-        _name = "no name"
+        _name = "no name" 
         _price = 0
         _sold = 0
         _from = "no from"
@@ -28,51 +28,53 @@ class Shopee:
         _star = 0
         _id = 0
 
+        # a = soup.select_one("a > div > div > div:nth-child(2) > div:nth-child(1)")
+        # print(a.text)
+        # print(len(a))
+        # print(a[1])
+        # name = a[1].select_one("div")
+        # print(name[0].select_one("div").text)
         try:
             # Name
             try:
-                name = soup.select_one("div._1nHzH4 > div.PFM7lj > div.yQmmFK._1POlWt._36CEnF")
+                name = soup.select_one("a > div > div > div:nth-child(2) > div:nth-child(1)")
                 if name:
                     _name = name.text
-                else:
-                    name = soup.select_one("div._10Wbs-._5SSWfi.UjjMrh")
-                    if name:
-                        _name = name.text
             except Exception as e:
                 pass
-            # Price
 
+            # Price
             try:
-                price = soup.select_one("div.WTFwws._1k2Ulw._5W0f35 > span._24JoLh")
+                price = soup.select_one("a > div > div > div:nth-child(2) > div:nth-child(2) > div > span:nth-child(2)")
                 # print("".join(price.text.split(",")))
                 if price:
                     _price = float("".join(price.text.split(",")))
-
-                else:
-                   price = soup.select_one("div.zp9xm9.xSxKlK._1heB4J > span._1d9_77")
-                   if price:
-                       _price = float("".join(price.text.split(",")))
             except Exception as e:
                 pass
+
             # type
             try:
-                __type = soup.select_one("div.T_lEwS._3yYsYA> span._3SZzfE")
-                if __type:
-                    _type = __type.text
+                selected = soup.select_one("a > div > div > div:nth-child(1)")
+                __type = selected.find("div",attrs={"style":"color: rgb(242, 82, 32);"})
+                if(__type):
+                    _type = "ร้านแนะนำ"
                 else:
-                    __type = soup.select_one("div.T_lEwS._25E9FD > div._2_QOzr")
-                    if __type:
-                        _type = "shopee mall"
+                    __type = selected.find("div",attrs={"style":"color: rgb(208, 1, 27);"})
+                    if(__type):
+                        _type = "Mall"
+                print(_type)
             except Exception as e:
                 pass
+
             # sold / month
             try:
-                sold = soup.select_one("div._2VIlt8")
-                if sold.text:
+                sold = soup.select_one("a > div > div > div:nth-child(2) > div:nth-child(3) > div:nth-child(3)")
+                if sold:
                     if "พัน" not in sold.text:
                         _sold = float((sold.text).split(" ")[1])
                     else:
                         _sold = float((sold.text).split(" ")[1].split("พัน")[0]) * 1000
+                    print(_sold)
             except Exception as e:
                 pass
             # print(_sold)
@@ -89,9 +91,10 @@ class Shopee:
 
             # from
             try:
-                __from = soup.select_one("div._1w5FgK")
-                if __from:
+                __from = soup.select_one("a > div > div > div:nth-child(2) > div:nth-child(4)")
+                if __from.text:
                     _from = __from.text
+                print(_from)
             except Exception as e:
                 pass
             # find img path
@@ -105,7 +108,7 @@ class Shopee:
                 pass
             # url
             url = soup.select_one("a")
-            _url = "https://shopee.co.th/" + url["href"]
+            _url = "https://shopee.co.th" + url["href"]
             # product_id
             _id = int((url["href"]).split(".")[len((url["href"]).split(".")) - 1].split("?")[0])
 
@@ -143,13 +146,31 @@ class Shopee:
         _rating = "no rating"
         _brand = "no brand"
         _description = "no description"
+        _cat1 = "no cat1"
+        _cat2 = "no cat2"
+        _cat3 = "no cat3"
         soup = BeautifulSoup(html, "html.parser")
+        soup = soup.select_one("div.page-product > div.container")
+
+        #catagory
+        try:
+            _cat = soup.select_one("div")
+            __cat1 = _cat.find_all("span")[0]
+            if(__cat1):
+                _cat1 = __cat1.text
+            __cat2 = _cat.find_all("span")[1]
+            if(__cat2):
+                _cat2= __cat2.text
+            __cat3 = _cat.find_all("span")[2]
+            if(__cat3):
+                _cat3 = __cat3.text
+        except Exception as e:
+            pass
+
+            
         try:
             rating = ""
-            rating = soup.select("div.OitLRu")[1].text
-        except:
-            pass
-        try:
+            rating = soup.select_one("div:nth-child(2) > div:nth-child(3) > div > div:nth-child(2) > div:nth-child(2) > div").text
             if(rating):
                 if "พัน" in rating: 
                     _rating=float((rating).split("พัน")[0]) * 1000
@@ -161,9 +182,9 @@ class Shopee:
         
         try:
             brand = ""
-            brand = soup.select_one("div._3uf2ae").text
+            brand = soup.select_one("div:nth-child(3) > div._34c6X6.page-product__shop > div > div > div")
             if(brand):
-                _brand=brand
+                _brand=brand.text
         except Exception as e:
             logging.warning("brand")
             logging.warning(e)
@@ -171,7 +192,7 @@ class Shopee:
         
         try:
             description = ""
-            description = soup.select_one("div._3yZnxJ > span").text
+            description = soup.select_one("div:nth-child(3) >div.page-product__content > div > div > div:nth-child(2) > div:nth-child(2)").text
             if(description):
                 _description=description
         except Exception as e:
@@ -183,7 +204,10 @@ class Shopee:
             'product_id':product_id,
             'rating': _rating,
             'brand': _brand,
-            'description': _description
+            'description': _description,
+            'cat1' : _cat1,
+            'cat2' : _cat2,
+            'cat3' : _cat3
         }
         self.details.append(detail)
         # print(product_id,rating,brand,description)
@@ -228,6 +252,9 @@ class Shopee:
                 "brand",
                 "rating",
                 "description",
+                "cat1",
+                "cat2",
+                "cat3"
             ]
             thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
             thewriter.writeheader()
@@ -238,6 +265,10 @@ class Shopee:
                         "brand": details[i]["brand"],
                         "rating": details[i]["rating"],
                         "description": details[i]["description"],
+                        "cat1" : details[i]["cat1"],
+                        "cat2" : details[i]["cat2"],
+                        "cat3" : details[i]["cat3"],
+                        
                     }
                 )
 
