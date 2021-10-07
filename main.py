@@ -418,45 +418,49 @@ elif ss == 9:
         next(datas)
         count = 0
         for row in datas:
-            count += 1
-            base_url = row[1]
-            browser.get(base_url)
-            WebDriverWait(browser, delay)
-            sleep(3)
-            browser.execute_script("window.scrollTo(0, 0);")
-            browser.execute_script(
-            "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
-            )
-            browser.execute_script(
-                "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
-            )
-            html = browser.execute_script(
-                "return document.getElementsByTagName('html')[0].innerHTML"
-            )
-            shopee_detail.getDetail(row[0],html)
+            try:
+                count += 1
+                base_url = row[1]
+                browser.get(base_url)
+                WebDriverWait(browser, delay)
+                sleep(3)
+                browser.execute_script("window.scrollTo(0, 0);")
+                browser.execute_script(
+                "window.scrollTo(0, (document.body.scrollHeight /10) * 1);")
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 2);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 3);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 4);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 5);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 6);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 7);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 8);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 9);"
+                )
+                browser.execute_script(
+                    "window.scrollTo(0, (document.body.scrollHeight /10) * 10);"
+                )
+                html = browser.execute_script(
+                    "return document.getElementsByTagName('html')[0].innerHTML"
+                )
+                shopee_detail.getDetail(row[0],html)
+            except Exception as e:
+                print(e)
+                pass
         shopee_detail.detailToCsv(shopee_detail.details)
         # print(shopee_detail.details)
 
