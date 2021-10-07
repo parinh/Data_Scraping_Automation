@@ -143,24 +143,24 @@ class Shopee:
         _rating = "no rating"
         _brand = "no brand"
         _description = "no description"
-        _cat1 = "no cat1"
-        _cat2 = "no cat2"
-        _cat3 = "no cat3"
+        _cat_1 = "no cat_1"
+        _cat_2 = "no cat_2"
+        _cat_3 = "no cat_3"
         soup = BeautifulSoup(html, "html.parser")
         soup = soup.select_one("div.page-product > div.container")
 
         #catagory
         try:
             _cat = soup.select_one("div")
-            __cat1 = _cat.find_all("span")[0]
-            if(__cat1):
-                _cat1 = __cat1.text
-            __cat2 = _cat.find_all("span")[1]
-            if(__cat2):
-                _cat2= __cat2.text
-            __cat3 = _cat.find_all("span")[2]
-            if(__cat3):
-                _cat3 = __cat3.text
+            __cat_1 = _cat.find_all("span")[0]
+            if(__cat_1):
+                _cat1 = __cat_1.text
+            __cat_2 = _cat.find_all("span")[1]
+            if(__cat_2):
+                _cat_2= __cat_2.text
+            __cat_3 = _cat.find_all("span")[2]
+            if(__cat_3):
+                _cat_3 = __cat_3.text
         except Exception as e:
             pass
 
@@ -202,9 +202,9 @@ class Shopee:
             'rating': _rating,
             'brand': _brand,
             'description': _description,
-            'cat1' : _cat1,
-            'cat2' : _cat2,
-            'cat3' : _cat3
+            'cat_1' : _cat_1,
+            'cat_2' : _cat_2,
+            'cat_3' : _cat_3
         }
         self.details.append(detail)
         # print(product_id,rating,brand,description)
@@ -249,9 +249,9 @@ class Shopee:
                 "brand",
                 "rating",
                 "description",
-                "cat1",
-                "cat2",
-                "cat3"
+                "cat_1",
+                "cat_2",
+                "cat_3"
             ]
             thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
             thewriter.writeheader()
@@ -262,9 +262,9 @@ class Shopee:
                         "brand": details[i]["brand"],
                         "rating": details[i]["rating"],
                         "description": details[i]["description"],
-                        "cat1" : details[i]["cat1"],
-                        "cat2" : details[i]["cat2"],
-                        "cat3" : details[i]["cat3"],
+                        "cat_1" : details[i]["cat_1"],
+                        "cat_2" : details[i]["cat_2"],
+                        "cat_3" : details[i]["cat_3"],
                         
                     }
                 )
