@@ -154,7 +154,7 @@ class Shopee:
             _cat = soup.select_one("div")
             __cat_1 = _cat.find_all("span")[0]
             if(__cat_1):
-                _cat1 = __cat_1.text
+                _cat_1 = __cat_1.text
             __cat_2 = _cat.find_all("span")[1]
             if(__cat_2):
                 _cat_2= __cat_2.text
