@@ -20,60 +20,76 @@ class JD:
     
     def getItem(self,item):
         product = []
-        _price = 'no price'
+        _price = 0
         _image = 'no image'
         _from = 'no data'
-        _id = 'no id'
+        _id = 0
         _review = "no review"
         _type = 'general'
         _url = "no url"
         # ID
         try:
-            _id = item['spuId']
+            __id = item['spuId']
+            if(__id):
+                _id = __id
         except:
-            _id = 'no id'
+            pass
             
         # Name
         try:
-            _name = item['wname']
+            __name = item['wname']
+            if(__name):
+                _name = __name
         except:
-            _name = 'no name'
+            pass
 
         # Price
         try:
-            _price = float(item['jdPrice'])
+            __price = float(item['jdPrice'])
+            if(__price):
+                _price = __price
         except:
-            _price = 'no price'
+            pass
 
         # Type
         try:
-            _type = item['shopName']
+            __type = item['shopName']
+            if(__type):
+                _type = __type
         except:
-            _type = 'general'
+            pass
             
         # Review
         try:
-            _review = int((item['reviews']).split(" ")[0])
+            __review = int((item['reviews']).split(" ")[0])
+            if(__review):
+                _review = __review
         except:
-            _review = "no review"
+            pass
 
         # Img
         try:
-            _image = item['imageurl']
+            __image = item['imageurl']
+            if(__image):
+                _image = __image
         except:
-            _image = 'no image'
+            pass
             
         # From
         try:
-            _from = item['localDelivery']
+            __from = item['localDelivery']
+            if(__from):
+                _from = __from
         except:
-            _from = 'no data'
+            pass
 
         # Url
         try:
-            _url = "https://www.jd.co.th/product/"+ _id +".html"
+            __url = "https://www.jd.co.th/product/"+ _id +".html"
+            if(__url):
+                _url = __url
         except:
-            _url = "no url"
+            pass
 
         
         product = {
