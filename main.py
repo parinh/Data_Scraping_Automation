@@ -27,6 +27,7 @@ from thaijo import *
 import requests
 import logging
 import csv
+import math
 
 # print(config("LOG_FILE"))
 logging.basicConfig(filename=config("LOG_FILE"), filemode='w', format='%(name)s - %(levelname)s - %(message)s')
@@ -401,12 +402,15 @@ elif ss == 8:
     while page <= page_count:
         try:
             
-            page = thaijo.getData(keyword_input,page)
+            total = thaijo.getData(keyword_input,page)
+            page_count = math.ceil(total/30)
+            print(page_count)
 
             # print(thaijo.datas)
         except Exception as e:
             logging.warning(e)
             page = 1000
+            page_count = 0
         page += 1
     
     thaijo.toCsv(thaijo.datas)

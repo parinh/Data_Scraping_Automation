@@ -19,6 +19,7 @@ class Thaijo:
         _authors_full_name = "no author name"
         _authors_affiliation = "no affiliation"
         _issue_id = "no id"
+        _thaijo_id = "no id"
 
         try:
             # print(response.json().get("result")[0])
@@ -84,10 +85,15 @@ class Thaijo:
             if(issue_id):
                 _issue_id=issue_id
 
+            thaijo_id =response.get("id")
+            if(thaijo_id):
+                _thaijo_id=thaijo_id
+
             
 
             research = {
                 "issue_id":_issue_id,
+                "thaijo_id":_thaijo_id,
                 "title": _title,
                 "abstract_clean":_abstract_clean,
                 "article_url":_article_url,
@@ -114,20 +120,26 @@ class Thaijo:
         try:
             # print(page)
             # print(keyword)
-            query = {"term":keyword,"page":page,"size":1,"strict":True,"title":True,"author":True,"abstract":True}
+            query = {"term":keyword,"page":page,"size":30,"strict":True,"title":True,"author":True,"abstract":True}
             response = requests.post('https://www.tci-thaijo.org/api/articles/search/', json=query)
             # print(response.text)
-            result = response.json().get("result")[0]
-            logging.info(result)
-            # print(result)
+            # results = response.json().get("result")[0]
+            total = response.json().get("total")
+            results = response.json().get("result")
+            #print(len(results))
+            #print(results)
 
-            # if(result == "list index out of range"):
-            #     page = 1000
-            #     return(page)
-            # else:
-            self.datas.append(self.getItem(result))
+            for result in results: 
+                logging.info(result)
+                # print(result)
 
-            return(page)
+                # if(result == "list index out of range"):
+                #     page = 1000
+                #     return(page)
+                # else:
+                self.datas.append(self.getItem(result))
+
+            return(total) #for len of results
 
             # print(result)
             # print("\n")
@@ -143,7 +155,7 @@ class Thaijo:
     def toCsv (self,datas):
         try:
             with open(config("FILE"), "w", encoding="utf-8", newline="") as csvfile:
-                head_csv = ["num","issue_id","title","abstract_clean","article_url","issue_date_published",
+                head_csv = ["num","issue_id","thaijo_id","title","abstract_clean","article_url","issue_date_published",
                 "issue_cover_image", "authors_full_name", "authors_affiliation"]
                 thewriter = csv.DictWriter(csvfile, fieldnames=head_csv)
                 thewriter.writeheader()
@@ -154,6 +166,7 @@ class Thaijo:
                         {
                             "num": self.csv_count,
                             "issue_id": datas[i]["issue_id"],
+                            "thaijo_id": datas[i]["thaijo_id"],
                             "title": datas[i]["title"],
                             "abstract_clean": datas[i]["abstract_clean"],
                             "article_url": datas[i]["article_url"],
